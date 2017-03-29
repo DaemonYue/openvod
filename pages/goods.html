@@ -1,0 +1,36 @@
+<!-- 商城管理>右侧部分 -->
+<div ng-controller="goodsController as goods" ng-init="goods.init();" class="content-right">
+    <!-- loading -->
+    <div ng-show="goods.loading">loading...</div>
+    <!-- 标题 + 编辑酒店信息按钮-->
+    <h4 ng-click="goods.shopEdit()" class="cursor-pointer">
+        {{goods.maskParams.ShopName[goods.langStyle]}}（{{goods.maskParams.HotelName[goods.langStyle]}}）
+        <a class="title-btn"><i class="icon ion-ios-compose-outline theme-color"></i></a>
+    </h4>
+    <hr>
+    <!-- 分类标签 -->
+    <ul class="nav nav-tabs">
+
+        <li class="cursor-pointer {{'all' == goods.ShopGoodsCategoryID ? 'active' : ''}}" ng-click="goods.goTo('all', '全部商品')">
+            <a ng-click="" >全部商品</a>
+        </li>
+        <li class="cursor-pointer ShopGoodsCategoryID {{category.id == goods.ShopGoodsCategoryID ? 'active' : ''}}" ng-repeat="category in goods.categoryList">
+            <a ng-click="goods.goTo(category.id,category.name)">{{category.name[goods.langStyle]}}</a>
+        </li>
+        <li class="cursor-pointer">
+            <a ng-click="goods.categoryAdd()">
+            	<i class="icon ion-android-add-circle"></i> 分类添加
+            </a>
+        </li>
+    </ul>
+	<!-- tab-content start -->
+    <div class="tab-content">
+    	<!-- 商品列表 -->
+        <div class="tab-pane active in padding-bottom-72">
+		    <ui-view></ui-view>
+    		<!-- <div ng-show="goods.noData">查无数据</div> -->
+        </div>
+    </div>
+
+
+</div>

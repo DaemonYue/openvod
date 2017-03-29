@@ -1,0 +1,57 @@
+<div ng-controller="pcProjectInfoController as pcProjectInfo" ng-init="pcProjectInfo.init()">
+    <!-- title     -->
+    <h4 class="ng-binding">项目信息</h4>
+    <hr>
+    <div class="row">
+        <div class="col-xs-6">
+            <!-- loading -->
+            <div ng-show="pcProjectInfo.loading">loading...</div>
+            <form name="projectInfoForm" ng-submit="projectInfoForm.$valid && pcProjectInfo.save()">
+                <!--项目名称-->
+                <ng-repeat ng-repeat="lang in pcProjectInfo.editLangs">
+                    <div ng-if="lang.default" class="form-group">
+                        <label>项目名称 {{lang.name}}</label>
+                        <input ng-model="pcProjectInfo.projectName[lang.code]" required placeholder="（必填）" class="form-control" />
+                    </div>
+                    <div ng-if="lang.default !== true" class="form-group">
+                        <label>项目名称 {{lang.name}}</label>
+                        <input ng-model="pcProjectInfo.projectName[lang.code]" class="form-control" />
+                    </div>
+                </ng-repeat>
+                <!--项目名称-->
+                <!--项目logo图 end-->
+                <div class="form-group ">
+                    <label>酒店品牌海报</label>
+                    <!--logo图修改按钮-->
+                    <!--上传按钮-->
+                    <input id="upload1" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload1" />
+                    <a ng-click="pcProjectInfo.clickUpload('upload1')">上传</a>
+                    <a id="hidenUpload1" style="display: none;" ng-click="pcProjectInfo.imgs1.uploadFile('myFile', pcProjectInfo.imgs1)"></a>
+                    <br><small>用于微信预订页面顶部，建议使用宽高16:9、大小200kb以内的图片</small>
+                    <!-- 图 -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ng-repeat="img in pcProjectInfo.imgs1.data" class="form-thumbnail" style="background-image: url({{img.src}})">
+                                <!-- 进度条 -->
+                                <!-- -1代表失败 -->
+                                <!-- 大小： {{img.fileSize}}
+                                剩余： {{img.leftSize}} -->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--保存按钮-->
+                <div class="form-group">
+                    <label> </label>
+                    <button type="submit" class="button button-small button-block theme-button-outline ng-binding" ng-disable="pcProjectInfo.saving">
+                        <i class="icon ion-ios-checkmark-outline"></i> 保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<!-- terminalController -->
+<div ng-controller="terminalController as terminal" ng-init="terminal.init()" class="container">
+    <!-- 左侧菜单 筛选条件——门店-->
+    <div class="nav-left">
+        <ul class="nav nav-stacked nav-left-content">
+            <li ng-repeat="hotel in terminal.hotelList track by $index" ng-click="terminal.getDevNum(hotel.ID, $index)" ng-init="$first && terminal.getDevNum(hotel.ID, 0)" class="nav-header {{terminal.hotelListIndex == $index ? 'active':''}}">
+                <a>{{hotel.Name[terminal.defaultLangCode]}}</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 右侧部分 -->
+    <div class="content-right">
+        <!--当前选中名称-->
+        <!-- 在线状态 -->
+        <h4>{{terminal.form.HotelName}}<small>&nbsp&nbsp在线：{{terminal.form.online}} / 总数：{{terminal.form.total}}</small></h4>
+        <hr>
+        <!-- 搜索 -->
+        <div class="search-bar">
+            <!-- Online  -->
+            <div class="form-group">
+                <select ng-model="terminal.form.Online" class="form-control">
+                    <option value="">全部</option>
+                    <option value="1">在线</option>
+                    <option value="0">离线</option>
+                </select>
+            </div>
+            <!-- RoomID -->
+            <div class="form-group">
+                <input type="text" name="" ng-model="terminal.form.RoomID" class="form-control" placeholder="房间号">
+            </div>
+            <a ng-click="terminal.getDevList()" class="button button-light">
+                <i class="icon ion-ios-search-strong"></i>搜索
+            </a>
+        </div>
+        <!-- 添加终端 -->
+        <a ng-click="terminal.addDev()" class="button button-light">
+            <i class="icon ion-ios-plus-outline"></i> 添加终端
+        </a>
+        <!-- 终端列表 -->
+        <table ng-table="terminal.tableParams" ng-show="!terminal.loading" class="table table-hover">
+            <tr ng-repeat="row in $data track by $index">
+                <td title="'状态'" style="color:{{row.Online == 0 ? '' : 'rgb(0,185,120)'}}">
+                    {{row.Online == 0 ? "离线" : "在线"}}
+                </td>
+                <td title="'房间号'">
+                    {{row.RoomID}}
+                </td>
+                <td title="'MAC地址'">
+                    {{row.TermMac}}
+                </td>
+                <td title="'IP地址'">
+                    {{row.IP}}
+                </td>
+                <td title="'内存'">
+                    {{row.Mem}}
+                </td>
+                <td title="'容量'">
+                    {{row.DiskInfo}}
+                </td>
+                <td title="'操作'">
+                    <a ng-click="terminal.delTerm(row.ID)">删除</a>
+                </td>
+                <td title="'授权'">
+                    <input type="checkbox" ng-checked="row.Registered==1"  ng-click="terminal.validDev(row.ID,row.Registered)">
+                </td>
+            </tr>
+        </table>
+        <!-- loading -->
+        <div ng-show="terminal.loading">loading...</div>
+        <div ng-show="terminal.noData">查无数据</div>
+    </div>
+    <!-- 右侧部分 end -->
+</div>

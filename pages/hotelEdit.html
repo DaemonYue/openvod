@@ -1,0 +1,164 @@
+<div ng-controller="hotelEditController as hotelEdit" ng-init="hotelEdit.init()" class="modal-dialog">
+    <div class="modal-content">
+        <!--header-->
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" ng-click="hotelEdit.cancel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h5 class="modal-title">酒店详情</h5>
+        </div>
+        <!--header end-->
+        <!--body-->
+        <div class="modal-body">
+            <!-- loading -->
+            <div ng-show="loading">loading...</div>
+            <!-- form -->
+            <form id="hotelEditForm" name="hotelEditForm" ng-submit="hotelEditForm.$valid && hotelEdit.save()" rol="form">
+                <!--管理员手机号-->
+                <div class="form-group">
+                    <label>管理员手机号</label>
+                    <input type="text" pattern="[0-9]{11,}" oninvalid="this.setCustomValidity('至少输入11位数字')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" ng-model="hotelEdit.hotel.AdminPhoneNum" required placeholder="（必填，至少输入11位数字）">
+                </div>
+                <!--管理员手机号-->
+                <!--城市-->
+                <div class="form-group">
+                    <label>所在城市</label>
+                    <input type="text" class="form-control" ng-model="hotelEdit.hotel.CityName" required placeholder="（必填）">
+                </div>
+                <!--酒店名-->
+                <ng-repeat ng-repeat="lang in hotelEdit.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>酒店名 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Name[lang.code]" required placeholder="（必填）" />
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>酒店名 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Name[lang.code]" />
+                    </div>
+                </ng-repeat>
+                <!--酒店名-->
+                <!--酒店图-->
+                <div class="form-group">
+                    <label>酒店图片</label>
+                    <small>建议使用宽高16:9、大小200kb以内的图片</small>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- 图 -->
+                            <div ng-repeat="img in hotelEdit.imgs1.data" style="background-image: url({{img.src}})" class="form-thumbnail">
+                                <!-- 进度条 -->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
+                                    </div>
+                                </div>
+                                <!-- 删除按钮 -->
+                                <i ng-click="hotelEdit.imgs1.deleteById(img.id)" class="form-thumbnail-delete icon ion-close"></i>
+                            </div>
+                            <!-- 上传按钮 -->
+                            <div ng-click="hotelEdit.clickUpload('upload1')" class="form-thumbnail form-thumbnail-creat">
+                                <i class="icon ion-upload"></i> 上传图片
+                                <input id="upload1" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload1" />
+                                <a id="hidenUpload1" style="display: none;" ng-click="hotelEdit.imgs1.uploadFile('myFile', hotelEdit.imgs1)"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/酒店图-->
+                <!--720酒店全景图地址-->
+                <div class="form-group">
+                    <label>720酒店全景图地址（如无，请不要填任何内容）</label>
+                    <input type="text" class="form-control" ng-model="hotelEdit.hotel.ViewURL">
+                </div>
+                <!--标签-->
+                <div class="form-group">
+                    <label>已选标签</label>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span ng-repeat="tag in hotelEdit.hotelTags track by $index" ng-model="hotelEdit.ifCheckedHotelTags[$index].checked" uib-btn-checkbox class="tag"><!-- {{tag.ID}} {{tag.TagImageURL}} --> {{tag.TagName[hotelEdit.defaultLangCode]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!--/标签-->
+                <!--酒店地址-->
+                <ng-repeat ng-repeat="lang in hotelEdit.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>酒店地址 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Address[lang.code]" required placeholder="（必填）" />
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>酒店地址 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Address[lang.code]" />
+                    </div>
+                </ng-repeat>
+                <!--酒店地址-->
+                <!--酒店坐标-->
+                <div class="form-group">
+                    <label>酒店坐标</label>
+                    <a href="http://lbs.qq.com/tool/getpoint/index.html" target="view_frame">获取门店坐标</a>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" ng-model="hotelEdit.hotel.LocationX" placeholder="X坐标" required placeholder="（必填）" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" ng-model="hotelEdit.hotel.LocationY" placeholder="Y坐标" required placeholder="（必填）" />
+                        </div>
+                    </div>
+                </div>
+                <!--酒店坐标-->
+                <!--酒店logo图-->
+                <div class="form-group ">
+                    <label>酒店LOGO</label>
+                    <small>建议使用宽高1:1、大小200kb以内的图片</small>
+                    <!--酒店logo图修改按钮-->
+                    <a ng-click="hotelEdit.clickUpload('upload2')">上传</a>
+                    <br>
+                    <input id="upload2" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload2" />
+                    <a id="hidenUpload2" style="display: none;" ng-click="hotelEdit.imgs2.uploadFile('myFile', hotelEdit.imgs2)"></a>
+                    <!--酒店logo图修改按钮-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- 图 -->
+                            <div ng-repeat="img in hotelEdit.imgs2.data" class="form-thumbnail" style="background-image: url({{img.src}})">
+                                <!-- 进度条 -->
+                                <!-- -1代表失败 -->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--酒店logo图 end-->
+                <!--酒店介绍-->
+                <ng-repeat ng-repeat="lang in hotelEdit.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>酒店介绍 {{lang.name}}</label>
+                        <textarea  ng-trim="false" ng-model="hotelEdit.hotel.Description[lang.code]" required placeholder="（必填）" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>酒店介绍 {{lang.name}}</label>
+                        <textarea ng-trim="false" ng-model="hotelEdit.hotel.Description[lang.code]" class="form-control"></textarea>
+                    </div>
+                </ng-repeat>
+                <!--酒店介绍-->
+                <!--终端首页地址-->
+                <div class="form-group">
+                    <label>终端首页地址</label>
+                    <input type="text" class="form-control" ng-model="hotelEdit.hotel.TermMainPage">
+                </div>
+            </form>
+        </div>
+        <!--body end-->
+        <!--footer-->
+        <div class="modal-footer">
+            <!-- 取消 -->
+            <button ng-click="hotelEdit.cancel()" type="button" class="btn btn-default btn-sm">{{'CANCEL' | translate}}</button>
+            <!-- 保存 -->
+            <button form="hotelEditForm" type="submit" class="btn btn-primary btn-sm"><i class="icon ion-ios-checkmark-outline"></i> {{'SAVE' | translate}}</button>
+        </div>
+        <!--footer end-->
+    </div>
+    <!-- 保存中 -->
+    <div ng-show="hotelEdit.saving">saving...</div>
+</div>
