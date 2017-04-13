@@ -382,6 +382,7 @@
                     data: {
                         "Name": self.hotel.Name,
                         "CityName": "北京",
+                        "ViewURL": self.hotel.ViewURL ? self.hotel.ViewURL : '',
                         "LocationX": self.hotel.LocationX ? self.hotel.LocationX : 0,
                         "LocationY": self.hotel.LocationY ? self.hotel.LocationY : 0,
                         "LogoURL": self.imgs2.data.length > 0 ? self.imgs2.data[0].src : "",

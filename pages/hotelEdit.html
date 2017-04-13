@@ -63,85 +63,13 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 &lt;!&ndash;/医院图&ndash;&gt;
                 &lt;!&ndash;标签&ndash;&gt;
-                <div class="form-group">
-                    <label>已选标签</label>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span ng-repeat="tag in hotelEdit.hotelTags track by $index" ng-model="hotelEdit.ifCheckedHotelTags[$index].checked" uib-btn-checkbox class="tag">&lt;!&ndash; {{tag.ID}} {{tag.TagImageURL}} &ndash;&gt; {{tag.TagName[hotelEdit.defaultLangCode]}}</span>
-                        </div>
-                    </div>
-                </div>
-                &lt;!&ndash;/标签&ndash;&gt;
-                &lt;!&ndash;医院地址&ndash;&gt;
-                <ng-repeat ng-repeat="lang in hotelEdit.editLangs">
-                    <div class="form-group" ng-if="lang.default">
-                        <label>医院地址 {{lang.name}}</label>
-                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Address[lang.code]" required placeholder="（必填）" />
-                    </div>
-                    <div class="form-group" ng-if="lang.default !== true">
-                        <label>医院地址 {{lang.name}}</label>
-                        <input type="text" class="form-control" ng-model="hotelEdit.hotel.Address[lang.code]" />
-                    </div>
-                </ng-repeat>
-                &lt;!&ndash;医院地址&ndash;&gt;
-                &lt;!&ndash;医院坐标&ndash;&gt;
-                <div class="form-group">
-                    <label>医院坐标</label>
-                    <a href="http://lbs.qq.com/tool/getpoint/index.html" target="view_frame">获取门店坐标</a>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="hotelEdit.hotel.LocationX" placeholder="X坐标" required placeholder="（必填）" />
-                        </div>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" ng-model="hotelEdit.hotel.LocationY" placeholder="Y坐标" required placeholder="（必填）" />
-                        </div>
-                    </div>
-                </div>
-                &lt;!&ndash;医院坐标&ndash;&gt;
-                &lt;!&ndash;医院logo图&ndash;&gt;
-                <div class="form-group ">
-                    <label>医院LOGO</label>
-                    <small>建议使用宽高1:1、大小200kb以内的图片</small>
-                    &lt;!&ndash;医院logo图修改按钮&ndash;&gt;
-                    <a ng-click="hotelEdit.clickUpload('upload2')">上传</a>
-                    <br>
-                    <input id="upload2" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload2" />
-                    <a id="hidenUpload2" style="display: none;" ng-click="hotelEdit.imgs2.uploadFile('myFile', hotelEdit.imgs2)"></a>
-                    &lt;!&ndash;医院logo图修改按钮&ndash;&gt;
-                    <div class="row">
-                        <div class="col-xs-12">
-                            &lt;!&ndash; 图 &ndash;&gt;
-                            <div ng-repeat="img in hotelEdit.imgs2.data" class="form-thumbnail" style="background-image: url({{img.src}})">
-                                &lt;!&ndash; 进度条 &ndash;&gt;
-                                &lt;!&ndash; -1代表失败 &ndash;&gt;
-                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                &lt;!&ndash;医院logo图 end&ndash;&gt;
-                &lt;!&ndash;医院介绍&ndash;&gt;
-                <ng-repeat ng-repeat="lang in hotelEdit.editLangs">
-                    <div class="form-group" ng-if="lang.default">
-                        <label>医院介绍 {{lang.name}}</label>
-                        <textarea  ng-trim="false" ng-model="hotelEdit.hotel.Description[lang.code]" required placeholder="（必填）" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group" ng-if="lang.default !== true">
-                        <label>医院介绍 {{lang.name}}</label>
-                        <textarea ng-trim="false" ng-model="hotelEdit.hotel.Description[lang.code]" class="form-control"></textarea>
-                    </div>
-                </ng-repeat>
-                &lt;!&ndash;医院介绍&ndash;&gt;
-                &lt;!&ndash;终端首页地址&ndash;&gt;
-                <div class="form-group">
-                    <label>终端首页地址</label>
-                    <input type="text" class="form-control" ng-model="hotelEdit.hotel.TermMainPage">
-                </div>-->
+=======
+                <!--/酒店图-->
+                <!--720酒店全景图地址-->
+
             </form>
         </div>
         <!--body end-->
