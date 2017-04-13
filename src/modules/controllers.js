@@ -216,8 +216,8 @@
         }])
 
         // 终端管理
-        .controller('terminalController', ['$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
-            function($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
+        .controller('terminalController', ['$q', '$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
+            function($q, $scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
                 console.log('terminalController');
                 var self = this;
                 self.init = function() {
@@ -241,8 +241,8 @@
                         data: data
                     }).then(function successCallback(data, status, headers, config) {
                         if (data.data.rescode == "200") {
-
                             self.hotelList = data.data.data;
+                            console.log(self.hotelList);
                         } else if (data.data.rescode == "401") {
                             alert('访问超时，请重新登录');
                             $state.go('login')
@@ -256,6 +256,43 @@
                         self.loading = false;
                     });
 
+                }
+
+                self.getSectionsInfo = function (id) {
+                    var deferred = $q.defer();
+                    self.loading1 = true;
+                    var data = JSON.stringify({
+                        action: "getSectionList",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        hotelID: Number(id)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.section = {};
+                            if(data.sectionList){
+                                self.seclist = data.sectionList;
+                            }
+                            deferred.resolve();
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                            deferred.reject();
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                        deferred.reject();
+                    }).finally(function (e) {
+                        self.loading = false;
+                    });
+                    return deferred.promise;
                 }
 
                 // 获取终端列表 带搜索和分页
@@ -310,6 +347,7 @@
 
                 // 获取终端状态 总数目
                 self.getDevNum = function(ID, index) {
+                    self.idd = ID;
                     self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
                     self.form.HotelID = ID;
                     self.hotelListIndex = index;
@@ -344,6 +382,96 @@
 
 
                 }
+
+
+                // 获取某分区终端列表 带搜索和分页
+                self.getSectionDevList = function() {
+                    self.noData = false;
+                    self.loading = true;
+                    self.tableParams = new NgTableParams({
+                        page: 1,
+                        count: 15,
+                        url: ''
+                    }, {
+                        counts: [],
+                        getData: function(params) {
+                            var data = {
+                                "action": "getDevList",
+                                "token": util.getParams("token"),
+                                "lang": self.langStyle,
+                                "Online": self.form.Online,
+                                "SectionID": self.form.SectionID,
+                                "RoomID": self.form.RoomID
+                            }
+                            var paramsUrl = params.url();
+                            data.per_page = paramsUrl.count - 0;
+                            data.page = paramsUrl.page - 0;
+                            data = JSON.stringify(data);
+                            return $http({
+                                method: $filter('ajaxMethod')(),
+                                url: util.getApiUrl('devinfo', 'shopList', 'server'),
+                                data: data
+                            }).then(function successCallback(data, status, headers, config) {
+                                if (data.data.rescode == '200') {
+                                    if (data.data.total == 0) {
+                                        self.noData = true;
+                                    }
+                                    params.total(data.data.total);
+                                    return data.data.devlist;
+                                } else if (msg.rescode == '401') {
+                                    alert('访问超时，请重新登录');
+                                    $location.path("pages/login.html");
+                                } else {
+                                    alert(data.rescode + ' ' + data.errInfo);
+                                }
+
+                            }, function errorCallback(data, status, headers, config) {
+                                alert(response.status + ' 服务器出错');
+                            }).finally(function(value) {
+                                self.loading = false;
+                            })
+                        }
+                    });
+                }
+
+                // 获取某分区终端状态 总数目
+                self.getSectionDevNum = function(ID) {
+                    self.idd = ID;
+                   // self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
+                    self.form.sectionID = ID;
+                    self.getSectionDevList();
+                    var data = {
+                        "action": "getDevNum",
+                        "token": util.getParams("token"),
+                        "lang": self.langStyle,
+                        "SectionID": self.form.SectionID
+                    }
+
+                    data = JSON.stringify(data);
+                    $http({
+                        method: $filter('ajaxMethod')(),
+                        url: util.getApiUrl('devinfo', '', 'server'),
+                        data: data
+                    }).then(function successCallback(data, status, headers, config) {
+                        if (data.data.rescode == '200') {
+                            self.form.total = data.data.total;
+                            self.form.online = data.data.online;
+                        } else if (msg.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert(data.rescode + ' ' + data.errInfo);
+                        }
+                    }, function errorCallback(data, status, headers, config) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function(value) {
+                        self.loading = false;
+                    })
+
+
+                }
+
+
 
                 self.delTerm = function(id) {
                     var conf = confirm('确认删除？');

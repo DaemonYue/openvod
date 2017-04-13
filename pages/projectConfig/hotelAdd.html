@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
                 <span class="sr-only">Close</span>
             </button>
-            <h5 class="modal-title">添加酒店</h5>
+            <h5 class="modal-title">添加医院</h5>
         </div>
         <!--header end-->
         <!--body-->
@@ -15,45 +15,45 @@
             <div ng-show="loading">loading...</div>
             <!-- form -->
             <form id="hotelAddForm" name="hotelAddForm" ng-submit="hotelAddForm.$valid && hotelAdd.save()" rol="form">
-                <!--管理员手机号-->
+              <!--  管理员手机号
                 <div class="form-group">
                     <label>管理员手机号</label>
                     <input type="text" pattern="[0-9]{11,}" oninvalid="this.setCustomValidity('至少输入11位数字')" onchange="try{setCustomValidity('')}catch(e){}" class="form-control" ng-model="hotelAdd.hotel.AdminPhoneNum" required placeholder="（必填，至少输入11位数字）">
                 </div>
-                <!--管理员手机号-->
-                <!--城市-->
+                管理员手机号
+                城市
                 <div class="form-group">
                     <label>所在城市</label>
                     <input type="text" class="form-control" ng-model="hotelAdd.hotel.CityName" required placeholder="（必填）">
                 </div>
-                <!--酒店名-->
+                酒店名-->
                 <ng-repeat ng-repeat="lang in hotelAdd.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label>酒店名 {{lang.name}}</label>
+                        <label>医院名 {{lang.name}}</label>
                         <input type="text" class="form-control" ng-model="hotelAdd.hotel.Name[lang.code]" required placeholder="（必填）" />
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label>酒店名 {{lang.name}}</label>
+                        <label>医院名 {{lang.name}}</label>
                         <input type="text" class="form-control" ng-model="hotelAdd.hotel.Name[lang.code]" />
                     </div>
                 </ng-repeat>
                 <!--酒店名-->
                 <!--酒店图-->
-                <div class="form-group">
-                    <label>酒店图片</label>
+               <!-- <div class="form-group">
+                    <label>医院图片</label>
                     <div class="row">
                         <div class="col-xs-12">
-                            <!-- 图 -->
+                            &lt;!&ndash; 图 &ndash;&gt;
                             <div ng-repeat="img in hotelAdd.imgs1.data" style="background-image: url({{img.src}})" class="form-thumbnail">
-                                <!-- 进度条 -->
+                                &lt;!&ndash; 进度条 &ndash;&gt;
                                 <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
                                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
                                     </div>
                                 </div>
-                                <!-- 删除按钮 -->
+                                &lt;!&ndash; 删除按钮 &ndash;&gt;
                                 <i ng-click="hotelAdd.imgs1.deleteById(img.id)" class="form-thumbnail-delete icon ion-close"></i>
                             </div>
-                            <!-- 上传按钮 -->
+                            &lt;!&ndash; 上传按钮 &ndash;&gt;
                             <div ng-click="hotelAdd.clickUpload('upload1')" class="form-thumbnail form-thumbnail-creat">
                                 <i class="icon ion-upload"></i> 上传图片
                                 <input id="upload1" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload1" />
@@ -61,33 +61,33 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--/酒店图-->
                 <!--标签-->
-                <div class="form-group">
+               <!-- <div class="form-group">
                     <label>已选标签</label>
                     <div class="row">
                         <div class="col-xs-12">
-                            <span ng-repeat="tag in hotelAdd.hotelTags track by $index" ng-model="hotelAdd.ifCheckedHotelTags[$index].checked" uib-btn-checkbox class="tag"><!-- {{tag.ID}} {{tag.TagImageURL}} --> {{tag.TagName[hotelAdd.defaultLangCode]}}</span>
+                            <span ng-repeat="tag in hotelAdd.hotelTags track by $index" ng-model="hotelAdd.ifCheckedHotelTags[$index].checked" uib-btn-checkbox class="tag">&lt;!&ndash; {{tag.ID}} {{tag.TagImageURL}} &ndash;&gt; {{tag.TagName[hotelAdd.defaultLangCode]}}</span>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--/标签-->
                 <!--酒店地址-->
-                <ng-repeat ng-repeat="lang in hotelAdd.editLangs">
+               <!-- <ng-repeat ng-repeat="lang in hotelAdd.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label>酒店地址 {{lang.name}}</label>
+                        <label>医院地址 {{lang.name}}</label>
                         <input type="text" class="form-control" ng-model="hotelAdd.hotel.Address[lang.code]" />
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label>酒店地址 {{lang.name}}</label>
+                        <label>医院地址 {{lang.name}}</label>
                         <input type="text" class="form-control" ng-model="hotelAdd.hotel.Address[lang.code]" />
                     </div>
-                </ng-repeat>
+                </ng-repeat>-->
                 <!--酒店地址-->
                 <!--酒店坐标-->
-                <div class="form-group">
-                    <label>酒店坐标</label>
+               <!-- <div class="form-group">
+                    <label>医院坐标</label>
                     <a href="http://lbs.qq.com/tool/getpoint/index.html" target="view_frame">获取门店坐标</a>
                     <div class="row">
                         <div class="col-xs-6">
@@ -97,23 +97,23 @@
                             <input type="text" class="form-control" ng-model="hotelAdd.hotel.LocationY" placeholder="Y坐标" />
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--酒店坐标-->
                 <!--酒店logo图-->
-                <div class="form-group ">
-                    <label>酒店LOGO</label>
-                    <!--酒店logo图修改按钮-->
+               <!-- <div class="form-group ">
+                    <label>医院LOGO</label>
+                    &lt;!&ndash;酒店logo图修改按钮&ndash;&gt;
                     <a ng-click="hotelAdd.clickUpload('upload2')">上传</a>
                     <br>
                     <input id="upload2" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload2" />
                     <a id="hidenUpload2" style="display: none;" ng-click="hotelAdd.imgs2.uploadFile('myFile', hotelAdd.imgs2)"></a>
-                    <!--酒店logo图修改按钮-->
+                    &lt;!&ndash;酒店logo图修改按钮&ndash;&gt;
                     <div class="row">
                         <div class="col-xs-12">
-                            <!-- 图 -->
+                            &lt;!&ndash; 图 &ndash;&gt;
                             <div ng-repeat="img in hotelAdd.imgs2.data" class="form-thumbnail" style="background-image: url({{img.src}})">
-                                <!-- 进度条 -->
-                                <!-- -1代表失败 -->
+                                &lt;!&ndash; 进度条 &ndash;&gt;
+                                &lt;!&ndash; -1代表失败 &ndash;&gt;
                                 <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
                                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
                                     </div>
@@ -121,25 +121,27 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!--酒店logo图 end-->
                 <!--酒店介绍-->
-                <ng-repeat ng-repeat="lang in hotelAdd.editLangs">
+              <!--  <ng-repeat ng-repeat="lang in hotelAdd.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label>酒店介绍 {{lang.name}}</label>
+                        <label>医院介绍 {{lang.name}}</label>
                         <textarea ng-trim="false" ng-model="hotelAdd.hotel.Description[lang.code]" class="form-control"></textarea>
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label>酒店介绍 {{lang.name}}</label>
+                        <label>医院介绍 {{lang.name}}</label>
                         <textarea ng-trim="false" ng-model="hotelAdd.hotel.Description[lang.code]" class="form-control"></textarea>
                     </div>
-                </ng-repeat>
+                </ng-repeat>-->
                 <!--酒店介绍-->
                 <!--终端首页地址-->
-                <div class="form-group">
+              <!--  <div class="form-group">
                     <label>终端首页地址</label>
                     <input type="text" class="form-control" ng-model="hotelAdd.hotel.TermMainPage">
-                </div>
+                </div>-->
+                <!--添加科室-->
+
             </form>
         </div>
         <!--body end-->

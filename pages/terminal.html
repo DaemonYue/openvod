@@ -1,12 +1,21 @@
 <!-- terminalController -->
 <div ng-controller="terminalController as terminal" ng-init="terminal.init()" class="container">
     <!-- 左侧菜单 筛选条件——门店-->
-    <div class="nav-left">
+    <div class="nav-left" id="outer">
         <ul class="nav nav-stacked nav-left-content">
-            <li ng-repeat="hotel in terminal.hotelList track by $index" ng-click="terminal.getDevNum(hotel.ID, $index)" ng-init="$first && terminal.getDevNum(hotel.ID, 0)" class="nav-header {{terminal.hotelListIndex == $index ? 'active':''}}">
-                <a>{{hotel.Name[terminal.defaultLangCode]}}</a>
+            <li  ng-repeat="hotel in terminal.hotelList track by $index" class="nav-header {{terminal.hotelListIndex == $index ? 'active':''}}" >
+                <a  ng-init="$first && terminal.getDevNum(hotel.ID, 0)" ng-click="terminal.getSectionsInfo(hotel.ID);terminal.getDevNum(hotel.ID, $index)" >{{hotel.Name[terminal.defaultLangCode]}}</a>
+                <ul  class="nav-stacked  panel-collapse" ng-if="terminal.idd==hotel.ID" style="padding:0">
+                    <li ng-repeat="sec in terminal.seclist"  style="list-style: none" ng-click="terminal.getSectionDevNum(sec.ID)">
+                        <a ng-hide="true"></a>
+                        <button class="btn-default" style="width: 100%;border: 0" >{{sec.Name[terminal.defaultLangCode]}}</button>
+                    </li>
+                </ul>
             </li>
+
         </ul>
+
+
     </div>
     <!-- 右侧部分 -->
     <div class="content-right">
@@ -21,7 +30,6 @@
                 <select ng-model="terminal.form.Online" class="form-control">
                     <option value="">全部</option>
                     <option value="1">在线</option>
-                    <option value="0">离线</option>
                 </select>
             </div>
             <!-- RoomID -->

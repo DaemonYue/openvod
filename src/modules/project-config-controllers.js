@@ -22,11 +22,11 @@
             var self = this;
             
             self.init = function() {
-                self.loadInfo();
+                self.loadHotelInfo();
                 self.defaultLangCode = util.getDefaultLangCode();
             }
 
-            self.loadInfo = function() {
+            self.loadHotelInfo = function() {
                 var data = JSON.stringify({
                     action: "getHotelList",
                     token: util.getParams('token'),
@@ -89,14 +89,248 @@
             self.add = function() {
                 $scope.app.showHideMask(true,'pages/projectConfig/hotelAdd.html');
             }
+
+            self.showSections = function (id) {
+                $state.go('app.projectConfig.hotelList.sections',{id:id});
+
+            }
             
         }
     ])
 
+    .controller('sectionController', ['$q', '$scope', '$filter', '$state', '$http', '$stateParams', 'util',
+            function ($q, $scope, $filter, $state, $http, $stateParams, util) {
+                var self = this;
+
+                self.init = function () {
+                    self.hotelId = $stateParams.id;
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.getHotelInfo();
+                    self.loadSection();
+                }
+
+                self.getHotelInfo = function () {
+                    var deferred = $q.defer();
+                    self.loading = true;
+                    var data = JSON.stringify({
+                        action: "getHotel",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        HotelID: Number(self.hotelId)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('hotelroom', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.hotel = {};
+                            self.hotel.Name = data.data.Name;
+                            deferred.resolve();
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                            deferred.reject();
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                        deferred.reject();
+                    }).finally(function (e) {
+                        self.loading = false;
+                    });
+                    return deferred.promise;
+                };
+
+                self.add = function () {
+                    $scope.app.showHideMask(true,'pages/projectConfig/sectionAdd.html');
+                };
+
+                self.edit = function (id,name) {
+                    console.log(id);
+                    $scope.app.maskParams.sectionId = id;
+                    $scope.app.maskParams.sectionName = name;
+
+                    $scope.app.showHideMask(true,'pages/projectConfig/sectionEdit.html');
+                };
+
+                self.del = function () {
+                    if(!confirm('确认删除？')) {
+                        return;
+                    }
+
+                    var data = JSON.stringify({
+                        action: "deleteSection",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        hotelID:id
+                    })
+
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('已删除');
+                            $state.reload();
+                        } else {
+                            alert('删除失败' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert('服务器出错');
+                    });
+                }
+
+                self.loadSection = function () {
+                    var deferred = $q.defer();
+                    self.loading = true;
+                    var data = JSON.stringify({
+                        action: "getSectionList",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        hotelID: Number(self.hotelId)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.section = {};
+                            if(data.sectionList){
+                                self.list = data.sectionList;
+                            }
+
+                            deferred.resolve();
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                            deferred.reject();
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                        deferred.reject();
+                    }).finally(function (e) {
+                        self.loading = false;
+                    });
+                    return deferred.promise;
+                }
+
+
+            }
+        ])
+
+    .controller('sectionAddController', ['$scope', '$filter', '$state', '$http', '$stateParams', 'util',
+            function ($scope, $filter, $state, $http, $stateParams, util) {
+                var self = this;
+
+                self.cancel = function () {
+                    $scope.app.showHideMask(false);
+                }
+
+                self.init = function () {
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.editLangs = util.getParams('editLangs');
+                    self.section = {};
+                    self.hotelid = $stateParams.id;
+                };
+
+                self.save = function () {
+                    self.saving = true;
+                    var data = JSON.stringify({
+                        action: "addSection",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        name: self.section.Name,
+                        hotelID: self.hotelid
+
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('添加成功');
+                            $state.reload();
+                        } else {
+                            alert('添加失败' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.saving = false;
+                    });
+                }
+
+
+            }
+        ])
+
+    .controller('sectionEditController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
+            function ($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
+                console.log('sectionEditController');
+                var self = this;
+                self.init = function () {
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.sectionId = $scope.app.maskParams.sectionId;
+                    console.log(self.sectionId);
+                    self.sectionName = $scope.app.maskParams.sectionName;
+                    self.editLangs = util.getParams('editLangs');
+
+                };
+
+
+                self.cancel = function () {
+                    $scope.app.showHideMask(false);
+                };
+
+                self.save = function () {
+                    self.saving = true;
+                    var data = JSON.stringify({
+                        action: "editSection",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        sectionID: Number(self.sectionId),
+                        name: self.sectionName
+
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('修改成功');
+                            $state.reload();
+                        } else {
+                            alert('保存失败' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.saving = false;
+                    });
+                }
+            }
+        ])
+
     .controller('hotelAddController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
-            console.log('hotelEditController')
+            console.log('hotelADDController');
             var self = this;
+            self.items=[];    //初始化数组，以便为每一个ng-model分配一个对象
+            var i=0;
+
             self.init = function () {
                 self.defaultLangCode = util.getDefaultLangCode();
                 self.ifCheckedHotelTags = [];
@@ -105,12 +339,15 @@
                 self.imgs1 = new Imgs([]);
                 self.imgs2 = new Imgs([], true);
                 self.getHotelTags();
-                
+
+
             }
 
             self.cancel = function () {
                 $scope.app.showHideMask(false);
             }
+
+
 
             self.save = function () {
                 var imgs = [];
@@ -144,18 +381,18 @@
                     lang: util.langStyle(),
                     data: {
                         "Name": self.hotel.Name,
-                        "CityName": self.hotel.CityName,
+                        "CityName": "北京",
                         "LocationX": self.hotel.LocationX ? self.hotel.LocationX : 0,
                         "LocationY": self.hotel.LocationY ? self.hotel.LocationY : 0,
                         "LogoURL": self.imgs2.data.length > 0 ? self.imgs2.data[0].src : "",
-                        "Features": tags,
+                        "Features": [],
                         "TelePhone": null,
-                        "AdminPhoneNum": self.hotel.AdminPhoneNum,
+                        "AdminPhoneNum": '11111',
                         "Address": self.hotel.Address ? self.hotel.Address : {},
                         "Description": self.hotel.Description ? self.hotel.Description : {},
                         "OfficePhone": null,
-                        "Gallery": imgs,
-                        "TermMainPage": self.hotel.TermMainPage
+                        "Gallery": [],
+                        "TermMainPage": ''
                     }
                 })
                 $http({
@@ -216,6 +453,32 @@
                     document.getElementById(e).click();
                 }, 0);
             }
+
+            /*科室分区的编辑*/
+
+            self.getResult=function(){      //计算输入框的总值
+                var result=0;
+                console.log(self.items)
+                angular.forEach(self.items,function(item,key){
+
+                    result+=parseInt(self.items[key]);
+                })
+                self.result=result;
+            }
+
+            self.Fn= {
+                add: function () {         //每次添加都要给items数组的长度加一
+                    self.items[i] = '';
+                    i++;
+                },
+                del: function (key) {      //每次删除一个输入框都后要让i自减，否则重新添加时会出bug
+                    console.log(key);
+                    self.items.splice(key, 1);
+                    i--;
+                    self.getResult();    //每次删除时得重新计算总值
+                }
+            }
+
 
             function Imgs(imgList, single) {
                 this.initImgList = imgList;

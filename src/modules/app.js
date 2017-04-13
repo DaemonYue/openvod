@@ -95,6 +95,10 @@
                     url: '/projectConfig/hotelList',
                     templateUrl: 'pages/projectConfig/hotelList.html'
                 })
+                .state('app.projectConfig.hotelList.sections', {
+                    url: '/projectConfig/hotelList?id',
+                    templateUrl: 'pages/projectConfig/sections.html'
+                })
                 .state('app.projectConfig.projectInfo', {
                     url: '/projectConfig/projectInfo',
                     templateUrl: 'pages/projectConfig/projectInfo.html'
@@ -593,7 +597,7 @@
         }])
 
         .constant('CONFIG', {
-            serverUrl: 'http://192.168.30.100/backend_mgt/v1/',
+            serverUrl: 'http://192.168.17.73/backend_mgt/v1/',
             // serverUrl: 'http://openvod.cleartv.cn/backend_mgt/v1/',
             uploadUrl: 'http://mres.cleartv.cn/upload',
             testUrl: 'test/',

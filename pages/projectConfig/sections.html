@@ -1,0 +1,20 @@
+<div ng-controller="sectionController as sectionCtrl" ng-init="sectionCtrl.init()">
+    <!--loading-->
+    <div ng-show="sectionCtrl.loading">loading...</div>
+    <!--loading-->
+    <!--添加门店-->
+    <h4>{{sectionCtrl.hotel.Name[sectionCtrl.defaultLangCode]}}——分区信息</h4>
+    <a ng-click="sectionCtrl.add()" class="button button-light">
+        <i class="icon ion-ios-plus-outline"></i> 添加分区
+    </a>
+    <!--添加门店-->
+    <ul class="list-group">
+        <li ng-repeat="section in sectionCtrl.list" class="list-group-item">
+            {{section.Name[sectionCtrl.defaultLangCode]}}
+            <a ng-click="sectionCtrl.del(section.ID)"  class="btn pull-right">删除</a>
+            <a ng-click="sectionCtrl.edit(section.ID,section.Name)" class="btn pull-right">编辑</a>
+            <br>
+        </li>
+    </ul>
+
+</div>
