@@ -1,0 +1,16 @@
+{
+  "rescode": "200",
+  "errInfo": "",
+  "data": {
+      "sectionInfo":
+          {
+              "":1,
+              "HotelID":1,
+              "Name":{"zh-CN":"上海门店"},
+              "Gallery":null,
+              "LogoURL":null,
+              "Description":null,
+
+          }
+  }
+}
