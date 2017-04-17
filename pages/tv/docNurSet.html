@@ -1,0 +1,26 @@
+<div ng-controller="DocNurSetController as cnset" ng-init="cnset.init()" class="row">
+    <div class="col-xs-6">
+        <!-- 读取中 -->
+        <div ng-show="cnset.loading">loading...</div>
+        <!-- 读取中 -->
+        <form class="form" name="cnsetForm" ng-submit="cnsetForm.$valid && cnset.save()">
+
+            <!--ApkStartParam-->
+            <div class="form-group">
+                <label>展示方式</label>
+                <select class="form-control" ng-model="cnset.setOption" ng-options="x for x in cnset.selectOptions"></select>
+            </div>
+            <!--ApkStartParam-->
+
+            <!-- 保存 -->
+            <div class="form-group">
+                <label> </label>
+                <button type="submit" class="button button-small button-block theme-button-outline">
+                    <i class="icon ion-ios-checkmark-outline"></i> {{'SAVE' | translate}}
+                </button>
+            </div>
+        </form>
+        <!-- 保存中 -->
+        <div ng-show="cnset.saving">saving...</div>
+    </div>
+</div>

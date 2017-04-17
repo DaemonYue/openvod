@@ -39,7 +39,7 @@
                 <!--菜单样式选项-->
                 <div class="form-group">
                     <label>菜单样式</label>
-                    <select  ng-model="tvMenuAdd.choseStyle" ng-change="tvMenuAdd.changeShowPic()" ng-options="x.name for x in tvMenuAdd.stylename" class="form-control">
+                    <select  ng-model="tvMenuAdd.choseStyle" ng-options="x.name for x in tvMenuAdd.stylename" ng-change="tvMenuAdd.changeShowPic(tvMenuAdd.choseStyle)"  class="form-control">
                     </select>
                 </div>
                 <!--菜单样式选项-->

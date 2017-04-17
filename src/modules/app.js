@@ -754,7 +754,148 @@
                     }
                 })
 
+                // 护士信息
+                .state('app.tvAdmin.NurseInfo', {
+                    url: '/NurseInfo?moduleId&label',
+                    templateUrl: 'pages/tv/docNurSet.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
 
+                        }]
+                    }
+                })
+
+                // 医生信息
+                .state('app.tvAdmin.ExpertInfo', {
+                    url: '/ExpertInfo?moduleId&label',
+                    templateUrl: 'pages/tv/docNurSet.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 科室信息
+                .state('app.tvAdmin.SectionInfo', {
+                    url: '/SectionInfo?moduleId&label',
+                    templateUrl: 'pages/tv/docNurSet.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院历史
+                .state('app.tvAdmin.History', {
+                    url: '/History?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院荣耀
+                .state('app.tvAdmin.Honours', {
+                    url: '/Honours?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院设备
+                .state('app.tvAdmin.Equipment', {
+                    url: '/Equipment?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 入院须知
+                .state('app.tvAdmin.Notes', {
+                    url: '/Notes?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院餐饮
+                .state('app.tvAdmin.Food', {
+                    url: '/Food?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院周边
+                .state('app.tvAdmin.Around', {
+                    url: '/Around?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 周边风景
+                .state('app.tvAdmin.Scenic', {
+                    url: '/Scenic?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 医院食堂
+                .state('app.tvAdmin.Canteen', {
+                    url: '/Canteen?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 公共活动区
+                .state('app.tvAdmin.PublicArea', {
+                    url: '/PublicArea?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 康复区
+                .state('app.tvAdmin.RehabilitationDistrict', {
+                    url: '/RehabilitationDistrict?moduleId&label',
+                    templateUrl: 'pages/tv/blank.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
 
                 .state('app.tvAdmin.blank', {
                     url: '/blank?label',

@@ -81,58 +81,57 @@
         <!-- 标签页: 客房列表 -->
         <div class="tab-pane padding-bottom-72" ng-class="{'in active':(dcnur.typestyle==2)}">
             <!-- 按钮: 添加客房 -->
-            <a ng-click="dcnur.roomAdd()" class="button button-light">
-                <i class="icon ion-ios-plus-outline"></i> {{'ROOM_ADD' | translate}}
+            <a ng-click="dcnur.secInfoAdd()" class="button button-light">
+                <i class="icon ion-ios-plus-outline"></i> 添加图文
             </a>
             <!-- 列表: 客房列表 -->
-            <div ng-init="dcnur.search()" class="wf-container">
+            <div  class="wf-container">
                 <!-- 容器: 瀑布流容器 -->
-                <div class="wf-box box" ng-repeat="item in dcnur.rooms">
+                <div class="wf-box box" ng-repeat="item in dcnur.section">
                     <div class="panel panel-default">
                         <!-- 内容: 客房图 -->
-                        <div class="box-top-img" ng-style="{'background-image': 'url({{item.imgs[0].ImageURL}})'}">
+                        <div class="box-top-img" ng-style="{'background-image': 'url({{item.PicURL}})'}">
                         </div>
                         <!-- 操作：编辑 -->
                         <i ng-click="dcnur.roomEdit(item.ID)" class="icon ion-gear-a box-corner-btn"></i>
                         <div class="panel-body">
                             <!-- 内容: 客房名 -->
-                            <h4>{{item.RoomTypeName[dcnur.defaultLangCode]}}</h4>
+                            <h4>{{item.Title[dcnur.defaultLangCode]}}</h4>
                             <!-- 内容: 标签 -->
-                            <p class=""><ng-repeat ng-repeat="tag in item.tags">{{tag.TagName[dcnur.defaultLangCode]}} </ng-repeat></p>
+                            <!--<p class=""><ng-repeat ng-repeat="tag in item.tags">{{tag.TagName[dcnur.defaultLangCode]}} </ng-repeat></p>-->
                         </div>
-                        <ul class="list-group">
-                            <!-- 操作：改价格 -->
-                            <li class="list-group-item btn" ng-click="dcnur.roomEditPrice(item.ID)">
+                        <!--<ul class="list-group">
+                            &lt;!&ndash; 操作：改价格 &ndash;&gt;
+                            <li class="list-group-item btn" >
                                 价格
                                 <span class="pull-right">
                                     {{item.LowPrice/100 | currency : '￥'}} ~ {{item.TopPrice/100 | currency : '￥'}}
                                     <i class="icon ion-ios-arrow-right"></i>
                                 </span>
                             </li>
-                            <!-- 操作：改数量 -->
-                            <li class="list-group-item btn" ng-click="dcnur.roomEditNum(item.ID)">
+                            &lt;!&ndash; 操作：改数量 &ndash;&gt;
+                            <li class="list-group-item btn" ng-click="">
                                 房间数
                                 <span class="pull-right">
-                                    {{item.roomMinNum }}间 ~ {{item.roomMaxNum}}间
                                     <i class="icon ion-ios-arrow-right"></i>
                                 </span>
                             </li>
 
-                            <!-- 内容: 今天可订 --><!--
+                            &lt;!&ndash; 内容: 今天可订 &ndash;&gt;&lt;!&ndash;
                             <li class="list-group-item col-xs-6">
                                 今日可订{{item.AvailableNumCurrent}}间
-                            </li> -->
-                            <!-- 内容: 今天剩余 --><!--
+                            </li> &ndash;&gt;
+                            &lt;!&ndash; 内容: 今天剩余 &ndash;&gt;&lt;!&ndash;
                             <li class="list-group-item col-xs-6 text-right">
                                 剩余6间
                             </li>
-                            <div class="clearfix"></div> -->
-                            <!-- 操作: 启用开关 -->
-                            <li class="list-group-item">
+                            <div class="clearfix"></div> &ndash;&gt;
+                            &lt;!&ndash; 操作: 启用开关 &ndash;&gt;
+                            &lt;!&ndash;<li class="list-group-item">
                                 上线
                                 <toggle ng-model="item.RoomAvailable" ng-change="dcnur.RAChanged($index)" class="pull-right"></toggle>
-                            </li>
-                        </ul>
+                            </li>&ndash;&gt;
+                        </ul>-->
                     </div>
                 </div>
             </div>

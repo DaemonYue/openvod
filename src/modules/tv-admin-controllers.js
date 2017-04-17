@@ -434,6 +434,99 @@
                     self.changeMenuInfo();
                 }
 
+                //NurseInfo
+                if(branch.data.type == 'Hospital_Section_PersonalInfo_Nurse') {
+
+                    $state.go('app.tvAdmin.NurseInfo', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //ExpertInfo
+                if(branch.data.type == 'Hospital_Section_PersonalInfo_Expert') {
+
+                    $state.go('app.tvAdmin.ExpertInfo', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //SectionInfo
+                if(branch.data.type == 'Hospital_Section_Introduction') {
+
+                    $state.go('app.tvAdmin.SectionInfo', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalHistory
+                if(branch.data.type == 'Hospital_Introduction_History') {
+
+                    $state.go('app.tvAdmin.History', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalHonours
+                if(branch.data.type == 'Hospital_Introduction_Honours') {
+
+                    $state.go('app.tvAdmin.Honours', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //MedicalEquipment
+                if(branch.data.type == 'Hospital_Introduction_MedicalEquipment') {
+
+                    $state.go('app.tvAdmin.Equipment', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //conditions and terms
+                if(branch.data.type == 'Hospital_Introduction_Notes') {
+
+                    $state.go('app.tvAdmin.Notes', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //Food
+                if(branch.data.type == 'Hospital_Food') {
+
+                    $state.go('app.tvAdmin.Food', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalAround
+                if(branch.data.type == 'Hospital_Guide_Around') {
+
+                    $state.go('app.tvAdmin.Around', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalScenic
+                if(branch.data.type == 'Hospital_Guide_Scenic') {
+
+                    $state.go('app.tvAdmin.Scenic', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalCanteen
+                if(branch.data.type == 'Hospital_Guide_Canteen') {
+
+                    $state.go('app.tvAdmin.Canteen', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //HospitalPublicArea
+                if(branch.data.type == 'Hospital_Guide_PublicArea') {
+
+                    $state.go('app.tvAdmin.PublicArea', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+                //RehabilitationDistrict
+                if(branch.data.type == 'Hospital_Guide_RehabilitationDistrict') {
+
+                    $state.go('app.tvAdmin.RehabilitationDistrict', {moduleId: branch.data.moduleId, label: branch.label});
+                    self.changeMenuInfo();
+                }
+
+
+
                 // MainMenu_THJ_SecondMenu
                 if(branch.data.type == 'MainMenu_THJ_SecondMenu'
                     || branch.data.type == 'MainMenu_SX_SecondMenu'
@@ -18238,10 +18331,10 @@
                                 var cen = {};
                                 cen.name=self.styleList[i].Name[util.langStyle()];
                                 cen.id=self.styleList[i].ID;
+                                cen.url=self.styleList[i].URL;
                                 self.stylename[i] = cen;
                             }
                         }
-                        console.log(self.stylename);
                         self.choseStyle = self.stylename[0];
                     } else if(data.rescode == '401'){
                         alert('访问超时，请重新登录');
@@ -18257,8 +18350,8 @@
 
             }
             
-            self.changeShowPic = function () {
-                
+            self.changeShowPic = function (style) {
+                self.styleImg = style.url
             }
 
             self.getMenuInfo = function() {
@@ -20032,6 +20125,97 @@
                         alert('连接服务器出错');
                     }).finally(function (value) {
                         self.loading = false;
+                    });
+                }
+
+            }
+        ])
+
+    // 医护信息展示分区的配置
+    .controller('DocNurSetController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
+            function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
+                console.log('DocNurSetController')
+                var self = this;
+                self.selectOptions=["仅显示相应分区信息","显示所有分区信息"]
+                self.init = function() {
+                    self.viewId = $stateParams.moduleId;
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.editLangs = util.getParams('editLangs');
+                    self.getInfo();
+                }
+
+                self.getInfo = function() {
+                    self.loading = true;
+                    var data = JSON.stringify({
+                        action: "getConfigureInfo",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        viewID: Number(self.viewId)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('commonview', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.info = data.data;
+                            if(self.info.ShowAll == 0){
+                                self.setOption = '仅显示相应分区信息'
+                            }else {
+                                self.setOption = '显示所有分区信息'
+                            }
+
+
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert('服务器出错');
+                        deferred.reject();
+                    }).finally(function(e) {
+                        self.loading = false;
+                    });
+                }
+
+
+                self.save = function() {
+                    if(self.setOption == '仅显示相应分区信息'){
+                        self.showall = 0;
+                    }else {
+                        self.showall = 1;
+                    }
+
+                    self.saving = true;
+
+                    var data = JSON.stringify({
+                        action: "update",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        viewID: self.viewId - 0,
+                        data: {
+                            "showAll": self.showall
+                        }
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('commonview', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('保存成功');
+                            $state.reload();
+                        } else {
+                            alert('保存失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert('服务器出错');
+                    }).finally(function(e) {
+                        self.saving = false;
                     });
                 }
 
