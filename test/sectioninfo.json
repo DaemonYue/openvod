@@ -4,12 +4,12 @@
   "data": {
       "sectionInfo":
           {
-              "":1,
+              "section":1,
               "HotelID":1,
-              "Name":{"zh-CN":"上海门店"},
+              "Name":{"zh-CN":"五官科"},
               "Gallery":null,
               "LogoURL":null,
-              "Description":null,
+              "Description":null
 
           }
   }

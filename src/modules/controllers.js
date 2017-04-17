@@ -332,14 +332,14 @@
                                     }
                                     params.total(data.data.total);
                                     return data.data.devlist;
-                                } else if (msg.rescode == '401') {
+                                } else if (data.tata.rescode == '401') {
                                     alert('访问超时，请重新登录');
                                     $location.path("pages/login.html");
                                 } else {
                                     alert(data.rescode + ' ' + data.errInfo);
                                 }
 
-                            }, function errorCallback(data, status, headers, config) {
+                            }, function errorCallback(response) {
                                 alert(response.status + ' 服务器出错');
                             }).finally(function(value) {
                                 self.loading = false;
@@ -368,8 +368,11 @@
                         url: util.getApiUrl('devinfo', '', 'server'),
                         data: data
                     }).then(function successCallback(data, status, headers, config) {
+                        console.log(data);
                         if (data.data.rescode == '200') {
                             self.form.total = data.data.total;
+                            console.log(self.form.total);
+                            console.log(self.form.total);
                             self.form.online = data.data.online;
                         } else if (msg.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -403,7 +406,7 @@
                                 "token": util.getParams("token"),
                                 "lang": self.langStyle,
                                 "Online": self.form.Online,
-                                "SectionID": self.form.SectionID,
+                                "SectionID": self.form.sectionID,
                                 "RoomID": self.form.RoomID
                             }
                             var paramsUrl = params.url();
@@ -428,7 +431,7 @@
                                     alert(data.rescode + ' ' + data.errInfo);
                                 }
 
-                            }, function errorCallback(data, status, headers, config) {
+                            }, function errorCallback(response) {
                                 alert(response.status + ' 服务器出错');
                             }).finally(function(value) {
                                 self.loading = false;
@@ -439,15 +442,15 @@
 
                 // 获取某分区终端状态 总数目
                 self.getSectionDevNum = function(ID) {
-                    self.idd = ID;
                    // self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
                     self.form.sectionID = ID;
+
                     self.getSectionDevList();
                     var data = {
                         "action": "getDevNum",
                         "token": util.getParams("token"),
                         "lang": self.langStyle,
-                        "SectionID": self.form.SectionID
+                        "SectionID": self.form.sectionID
                     }
 
                     data = JSON.stringify(data);
@@ -1924,8 +1927,8 @@
             }
         ])
 
-        .controller('hotelRoomController', ['$scope', '$http', '$stateParams', '$state', 'util',
-            function ($scope, $http, $stateParams, $state, util) {
+        .controller('hotelRoomController', ['$q', '$scope', '$http', '$stateParams', '$state', 'util',
+            function ($q, $scope, $http, $stateParams, $state, util) {
                 var self = this;
                 var lang;
                 self.init = function () {
@@ -1951,13 +1954,13 @@
                               self.noData = true;
                             }
                             else {
-                              if($stateParams.hotelId) {
+                             /* if($stateParams.hotelId) {
                                 $state.go('app.hotelRoom.room', {hotelId: $stateParams.hotelId}) 
                               }  
                               else {
                                 $state.go('app.hotelRoom.room', {hotelId: self.hotels[0].ID}) 
                               }
-                               
+                               */
                             }
                         } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -1970,6 +1973,49 @@
                     }).finally(function (e) {
                         self.loadingHotelInfo = false;
                     });
+                }
+
+                self.getSectionsInfo = function (id) {
+                    self.idd = id ;
+                    console.log(self.idd);
+                    var deferred = $q.defer();
+                    self.loading1 = true;
+                    var data = JSON.stringify({
+                        action: "getSectionList",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        hotelID: Number(id)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.section = {};
+                            if(data.sectionList){
+                                self.seclist = data.sectionList;
+                            }
+                            deferred.resolve();
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                            deferred.reject();
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                        deferred.reject();
+                    }).finally(function (e) {
+                        self.loading = false;
+                    });
+                    return deferred.promise;
+                }
+
+                self.showSections = function (id) {
+
                 }
             }
         ])
@@ -2027,6 +2073,338 @@
                         self.loadingHotelInfo = false;
                     });
                 }
+
+                /**
+                 * 获取客房列表
+                 */
+                self.search = function () {
+
+                    var searchName = "";
+                    if (self.searchName) {
+                        searchName = self.searchName;
+                    }
+                    var data = JSON.stringify({
+                        action: "getAllRoomInfo",
+                        token: util.getParams('token'),
+                        lang: lang,
+                        HotelID: Number(self.hotelId),
+                        page: 1,
+                        per_page: 10000,
+                        bookStartDate: util.getToday(),
+                        bookEndDate: util.getTomorrow()
+                    })
+                    self.loading = true;
+                    self.noData = false;
+
+                    return $http({
+                        method: 'POST',
+                        url: util.getApiUrl('room', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var msg = response.data;
+                        if (msg.rescode == '200') {
+                            self.rooms = msg.roomsInfo;
+                            // return msg.roomsInfo;
+                        } else if (msg.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取数据出错，' + msg.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function () {
+                        self.loading = false;
+                    });
+                }
+
+                self.RAChanged = function (index) {
+                    var roomObj = self.rooms[index];
+                    if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
+                        || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
+                        || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
+                        roomObj.RoomAvailable = 0;
+                        alert("未设置房间价格或数量，请设好后重试");
+                        return false;
+                    } else {
+                        var roomId = roomObj.ID,
+                            roomAvailable = roomObj.RoomAvailable
+                        var data = JSON.stringify({
+                            action: "setRoomAvailable",
+                            token: util.getParams('token'),
+                            lang: lang,
+                            roomID: roomId,
+                            RoomAvailable: roomAvailable == true ? 1 : 0
+                        })
+                        self.loading = true;
+
+                        $http({
+                            method: 'POST',
+                            url: util.getApiUrl('room', '', 'server'),
+                            data: data
+                        }).then(function successCallback(response) {
+                            var msg = response.data;
+                            if (msg.rescode == '200') {
+                            } else if (msg.rescode == '401') {
+                                alert('访问超时，请重新登录');
+                                $location.path("pages/login.html");
+                            } else {
+                                alert('操作失败，' + msg.errInfo);
+                            }
+                        }, function errorCallback(response) {
+                            alert(response.status + ' 服务器出错');
+                        }).finally(function () {
+                            self.loading = false;
+                        });
+                    }
+                }
+
+                self.hotelEdit = function () {
+                    $scope.app.maskParams = {'hotelId': self.hotelId, 'hotelInfo': self.hotel};
+                    $scope.app.showHideMask(true,'pages/hotelEdit.html');
+                }
+
+                self.roomAdd = function () {
+                    $scope.app.maskParams = {'hotelId': self.hotelId};
+                    $scope.app.showHideMask(true,'pages/roomAdd.html');
+                }
+
+                self.roomEdit = function (roomId) {
+                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                    $scope.app.showHideMask(true,'pages/roomEdit.html');
+                }
+
+                self.roomEditPrice = function (roomId) {
+                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                    $scope.app.showHideMask(true,'pages/roomEditPrice.html');
+                }
+
+                self.roomEditNum = function (roomId) {
+                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                    $scope.app.showHideMask(true,'pages/roomEditNum.html');
+                }
+            }
+        ])
+
+        .controller('doctornurseController', ['$scope', '$http', '$stateParams', '$translate', '$location', 'util', 'NgTableParams',
+            function ($scope, $http, $stateParams, $translate, $location, util, NgTableParams) {
+                var self = this;
+                var lang;
+
+                self.init = function () {
+                    lang = util.langStyle();
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.sectionId = $stateParams.secId;
+                    self.hotelId = $stateParams.hotelId;
+                  //  self.getSctionInfo();
+                    self.getHotelInfo();
+                    self.getSectionInfo();
+                    self.getSectionTags();
+                };
+
+                /**
+                 * 获取酒店信息
+                 */
+                self.getHotelInfo = function () {
+                    self.loadingHotelInfo = true;
+                    var data = JSON.stringify({
+                        action: "getHotel",
+                        token: util.getParams('token'),
+                        lang: lang,
+                        HotelID: Number(self.hotelId)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('hotelroom', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.hotel = {};
+                            self.hotel.Imgs = data.data.Gallery;
+                            self.hotel.Tags = data.data.Features;
+                            self.hotel.Name = data.data.Name;
+                            self.hotel.Address = data.data.Address;
+                            self.hotel.Description = data.data.Description;
+                            self.hotel.LocationX = data.data.LocationX;
+                            self.hotel.LocationY = data.data.LocationY;
+                            self.hotel.LogoImg = data.data.LogoURL;
+                            self.hotel.CityName = data.data.CityName;
+                            self.hotel.AdminPhoneNum = data.data.AdminPhoneNum;
+                            self.hotel.ViewURL = data.data.ViewURL;
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.loadingHotelInfo = false;
+                    });
+                }
+                /**
+                 * 获取标签信息
+                 */
+
+                self.getSectionTags = function () {
+                    var data = JSON.stringify({
+                        action: "getSectionInfoClass",
+                        token: util.getParams('token'),
+                        lang: lang,
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('section', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            self.tags=data.data.sectionInfoClass;
+                            if(self.tags){
+                                for(var i=0;i<self.tags.length;i++){
+                                    self.tags.state = false
+                                }
+                                self.tags[0].state = true;
+                            }
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.loadingSectionInfo = false;
+                    });
+
+
+                };
+
+
+                /**
+                 * 获取分区信息
+                 */
+                self.getSectionInfo = function () {
+                    self.loadingSectionInfo = true;
+                    var data = JSON.stringify({
+                        action: "getHotel",
+                        token: util.getParams('token'),
+                        lang: lang,
+                        SectionID: Number(self.sectionId)
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('', 'sectioninfo.json', 'local'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            var sectioninfo = data.data.sectionInfo;
+                            self.section = {};
+                            self.section.Imgs = sectioninfo.Gallery;
+                            self.section.Name = sectioninfo.Name;
+                            self.section.Description = sectioninfo.Description;
+                            self.section.LogoImg = sectioninfo.LogoURL;
+                            self.section.ViewURL = sectioninfo.ViewURL;
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $location.path("pages/login.html");
+                        } else {
+                            alert('读取信息失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.loadingSectionInfo = false;
+                    });
+                };
+
+                self.changTagStyle = function (tag) {
+                    switch (tag.ID) {
+                        case 1 :
+                        case 2 :
+                            self.typestyle = 1;   //医护信息
+                            self.getDoctorInfo(self.sectionId,tag.ID);
+                            break;
+                        case 3:
+                            self.typestyle = 2;
+                            break;
+                        default:
+                            break;
+                    }
+                    if(self.tags){
+                        for(var i=0;i<self.tags.length;i++){
+                              if(self.tags[i].ID == tag.ID){
+                                  self.tags[i].state = true;
+                              }else {
+                                  self.tags[i].state = false;
+                              }
+                        }
+                    }
+                };
+
+                /*------获取医生护士的信息-------------*/
+                self.getDoctorInfo = function (secId,type) {
+                    self.tableParams = new NgTableParams(
+                        {
+                            page: 1,
+                            count: 15,
+                            url: ''
+                        },
+                        {
+                            counts: false,
+                            getData: function(params) {
+                                var paramsUrl = params.url();
+
+                                var data = JSON.stringify({
+                                    "token": util.getParams('token'),
+                                    "action": "getPersonalInfoBySection",
+                                    "lang": util.langStyle(),
+                                    "sectionID": secId,
+                                    "type": type,
+                                    "page": paramsUrl.page - 0,
+                                    "per_page": paramsUrl.count - 0
+                                });
+                                self.loading = true;
+                                self.noData = false;
+                                return $http({
+                                    method: 'POST',
+                                    url: util.getApiUrl('personalInfo', '', 'server'),
+                                    data: data
+                                }).then(function successCallback(response) {
+                                    var data = response.data;
+                                    console.log(data);
+                                    if (data.rescode == '200') {
+                                        if(data.total == 0) {
+                                            self.noData = true;
+                                        }
+                                        params.total(data.total);
+                                        self.personal_info = data.data.personal_info;
+                                        if(self.personal_info){
+                                            for(var i=0;i<self.personal_info.length;i++){
+                                                self.personal_info[i].num = i+1;
+                                            }
+                                        }
+                                        return self.personal_info;
+                                    } else if(data.rescode == '401'){
+                                        alert('访问超时，请重新登录');
+                                        $state.go('login');
+                                    } else{
+                                        alert('获取信息失败，' + data.errInfo);
+                                    }
+                                }, function errorCallback(response) {
+                                    alert('连接服务器出错');
+                                }).finally(function (value) {
+                                    self.loading = false;
+                                });
+                            }
+                        }
+                    );
+                }
+
 
                 /**
                  * 获取客房列表

@@ -25,8 +25,8 @@
 */
 @font-face {
   font-family: "Ionicons";
-  src: url("../fonts/ionicons.eot?v=2.0.1");
-  src: url("../fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../fonts/ionicons.woff?v=2.0.1") format("woff"), url("../fonts/ionicons.woff") format("woff"), url("../fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
+  src: url("../../dist/fonts/ionicons.eot?v=2.0.1");
+  src: url("../../dist/fonts/ionicons.eot?v=2.0.1#iefix") format("embedded-opentype"), url("../../dist/fonts/ionicons.ttf?v=2.0.1") format("truetype"), url("../../dist/fonts/ionicons.woff?v=2.0.1") format("woff"), url("../../dist/fonts/ionicons.woff") format("woff"), url("../../dist/fonts/ionicons.svg?v=2.0.1#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -9174,10 +9174,10 @@ a.button {
 
 .button.disabled,
 .button[disabled] {
-  opacity: .4;
+  opacity: 0.4;
   cursor: default !important;
-  pointer-events: none; }
-
+  pointer-events: none;
+}
 /**
  * Button Bar
  * --------------------------------------------------
@@ -9504,7 +9504,7 @@ a.button {
 /* will trigger the flex-direction to */
 /* change to column and add some margin */
 /* to any columns in the row for clearity */
-///*
+/*
 @media (max-width: 567px) {
   .responsive-sm {
     -webkit-box-direction: normal;

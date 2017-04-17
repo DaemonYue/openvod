@@ -1,0 +1,145 @@
+<!-- 酒店/客房管理>右侧部分 -->
+<div ng-controller="doctornurseController as dcnur" ng-init="dcnur.init()" class="content-right">
+    <!--loading-->
+    <div ng-show="dcnur.loadingHotelInfo">loading...</div>
+    <!-- 标题 -->
+    <h4>{{dcnur.hotel.Name[dcnur.defaultLangCode]}}--{{dcnur.section.Name[dcnur.defaultLangCode]}}</h4>
+    <hr>
+    <!--tab-->
+    <ul class="nav nav-tabs">
+        <li ng-repeat="tag in dcnur.tags" ng-class="{'active':(tag.state)}" class="cursor-pointer" ng-init="$first && dcnur.changTagStyle(dcnur.tags[0])">
+            <a ng-click="dcnur.changTagStyle(tag)">{{tag.Name[dcnur.defaultLangCode]}}</a>
+        </li>
+       <!-- <li ng-class="{'active':(dcnur.tags.sectionInfo)}" class="cursor-pointer">
+            <a ng-click="dcnur.tags.sectionInfo=false; dcnur.roomList=true;">{{'ROOM_LIST' | translate}}</a>
+        </li>-->
+       <!-- <li ng-class="{'active':(dcnur.hotelInfo)}" class="cursor-pointer">
+            <a role="tab" ng-click="dcnur.tags.sectionInfo=true; dcnur.roomList=false;">酒店信息</a>
+        </li>-->
+    </ul>
+<!--     tab-content start-->
+    <div class="tab-content">
+        <!-- 标签页: 分区信息 -->
+        <div class="tab-pane" ng-class="{'in active':(dcnur.typestyle==1)}">
+            <!--订单列表-->
+            <table ng-table="dcnur.tableParams" class="table table-hover table-condensed">
+                <tr ng-repeat="row in $data">
+                    <!--订单号-->
+                    <td title="'序号'">
+                        {{row.num}}
+                    </td>
+                    <!--订单号-->
+
+                    <!--下单时间-->
+                    <td title="'照片'">
+                        <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{row.PicURL}})"></div>
+                    </td>
+                    <!--下单时间-->
+
+
+                    <!--客房信息－酒店名-->
+                    <td title="'姓名'">
+                        {{row.Name[dcnur.defaultLangCode]}}
+                    </td>
+                    <!--客房信息－酒店名-->
+
+            <!--        客房信息－客房名
+                    <td title="'科室'">
+                        {{row.RoomTypeName[dcnur.defaultLangCode]}}
+                    </td>
+                    客房信息－客房名-->
+
+                    <!--入住信息－入住时间-->
+                    <td title="'职称'">
+                        {{row.Professor[dcnur.defaultLangCode]}}
+                    </td>
+                    <!--入住信息－入住时间-->
+
+                    <!--入住信息－离店时间-->
+                    <td title="'特长'">
+                        {{row.Skill[dcnur.defaultLangCode]}}
+                    </td>
+                    <!--入住信息－离店时间-->
+
+
+                    <!--操作-->
+                    <td title="'操作'">
+                        <!--详情-->
+                        <a ng-click="dcnur.gotoDetail(row)">详情</a>
+                        <!--详情-->
+                    </td>
+                    <!--操作-->
+
+                </tr>
+            </table>
+            <!-- 列表loading -->
+            <div ng-show="dcnur.loading">loading...</div>
+            <!-- 列表无数据 -->
+            <div ng-show="dcnur.noData">无数据</div>
+            <!--订单列表 end-->
+        </div>
+        <!-- 标签页: 客房列表 -->
+        <div class="tab-pane padding-bottom-72" ng-class="{'in active':(dcnur.typestyle==2)}">
+            <!-- 按钮: 添加客房 -->
+            <a ng-click="dcnur.roomAdd()" class="button button-light">
+                <i class="icon ion-ios-plus-outline"></i> {{'ROOM_ADD' | translate}}
+            </a>
+            <!-- 列表: 客房列表 -->
+            <div ng-init="dcnur.search()" class="wf-container">
+                <!-- 容器: 瀑布流容器 -->
+                <div class="wf-box box" ng-repeat="item in dcnur.rooms">
+                    <div class="panel panel-default">
+                        <!-- 内容: 客房图 -->
+                        <div class="box-top-img" ng-style="{'background-image': 'url({{item.imgs[0].ImageURL}})'}">
+                        </div>
+                        <!-- 操作：编辑 -->
+                        <i ng-click="dcnur.roomEdit(item.ID)" class="icon ion-gear-a box-corner-btn"></i>
+                        <div class="panel-body">
+                            <!-- 内容: 客房名 -->
+                            <h4>{{item.RoomTypeName[dcnur.defaultLangCode]}}</h4>
+                            <!-- 内容: 标签 -->
+                            <p class=""><ng-repeat ng-repeat="tag in item.tags">{{tag.TagName[dcnur.defaultLangCode]}} </ng-repeat></p>
+                        </div>
+                        <ul class="list-group">
+                            <!-- 操作：改价格 -->
+                            <li class="list-group-item btn" ng-click="dcnur.roomEditPrice(item.ID)">
+                                价格
+                                <span class="pull-right">
+                                    {{item.LowPrice/100 | currency : '￥'}} ~ {{item.TopPrice/100 | currency : '￥'}}
+                                    <i class="icon ion-ios-arrow-right"></i>
+                                </span>
+                            </li>
+                            <!-- 操作：改数量 -->
+                            <li class="list-group-item btn" ng-click="dcnur.roomEditNum(item.ID)">
+                                房间数
+                                <span class="pull-right">
+                                    {{item.roomMinNum }}间 ~ {{item.roomMaxNum}}间
+                                    <i class="icon ion-ios-arrow-right"></i>
+                                </span>
+                            </li>
+
+                            <!-- 内容: 今天可订 --><!--
+                            <li class="list-group-item col-xs-6">
+                                今日可订{{item.AvailableNumCurrent}}间
+                            </li> -->
+                            <!-- 内容: 今天剩余 --><!--
+                            <li class="list-group-item col-xs-6 text-right">
+                                剩余6间
+                            </li>
+                            <div class="clearfix"></div> -->
+                            <!-- 操作: 启用开关 -->
+                            <li class="list-group-item">
+                                上线
+                                <toggle ng-model="item.RoomAvailable" ng-change="dcnur.RAChanged($index)" class="pull-right"></toggle>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+<!--     tab-content end-->
+</div>

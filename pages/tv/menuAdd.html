@@ -35,7 +35,15 @@
                         </ng-if>
                     </ng-repeat>
                 </div>
-                <!--菜单名称（多语言）-->
+                <!--菜单名称（多语言）
+                <!--菜单样式选项-->
+                <div class="form-group">
+                    <label>菜单样式</label>
+                    <select  ng-model="tvMenuAdd.choseStyle" ng-change="tvMenuAdd.changeShowPic()" ng-options="x.name for x in tvMenuAdd.stylename" class="form-control">
+                    </select>
+                </div>
+                <!--菜单样式选项-->
+
                 <!--菜单排序-->
                 <div class="form-group ">
                     <label>顺序</label>

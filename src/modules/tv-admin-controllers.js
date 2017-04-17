@@ -440,7 +440,8 @@
                     || branch.data.type == 'MainMenu_LiFeng_SecondMenu'
                     || branch.data.type == 'MainMenu_Yeste_SecondMenu'
                     || branch.data.type == 'MainMenu_SiMaTai_SecondMenu'
-                    || branch.data.type == 'MainMenu_Samsung_SecondMenu') {
+                    || branch.data.type == 'MainMenu_Samsung_SecondMenu'
+                    || branch.data.type == 'MainMenu_Hospital_SecondMenu') {
                     $state.go('app.tvAdmin.blank', {label: branch.label});
                     self.changeMenuInfo();
                 }
@@ -18202,12 +18203,61 @@
                 // 获取编辑多语言信息
                 self.editLangs = util.getParams('editLangs');
 
+
                 // 获取菜单类型名称、风格图
                 self.getMenuInfo();
 
                 // 初始化菜单图片和高亮图片
                 self.imgs1 = new Imgs([], true);
                 self.imgs2 = new Imgs([], true);
+
+                //获取菜单样式
+                self.getMenuStyle();
+                self.stylename=[]
+                
+            };
+
+            self.getMenuStyle = function(){
+                var data = JSON.stringify({
+                    "token": util.getParams('token'),
+                    "action": "getMainMenuTemplate",
+                    "lang": util.langStyle()
+                });
+                self.loading = true;
+
+                $http({
+                    method: 'POST',
+                    url: util.getApiUrl('', 'menuStyle.json', 'local'),
+                    data: data
+                }).then(function successCallback(response) {
+                    var data = response.data;
+                    if (data.rescode == '200') {
+                        self.styleList = data.data.menuStyle;
+                        if(self.styleList){
+                            for(var i=0;i<self.styleList.length;i++){
+                                var cen = {};
+                                cen.name=self.styleList[i].Name[util.langStyle()];
+                                cen.id=self.styleList[i].ID;
+                                self.stylename[i] = cen;
+                            }
+                        }
+                        console.log(self.stylename);
+                        self.choseStyle = self.stylename[0];
+                    } else if(data.rescode == '401'){
+                        alert('访问超时，请重新登录');
+                        $state.go('login');
+                    } else{
+                        alert('加载菜单示意信息失败，' + data.errInfo);
+                    }
+                }, function errorCallback(response) {
+                    alert('连接服务器出错');
+                }).finally(function (value) {
+                    self.loading = false;
+                });
+
+            }
+            
+            self.changeShowPic = function () {
                 
             }
 

@@ -1,0 +1,19 @@
+{
+  "data":{
+    "menuStyle":[
+      {
+        "Name":{"zh-CN":"左右"},
+        "ID":1,
+        "URL":"../dist/imgs/bg.jpg"
+      },
+      {
+        "Name":{"zh-CN":"板块"},
+        "ID":1,
+        "URL":"../dist/imgs/bg-01.jpg"
+      }
+    ]
+
+  },
+  "rescode": "200",
+  "errInfo": "None"
+}

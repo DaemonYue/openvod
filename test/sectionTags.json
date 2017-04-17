@@ -1,0 +1,22 @@
+{
+  "data":{
+    "tags":[
+      {
+        "Name":{"zh-CN":"分区信息"},
+        "ID":1,
+        "type":3
+      },
+      {
+        "Name":{"zh-CN":"医生信息"},
+        "ID":2,
+        "type":1
+      }
+
+
+
+    ]
+
+  },
+  "rescode": "200",
+  "errInfo": "None"
+}

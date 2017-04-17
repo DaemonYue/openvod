@@ -4,10 +4,16 @@
 	<!-- 左侧菜单 -->
     <div class="nav-left ">
         <ul class="nav nav-stacked nav-left-content">
-            <li class="nav-header" ui-sref-active="active" ui-sref="app.hotelRoom.room({hotelId:{{item.ID}}})" ng-repeat="item in hotelRoom.hotels" >
-            	<a class="theme-hover">
+            <li class="nav-header" ng-repeat="item in hotelRoom.hotels" ui-sref-active="active">
+            	<a class="theme-hover" ng-click="hotelRoom.getSectionsInfo(item.ID)" >
             		{{item.Name[hotelRoom.defaultLangCode]}}
             	</a>
+                <ul  class="nav-stacked  panel-collapse" ng-if="hotelRoom.idd == item.ID" style="padding:0">
+                    <li ng-repeat="sec in hotelRoom.seclist"  style="list-style: none" ui-sref-active="active" ui-sref="app.hotelRoom.section({hotelId:{{item.ID}},secId:{{sec.ID}}})">
+                        <a ng-hide="true"></a>
+                        <button class="btn-default" style="width: 100%;border: 0" >{{sec.Name[hotelRoom.defaultLangCode]}}</button>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
