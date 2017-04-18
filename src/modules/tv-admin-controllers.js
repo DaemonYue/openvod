@@ -114,7 +114,8 @@
                 if(menuLv != 1) {
                     parentMenu = {
                         id: my_tree.get_selected_branch().data.menuId, 
-                        name: my_tree.get_selected_branch().label
+                        name: my_tree.get_selected_branch().label,
+                        type: my_tree.get_selected_branch().data.showType
                     }
                 }
                 $scope.app.maskParams = {'menuLv': menuLv, 'parentMenu': parentMenu};
@@ -123,6 +124,7 @@
 
             // 菜单点击
             $scope.my_tree_handler = function(branch) {
+                //console.log(branch.data.showType);
                 console && console.log('select ' + branch.label, 'type: '+branch.data.type);
 
                 // welcome
@@ -437,14 +439,14 @@
                 //NurseInfo
                 if(branch.data.type == 'Hospital_Section_PersonalInfo_Nurse') {
 
-                    $state.go('app.tvAdmin.NurseInfo', {moduleId: branch.data.moduleId, label: branch.label});
+                    $state.go('app.tvAdmin.NurseInfo', {moduleId: branch.data.moduleId, label: branch.label, type: branch.data.showType});
                     self.changeMenuInfo();
                 }
 
                 //ExpertInfo
                 if(branch.data.type == 'Hospital_Section_PersonalInfo_Expert') {
 
-                    $state.go('app.tvAdmin.ExpertInfo', {moduleId: branch.data.moduleId, label: branch.label});
+                    $state.go('app.tvAdmin.ExpertInfo', {moduleId: branch.data.moduleId, label: branch.label, type: branch.data.showType});
                     self.changeMenuInfo();
                 }
 
@@ -18305,7 +18307,6 @@
                 self.imgs2 = new Imgs([], true);
 
                 //获取菜单样式
-                self.getMenuStyle();
                 self.stylename=[]
                 
             };
@@ -18313,27 +18314,29 @@
             self.getMenuStyle = function(){
                 var data = JSON.stringify({
                     "token": util.getParams('token'),
-                    "action": "getMainMenuTemplate",
+                    "action": "getSecondPageType",
                     "lang": util.langStyle()
                 });
                 self.loading = true;
 
                 $http({
                     method: 'POST',
-                    url: util.getApiUrl('', 'menuStyle.json', 'local'),
+                    url: util.getApiUrl('section', '', 'server'),
                     data: data
                 }).then(function successCallback(response) {
                     var data = response.data;
                     if (data.rescode == '200') {
-                        self.styleList = data.data.menuStyle;
+                        console.log(data);
+                        self.styleList = data.data.secondPageType;
                         if(self.styleList){
                             for(var i=0;i<self.styleList.length;i++){
                                 var cen = {};
                                 cen.name=self.styleList[i].Name[util.langStyle()];
                                 cen.id=self.styleList[i].ID;
-                                cen.url=self.styleList[i].URL;
+                                cen.url=self.styleList[i].PicURL;
                                 self.stylename[i] = cen;
                             }
+                            self.styleImg=self.stylename[0].url;
                         }
                         self.choseStyle = self.stylename[0];
                     } else if(data.rescode == '401'){
@@ -18369,7 +18372,9 @@
                 }).then(function successCallback(response) {
                     var data = response.data;
                     if (data.rescode == '200') {
-                        self.styleImg = data.data.SamplePic;
+                       // self.styleImg = data.data.SamplePic;
+                        self.getMenuStyle();
+
                     } else if(data.rescode == '401'){
                         alert('访问超时，请重新登录');
                         $state.go('login');
@@ -18389,6 +18394,7 @@
             }
 
             self.save = function() {
+                console.log(self.choseStyle.id)
 
                 //菜单图片必填验证
                 if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
@@ -18414,7 +18420,8 @@
                       "IconSize":self.imgs1.data[0].fileSize,
                       "IconFocusURL":self.imgs2.data[0].src,
                       "IconFocusSize":self.imgs2.data[0].fileSize,
-                      "Seq":self.seq  //在一级菜单中的排序号，从1开始
+                      "Seq":self.seq,  //在一级菜单中的排序号，从1开始
+                      "ShowType":self.choseStyle.id
                     },
                     "lang": util.langStyle()
                 })
@@ -18583,8 +18590,11 @@
                 // 非一级菜单时，parentMenu
                 if(self.menuLv != 1) {
                     self.parentMenu = $scope.app.maskParams.parentMenu;
+                    self.type = self.parentMenu.type
                     // self.parentMenu.id
                     // self.parentMenu.name
+                }else {
+                    self.type = ''
                 }
 
                 // 获取编辑多语言信息
@@ -18603,7 +18613,8 @@
                 var data = JSON.stringify({
                     "token": util.getParams('token'),
                     "action": "getCommonTemplate",
-                    "lang": util.langStyle()
+                    "lang": util.langStyle(),
+                    "type": self.type
                 });
                 self.loading = true;
                 // 获取模块类型名称、风格图
@@ -18615,7 +18626,10 @@
                     var data = response.data;
                     if (data.rescode == '200') {
                         self.modules = data.data;
-                        self.module = self.modules[0].Name;
+                        console.log(self.modules.length)
+                        if(self.modules.length == 0){
+                            self.module = self.modules[0].Name;
+                        }
                     } else if(data.rescode == '401'){
                         alert('访问超时，请重新登录');
                         $state.go('login');

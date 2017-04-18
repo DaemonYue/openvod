@@ -1,10 +1,200 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!-- 酒店/客房管理>右侧部分 -->
+<div ng-controller="hospitalController as hospital" ng-init="hospital.init()" class="content-right">
+    <!--loading-->
+    <div ng-show="hospital.loadingHotelInfo">loading...</div>
+    <!-- 标题 -->
+    <h4>{{hospital.hotel.Name[hospital.defaultLangCode]}}</h4>
+    <hr>
+    <!--tab-->
+    <ul class="nav nav-tabs">
+        <li ng-repeat="tag in hospital.tags" ng-class="{'active':(tag.state)}" class="cursor-pointer" ng-init="$first && hospital.changTagStyle(hospital.tags[0])">
+            <a ng-click="hospital.changTagStyle(tag)">{{tag.Name[hospital.defaultLangCode]}}</a>
+        </li>
+        <!-- <li ng-class="{'active':(hospital.tags.sectionInfo)}" class="cursor-pointer">
+             <a ng-click="hospital.tags.sectionInfo=false; hospital.roomList=true;">{{'ROOM_LIST' | translate}}</a>
+         </li>-->
+        <!-- <li ng-class="{'active':(hospital.hotelInfo)}" class="cursor-pointer">
+             <a role="tab" ng-click="hospital.tags.sectionInfo=true; hospital.roomList=false;">酒店信息</a>
+         </li>-->
+    </ul>
+    <ui-view></ui-view>
+    <!--     tab-content start-->
+    <!--<div class="tab-content">
+        &lt;!&ndash; 标签页: 分区信息 &ndash;&gt;
+        <div class="tab-pane" ng-class="{'in active':(hospital.typestyle==4)}">
+            &lt;!&ndash;订单列表&ndash;&gt;
+            <table ng-table="hospital.tableParams" class="table table-hover table-condensed">
+                <tr ng-repeat="row in $data">
+                    &lt;!&ndash;订单号&ndash;&gt;
+                    <td title="'序号'">
+                        {{row.num}}
+                    </td>
+                    &lt;!&ndash;订单号&ndash;&gt;
+
+                    &lt;!&ndash;下单时间&ndash;&gt;
+                    <td title="'照片'">
+                        <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{row.PicURL}})"></div>
+                    </td>
+                    &lt;!&ndash;下单时间&ndash;&gt;
+
+
+                    &lt;!&ndash;客房信息－酒店名&ndash;&gt;
+                    <td title="'姓名'">
+                        {{row.Name[hospital.defaultLangCode]}}
+                    </td>
+                    &lt;!&ndash;客房信息－酒店名&ndash;&gt;
+
+                    &lt;!&ndash;        客房信息－客房名
+                            <td title="'科室'">
+                                {{row.RoomTypeName[hospital.defaultLangCode]}}
+                            </td>
+                            客房信息－客房名&ndash;&gt;
+
+                    &lt;!&ndash;入住信息－入住时间&ndash;&gt;
+                    <td title="'职称'">
+                        {{row.Professor[hospital.defaultLangCode]}}
+                    </td>
+                    &lt;!&ndash;入住信息－入住时间&ndash;&gt;
+
+                    &lt;!&ndash;入住信息－离店时间&ndash;&gt;
+                    <td title="'特长'">
+                        {{row.Skill[hospital.defaultLangCode]}}
+                    </td>
+                    &lt;!&ndash;入住信息－离店时间&ndash;&gt;
+
+
+                    &lt;!&ndash;操作&ndash;&gt;
+                    <td title="'操作'">
+                        &lt;!&ndash;详情&ndash;&gt;
+                        <a ng-click="hospital.gotoDetail(row)">详情</a>
+                        &lt;!&ndash;详情&ndash;&gt;
+                    </td>
+                    &lt;!&ndash;操作&ndash;&gt;
+
+                </tr>
+            </table>
+            &lt;!&ndash; 列表loading &ndash;&gt;
+            <div ng-show="hospital.loading">loading...</div>
+            &lt;!&ndash; 列表无数据 &ndash;&gt;
+            <div ng-show="hospital.noData">无数据</div>
+            &lt;!&ndash;订单列表 end&ndash;&gt;
+        </div>
+        &lt;!&ndash; 标签页: 亿元荣耀 &ndash;&gt;
+        <div class="tab-pane padding-bottom-72" ng-class="{'in active':(hospital.typestyle==5)}">
+            &lt;!&ndash; 按钮: 添加客房 &ndash;&gt;
+            <a class="button button-light" ng-click="hospital.addHonourPic()">
+                <i class="icon ion-ios-plus-outline"></i>
+                添加图片
+            </a>
+            &lt;!&ndash;添加直播频道按钮&ndash;&gt;
+            &lt;!&ndash;直播列表&ndash;&gt;
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>图片</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pic in hospital.pics track by $index">
+                    <td>{{pic.Seq}}</td>
+                    <td>
+                        <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.SourceData[hospital.defaultLangCode].PicURL}})"></div>
+                    </td>
+                    <td>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.edit($index)">编辑</a>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.del(pic.ID, $index)">删除</a>
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+        &lt;!&ndash; 标签页: 亿元荣耀 &ndash;&gt;
+        <div class="tab-pane padding-bottom-72" ng-class="{'in active':(hospital.typestyle==6)}">
+            &lt;!&ndash; 按钮: 添加客房 &ndash;&gt;
+            <a class="button button-light" ng-click="hospital.addHonourPic()">
+                <i class="icon ion-ios-plus-outline"></i>
+                添加图片
+            </a>
+            &lt;!&ndash;添加直播频道按钮&ndash;&gt;
+            &lt;!&ndash;直播列表&ndash;&gt;
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>图片</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pic in hospital.pics track by $index">
+                    <td>{{pic.Seq}}</td>
+                    <td>
+                        <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.SourceData[hospital.defaultLangCode].PicURL}})"></div>
+                    </td>
+                    <td>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.edit($index)">编辑</a>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.del(pic.ID, $index)">删除</a>
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+        &lt;!&ndash; 标签页: 亿元荣耀 &ndash;&gt;
+        <div class="tab-pane padding-bottom-72" ng-class="{'in active':(hospital.typestyle==7)}">
+            &lt;!&ndash; 按钮: 添加客房 &ndash;&gt;
+            <a class="button button-light" ng-click="hospital.addHonourPic()">
+                <i class="icon ion-ios-plus-outline"></i>
+                添加图片
+            </a>
+            &lt;!&ndash;添加直播频道按钮&ndash;&gt;
+            &lt;!&ndash;直播列表&ndash;&gt;
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>图片</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pic in hospital.pics track by $index">
+                    <td>{{pic.Seq}}</td>
+                    <td>
+                        <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.SourceData[hospital.defaultLangCode].PicURL}})"></div>
+                    </td>
+                    <td>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.edit($index)">编辑</a>
+                        &lt;!&ndash;编辑按钮&ndash;&gt;
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                        <a class="" ng-click="hospital.del(pic.ID, $index)">删除</a>
+                        &lt;!&ndash;删除按钮&ndash;&gt;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+
+    </div>-->
+    <!--     tab-content end-->
+</div>

@@ -79,6 +79,14 @@
                     url: '/Hospital?hotelId',
                     templateUrl: 'pages/hospitalTags.html'
                 })
+                .state('app.hotelRoom.Hospital.honour', {
+                    url: '/honour?tagId',
+                    templateUrl: 'pages/hospitalHonour.html'
+                })
+                .state('app.hotelRoom.Hospital.history', {
+                    url: '/history?tagId',
+                    templateUrl: 'pages/hospitalHistory.html'
+                })
                 .state('app.hotelOrderList', {
                     url: '/hotelOrderList',
                     templateUrl: 'pages/orders/hotelOrderList.html'
@@ -165,7 +173,8 @@
                                                 "imgSize": preData[i].IconSize,
                                                 "focusImg": preData[i].IconFocusURL,
                                                 "focusImgSize": preData[i].IconFocusSize,
-                                                "seq": preData[i].Seq
+                                                "seq": preData[i].Seq,
+                                                "showType": preData[i].ShowType
                                               }
                                         });
                                         // 添加二级菜单
@@ -186,7 +195,9 @@
                                                         "imgSize": secondMenu[j].IconSize,
                                                         "focusImg":secondMenu[j].IconFocusURL,
                                                         "focusImgSize": secondMenu[j].IconFocusSize,
-                                                        "seq": secondMenu[j].Seq
+                                                        "seq": secondMenu[j].Seq,
+                                                        "showType": preData[i].ShowType
+
                                                     }
                                                 })
                                             }
@@ -760,7 +771,7 @@
 
                 // 护士信息
                 .state('app.tvAdmin.NurseInfo', {
-                    url: '/NurseInfo?moduleId&label',
+                    url: '/NurseInfo?moduleId&label&type',
                     templateUrl: 'pages/tv/docNurSet.html',
                     resolve: {
                         resB: ['resA', 'resWelcome', function(resA, resWelcome){
@@ -771,7 +782,7 @@
 
                 // 医生信息
                 .state('app.tvAdmin.ExpertInfo', {
-                    url: '/ExpertInfo?moduleId&label',
+                    url: '/ExpertInfo?moduleId&label&type',
                     templateUrl: 'pages/tv/docNurSet.html',
                     resolve: {
                         resB: ['resA', 'resWelcome', function(resA, resWelcome){
@@ -931,6 +942,7 @@
             uploadUrl: 'http://mres.cleartv.cn/upload',
             testUrl: 'test/',
             test: false,
+            hospitalTagNow: -1
         })
 
 })();
