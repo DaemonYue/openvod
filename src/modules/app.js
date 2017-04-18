@@ -75,6 +75,10 @@
                     url: '/section?hotelId&secId',
                     templateUrl: 'pages/doctornurse.html'
                 })
+                .state('app.hotelRoom.Hospital', {
+                    url: '/Hospital?hotelId',
+                    templateUrl: 'pages/hospitalTags.html'
+                })
                 .state('app.hotelOrderList', {
                     url: '/hotelOrderList',
                     templateUrl: 'pages/orders/hotelOrderList.html'
