@@ -87,6 +87,38 @@
                     url: '/history?tagId',
                     templateUrl: 'pages/hospitalHistory.html'
                 })
+                .state('app.hotelRoom.Hospital.equipment', {
+                    url: '/equipment?tagId',
+                    templateUrl: 'pages/hospitalEquipment.html'
+                })
+                .state('app.hotelRoom.Hospital.notes', {
+                    url: '/notes?tagId',
+                    templateUrl: 'pages/hospitalNotes.html'
+                })
+                .state('app.hotelRoom.Hospital.food', {
+                    url: '/food?tagId',
+                    templateUrl: 'pages/hospitalFood.html'
+                })
+                .state('app.hotelRoom.Hospital.around', {
+                    url: '/around?tagId',
+                    templateUrl: 'pages/hospitalAround.html'
+                })
+                .state('app.hotelRoom.Hospital.scenic', {
+                    url: '/scenic?tagId',
+                    templateUrl: 'pages/hospitalScenic.html'
+                })
+                .state('app.hotelRoom.Hospital.canteen', {
+                    url: '/canteen?tagId',
+                    templateUrl: 'pages/hospitalCanteen.html'
+                })
+                .state('app.hotelRoom.Hospital.publicarea', {
+                    url: '/publicarea?tagId',
+                    templateUrl: 'pages/hospitalPublicArea.html'
+                })
+                .state('app.hotelRoom.Hospital.recure', {
+                    url: '/recure?tagId',
+                    templateUrl: 'pages/hospitalRecure.html'
+                })
                 .state('app.hotelOrderList', {
                     url: '/hotelOrderList',
                     templateUrl: 'pages/orders/hotelOrderList.html'

@@ -1,0 +1,37 @@
+<div class="tab-pane padding-bottom-72" ng-controller="hospitalNotesController as notes" ng-init="notes.init()">
+    <!-- 按钮: 添加客房 -->
+    <a class="button button-light" ng-click="notes.add()">
+        <i class="icon ion-ios-plus-outline"></i>
+        添加图片
+    </a>
+    <!--添加直播频道按钮-->
+    <!--直播列表-->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>图片</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pic in notes.pics track by $index">
+            <td>{{pic.Seq}}</td>
+            <td>
+                <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.SourceData[notes.defaultLangCode].PicURL}})"></div>
+            </td>
+            <td>
+                <!--编辑按钮-->
+                <a class="" ng-click="notes.edit($index)">编辑</a>
+                <!--编辑按钮-->
+                <!--删除按钮-->
+                <a class="" ng-click="notes.del(pic.ID, $index)">删除</a>
+                <!--删除按钮-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
