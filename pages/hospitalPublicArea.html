@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="tab-pane" ng-controller="hospitalPublicAreaController as pubarea" ng-init="pubarea.init()">
+    <!--添加直播频道按钮-->
+    <a class="button button-light" ng-click="pubarea.add()">
+        <i class="icon ion-ios-plus-outline"></i>
+        添加图文
+    </a>
+    <!--添加直播频道按钮-->
+    <!--直播列表-->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>图片</th>
+            <th>名称</th>
+            <th>开放时间</th>
+            <th>位置</th>
+            <th>面积</th>
+            <th>简介</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pic in pubarea.pics track by $index">
+            <td>{{pic.Seq}}</td>
+            <td>
+                <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.PicURL}})"></div>
+            </td>
+            <td>{{pic.Title[pubarea.defaultLangCode]}}</td>
+            <td>{{pic.OpenTime[pubarea.defaultLangCode]}}</td>
+            <td>{{pic.Location[pubarea.defaultLangCode]}}</td>
+            <td>{{pic.Area[pubarea.defaultLangCode]}}</td>
+            <td style="max-width: 491px">{{pic.Introduction[pubarea.defaultLangCode]}}</td>
+            <td>
+                <!--编辑按钮-->
+                <a class="" ng-click="pubarea.edit($index)">编辑</a>
+                <!--编辑按钮-->
+                <!--删除按钮-->
+                <a class="" ng-click="pubarea.del(pic.ID, $index)">删除</a>
+                <!--删除按钮-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 列表loading -->
+    <div ng-show="hospital.loading">loading...</div>
+    <!-- 列表无数据 -->
+    <div ng-show="hospital.noData">无数据</div>
+    <!--订单列表 end-->
+</div>

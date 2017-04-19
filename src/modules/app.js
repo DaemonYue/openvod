@@ -107,17 +107,9 @@
                     url: '/scenic?tagId',
                     templateUrl: 'pages/hospitalScenic.html'
                 })
-                .state('app.hotelRoom.Hospital.canteen', {
-                    url: '/canteen?tagId',
-                    templateUrl: 'pages/hospitalCanteen.html'
-                })
                 .state('app.hotelRoom.Hospital.publicarea', {
                     url: '/publicarea?tagId',
                     templateUrl: 'pages/hospitalPublicArea.html'
-                })
-                .state('app.hotelRoom.Hospital.recure', {
-                    url: '/recure?tagId',
-                    templateUrl: 'pages/hospitalRecure.html'
                 })
                 .state('app.hotelOrderList', {
                     url: '/hotelOrderList',
