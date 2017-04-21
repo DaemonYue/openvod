@@ -19249,37 +19249,43 @@
                 if(self.preData.length != 7){
                     var s = confirm("菜单数为7个时，终端的显示效果最佳，您要继续提交吗？")
                     if(s){
-                        var data = JSON.stringify({
-                            "token": util.getParams('token'),
-                            "action": "submit",
-                            "type": "All",
-                            "lang": util.langStyle()
-                        })
-                        self.saving = true;
-                        alert('提交版本命令已发送，这需要大约一分钟的时间');
-                        $http({
-                            method: 'POST',
-                            url: util.getApiUrl('tvuiversion', '', 'server'),
-                            data: data
-                        }).then(function successCallback(response) {
-                            var data = response.data;
-                            if (data.rescode == '200') {
-                                alert('版本提交成功');
-                                $state.reload();
-                            } else if(data.rescode == '401'){
-                                alert('访问超时，请重新登录');
-                                $state.go('login');
-                            } else{
-                                alert('提交版本失败' + data.errInfo);
-                            }
-                        }, function errorCallback(response) {
-                            alert('连接服务器出错');
-                        }).finally(function (value) {
-                            self.saving = false;
-                        });
+                        self.submitVision();
                     }
+                }else{
+                    self.submitVision();
                 }
 
+            }
+
+            self.submitVision = function () {
+                var data = JSON.stringify({
+                    "token": util.getParams('token'),
+                    "action": "submit",
+                    "type": "All",
+                    "lang": util.langStyle()
+                })
+                self.saving = true;
+                alert('提交版本命令已发送，这需要大约一分钟的时间');
+                $http({
+                    method: 'POST',
+                    url: util.getApiUrl('tvuiversion', '', 'server'),
+                    data: data
+                }).then(function successCallback(response) {
+                    var data = response.data;
+                    if (data.rescode == '200') {
+                        alert('版本提交成功');
+                        $state.reload();
+                    } else if(data.rescode == '401'){
+                        alert('访问超时，请重新登录');
+                        $state.go('login');
+                    } else{
+                        alert('提交版本失败' + data.errInfo);
+                    }
+                }, function errorCallback(response) {
+                    alert('连接服务器出错');
+                }).finally(function (value) {
+                    self.saving = false;
+                });
             }
 
         }
