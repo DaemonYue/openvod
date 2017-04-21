@@ -652,7 +652,7 @@
 
             self.gotoDetail = function(info) {
                 $scope.app.maskParams = {'orderId': info.ID, 'orderInfo': info};
-                $scope.app.showHideMask(true,'pages/orders/shopOrderDetail.html');
+                $scope.app.showHideMask(true,'pages/dorcNurseDetail.html');
             }
         }
     ])

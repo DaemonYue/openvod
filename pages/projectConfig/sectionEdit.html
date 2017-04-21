@@ -26,7 +26,62 @@
                         <input type="text" class="form-control" ng-model="secEdit.sectionName[lang.code]" />
                     </div>
                 </ng-repeat>
+                <!--模块图片-->
+                <div class="form-group">
+                    <label>模块图标</label>
+                    <!--修改模块图片按钮-->
+                    <input id="upload1" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload1" />
+                    <a ng-click="secEdit.clickUpload('upload1')">上传</a>
+                    <a id="hidenUpload1" style="display: none;" ng-click="secEdit.imgs1.uploadFile('myFile', secEdit.imgs1)"></a>
+                    <!--修改模块图片按钮-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-thumbnail ng-scope" ng-repeat="img in secEdit.imgs1.data" style="background-image: url({{img.src}})">
+                                <!--进度条-->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%"></div>
+                                    <!-- -1代表失败 -->
+                                    <!-- 大小： {{img.fileSize}}
+                                    剩余： {{img.leftSize}} -->
+                                </div>
+                                <!--/progress-->
+                            </div>
+                            <!--/form-thumbnail-->
+                        </div>
+                        <!--/col-xs-12-->
+                    </div>
+                    <!--/row-->
+                    <!--/模块图片-->
+                </div>
 
+                <!--模块高亮图片-->
+                <div class="form-group">
+                    <label>模块高亮图标</label>
+                    <!--修改模块高亮图片按钮-->
+                    <input id="upload2" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload2" />
+                    <a ng-click="secEdit.clickUpload('upload2')">上传</a>
+                    <br>
+                    <a id="hidenUpload2" style="display: none;" ng-click="secEdit.imgs2.uploadFile('myFile', secEdit.imgs2)"></a>
+                    <!--修改模块高亮图片按钮-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-thumbnail ng-scope"  ng-repeat="img in secEdit.imgs2.data" style="background-image: url({{img.src}})">
+                                <!--进度条-->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%"></div>
+                                    <!-- -1代表失败 -->
+                                    <!-- 大小： {{img.fileSize}}
+                                    剩余： {{img.leftSize}} -->
+                                </div>
+                                <!--/progress-->
+                            </div>
+                            <!--/form-thumbnail-->
+                        </div>
+                        <!--/col-xs-12-->
+                    </div>
+                    <!--/row-->
+                    <!--/模块高亮图片-->
+                </div>
             </form>
         </div>
         <!--body end-->

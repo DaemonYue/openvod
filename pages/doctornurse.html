@@ -3,7 +3,7 @@
     <!--loading-->
     <div ng-show="dcnur.loadingHotelInfo">loading...</div>
     <!-- 标题 -->
-    <h4>{{dcnur.hotel.Name[dcnur.defaultLangCode]}}--{{dcnur.section.Name[dcnur.defaultLangCode]}}</h4>
+    <h4>{{dcnur.hotel.Name[dcnur.defaultLangCode]}}--{{dcnur.sectionName[dcnur.defaultLangCode]}}</h4>
     <hr>
     <!--tab-->
     <ul class="nav nav-tabs">
@@ -87,13 +87,13 @@
             <!-- 列表: 客房列表 -->
             <div  class="wf-container">
                 <!-- 容器: 瀑布流容器 -->
-                <div class="wf-box box" ng-repeat="item in dcnur.section">
+                <div class="wf-box box" ng-repeat="item in dcnur.section track by $index">
                     <div class="panel panel-default">
                         <!-- 内容: 客房图 -->
                         <div class="box-top-img" ng-style="{'background-image': 'url({{item.PicURL}})'}">
                         </div>
                         <!-- 操作：编辑 -->
-                        <i ng-click="dcnur.roomEdit(item.ID)" class="icon ion-gear-a box-corner-btn"></i>
+                        <i ng-click="dcnur.secInfoEdit(item.ID, $index)" class="icon ion-gear-a box-corner-btn"></i>
                         <div class="panel-body">
                             <!-- 内容: 客房名 -->
                             <h4>{{item.Title[dcnur.defaultLangCode]}}</h4>

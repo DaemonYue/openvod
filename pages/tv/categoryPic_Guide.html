@@ -1,30 +1,30 @@
-<div ng-controller="hospitalFoodListController as food" ng-init="food.init()">
+<div ng-controller="tvCategoryPicListController as tvPicList" ng-init="tvPicList.init()">
     <!-- loading -->
-    <div ng-show="food.loading">loading...</div>
+    <div ng-show="tvPicList.loading">loading...</div>
     <!-- loading -->
 
     <!-- 分类标签 -->
     <ul class="nav nav-tabs">
-        <li ng-repeat="cate in food.info track by $index" class="cursor-pointer {{$index == food.cateIndex ? 'active': ''}}">
-            <a ng-click="food.loadPics($index)">{{cate.Title[food.defaultLangCode]}}</a>
+        <li ng-repeat="cate in tvPicList.info track by $index" class="cursor-pointer {{$index == tvPicList.cateIndex ? 'active': ''}}">
+            <a ng-click="tvPicList.loadPics($index)">{{cate.Title[tvPicList.defaultLangCode]}}</a>
         </li>
 
         <li class="cursor-pointer">
-            <a ng-click="food.addCategory()">
+            <a ng-click="tvPicList.addCategory()">
                 <i class="icon ion-android-add-circle"></i> 分类添加
             </a>
         </li>
     </ul>
     <!-- 按钮: 编辑分类 -->
-    <a ng-if="food.info.length > 0" ng-click="food.editCate()" class="button button-light">
+    <a ng-if="tvPicList.info.length > 0" ng-click="tvPicList.editCate()" class="button button-light">
         <i class="icon ion-ios-compose-outline"></i> 编辑分类
     </a>
     <!-- 按钮: 删除分类 -->
-    <a ng-if="food.info.length > 0" ng-disabled="food.cateDeleting" ng-click="food.delCate()" class="button button-light">
+    <a ng-if="tvPicList.info.length > 0" ng-disabled="tvPicList.cateDeleting" ng-click="tvPicList.delCate()" class="button button-light">
         <i class="icon ion-ios-trash-outline"></i> 删除分类
     </a>
     <!--添加图片按钮-->
-    <a ng-if="food.info.length > 0" class="button button-light" ng-click="food.addPic()">
+    <a ng-if="tvPicList.info.length > 0" class="button button-light" ng-click="tvPicList.addPic()">
         <i class="icon ion-ios-plus-outline"></i>
         添加图片
     </a>
@@ -35,32 +35,26 @@
         <tr>
             <th>序号</th>
             <th>图片</th>
-            <th>标题</th>
-            <th>详情</th>
-            <th>价格</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="pic in food.info[food.cateIndex].sub track by $index">
+        <tr ng-repeat="pic in tvPicList.info[tvPicList.cateIndex].sub track by $index">
             <td>{{pic.Seq}}</td>
             <td>
                 <div class="form-thumbnail form-thumbnail-sm" style="background-image: url({{pic.PicURL}})"></div>
             </td>
-            <td>{{pic.Title[food.defaultLangCode]}}</td>
-            <td>{{pic.Text[food.defaultLangCode]}}</td>
-            <td>{{pic.Price[food.defaultLangCode]}}</td>
             <td>
                 <!--编辑按钮-->
-                <a class="" ng-click="food.editPic($index)">编辑</a>
+                <a class="" ng-click="tvPicList.editPic($index)">编辑</a>
                 <!--编辑按钮-->
                 <!--删除按钮-->
-                <a class="" ng-click="food.delPic($index)">删除</a>
+                <a class="" ng-click="tvPicList.delPic($index)">删除</a>
                 <!--删除按钮-->
             </td>
         </tr>
         </tbody>
     </table>
-    <div ng-if="food.info[food.cateIndex].sub.length == 0">空</div>
+    <div ng-if="tvPicList.info[tvPicList.cateIndex].sub.length == 0">空</div>
     <!--图文列表 结束-->
 </div>

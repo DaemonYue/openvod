@@ -1,0 +1,110 @@
+<div ng-controller="doctorInfoController as docinfo" ng-init="docinfo.init()" class="modal-dialog">
+    <div class="modal-content">
+        <!--header-->
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" ng-click="docinfo.cancel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h5 class="modal-title">详情</h5>
+        </div>
+        <!--header end-->
+        <!--body-->
+        <div class="modal-body">
+            <div ng-show="loading">loading...</div>
+            <!-- form -->
+            <form id="docinfoForm" name="docinfoForm" ng-submit="docinfoForm.$valid && docinfo.save()" role="form">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label >分区名 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="docinfo.Info.num"  disabled/>
+                    </div>
+                </div>
+                <!--客房名-->
+                <ng-repeat ng-repeat="lang in docinfo.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>姓名 {{lang.name}}</label>
+                        <input type="text" class="form-control"  ng-model="docinfo.Info.Name[lang.code]"  disabled/>
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>姓名 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="docinfo.Info.Name[lang.code]" disabled/>
+                    </div>
+                </ng-repeat>
+                <!--/客房名-->
+                <!--客房图-->
+                <div class="form-group">
+                    <label>照片</label>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- 图 -->
+                            <div ng-repeat="img in docinfo.imgs.data" class="form-thumbnail" style="background-image: url({{img.src}});height: 270px!important;width: 185px!important;">
+                                <!-- 进度条 -->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
+                                    </div>
+                                </div>
+                                <!-- 删除按钮 -->
+
+                            </div>
+                           <!-- &lt;!&ndash; 上传按钮 &ndash;&gt;
+                            <div ng-click="docinfo.clickUpload('upload')" class="form-thumbnail form-thumbnail-creat">
+                                <i class="icon ion-upload"></i> 上传图片
+                                <input id="upload" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload" />
+                                <a id="hidenUpload" style="display: none;" ng-click="docinfo.imgs.uploadFile('myFile', docinfo.imgs)"></a>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <!--/客房图-->
+                <ng-repeat ng-repeat="lang in docinfo.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>职称 {{lang.name}}</label>
+                        <input type="text" class="form-control"  ng-model="docinfo.Info.Professor[lang.code]"  disabled/>
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>职称 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="docinfo.Info.Professor[lang.code]" disabled/>
+                    </div>
+                </ng-repeat>
+                <ng-repeat ng-repeat="lang in docinfo.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>特长 {{lang.name}}</label>
+                        <input type="text" class="form-control"  ng-model="docinfo.Info.Skill[lang.code]"  disabled/>
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>特长 {{lang.name}}</label>
+                        <input type="text" class="form-control" ng-model="docinfo.Info.Skill[lang.code]" disabled/>
+                    </div>
+                </ng-repeat>
+
+                <!--/标签-->
+                <!-- 客房介绍摘要 -->
+                <!-- <ng-repeat ng-repeat="lang in docinfo.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>客房介绍摘要 {{lang.name}}</label>
+                        <input class="form-control" rows="1" ng-model="docinfo.room.Roomsummary[lang.code]" required placeholder="（必填）" maxlength="50">
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>客房介绍摘要 {{lang.name}}</label>
+                        <input class="form-control" rows="1" ng-model="docinfo.room.Roomsummary[lang.code]" maxlength="50">
+                    </div>
+                </ng-repeat> -->
+                <!-- /客房介绍摘要 -->
+                <!-- 客房介绍 -->
+                <ng-repeat ng-repeat="lang in docinfo.editLangs">
+                    <div class="form-group" ng-if="lang.default">
+                        <label>详细介绍{{lang.name}}</label>
+                        <textarea ng-trim="false" class="form-control" rows="2" ng-model="docinfo.Info.Introduction[lang.code]" disabled></textarea>
+                    </div>
+                    <div class="form-group" ng-if="lang.default !== true">
+                        <label>详细 {{lang.name}}</label>
+                        <textarea ng-trim="false" class="form-control" rows="2" ng-model="docinfo.Info.Introduction[lang.code]" disabled></textarea>
+                    </div>
+                </ng-repeat>
+                <!-- /客房介绍 -->
+            </form>
+        </div>
+        <!--body end-->
+    </div>
+</div>

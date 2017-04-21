@@ -936,6 +936,40 @@
                     }
                 })
 
+                // 疾病科普
+                .state('app.tvAdmin.DiseaseScience', {
+                    url: '/diseaseIntroduction?moduleId&label',
+                    templateUrl: 'pages/tv/categoryText_DiseaseInfo.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 推荐饮食
+                .state('app.tvAdmin.RecommendDiet', {
+                    url: '/recommendDiet?moduleId&label',
+                    templateUrl: 'pages/tv/simplePicText_recommendDiet.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+                // 出院指南
+                .state('app.tvAdmin.DischargeGuide', {
+                    url: '/dischargeGuide?moduleId&label',
+                    templateUrl: 'pages/tv/categoryPic_Guide.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+
+                        }]
+                    }
+                })
+
+
                 .state('app.tvAdmin.blank', {
                     url: '/blank?label',
                     templateUrl: 'pages/tv/blank.html'

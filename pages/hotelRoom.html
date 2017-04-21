@@ -4,8 +4,8 @@
 	<!-- 左侧菜单 -->
     <div class="nav-left ">
         <ul class="nav nav-stacked nav-left-content">
-            <li class="nav-header" ng-repeat="item in hotelRoom.hotels" ui-sref-active="active"  >
-            	<a class="theme-hover" ng-click="hotelRoom.getSectionsInfo(item.ID)" ui-sref="app.hotelRoom.Hospital({hotelId:{{item.ID}}})">
+            <li class="nav-header" ng-repeat="item in hotelRoom.hotels" ui-sref-active="active" >
+            	<a class="theme-hover" ng-click="hotelRoom.getSectionsInfo(item.ID)">
             		{{item.Name[hotelRoom.defaultLangCode]}}
             	</a>
                 <ul  class="nav-stacked  panel-collapse" ng-if="hotelRoom.idd == item.ID" style="padding:0" >

@@ -9,10 +9,10 @@
     </a>
     <!--添加门店-->
     <ul class="list-group">
-        <li ng-repeat="section in sectionCtrl.list" class="list-group-item">
+        <li ng-repeat="section in sectionCtrl.list track by $index" class="list-group-item">
             {{section.Name[sectionCtrl.defaultLangCode]}}
-            <a ng-click="sectionCtrl.del(section.ID)"  class="btn pull-right">删除</a>
-            <a ng-click="sectionCtrl.edit(section.ID,section.Name)" class="btn pull-right">编辑</a>
+            <a ng-click="sectionCtrl.del(section.ID)"  class="btn pull-right" ng-hide="section.IsOther == 1">删除</a>
+            <a ng-click="sectionCtrl.edit(section.ID, $index)" class="btn pull-right" ng-hide="section.IsOther == 1">编辑</a>
             <br>
         </li>
     </ul>

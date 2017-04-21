@@ -1,4 +1,4 @@
-<div ng-controller="roomEditController as roomEdit" ng-init="roomEdit.init()" class="modal-dialog">
+<div ng-controller="sectionInfoEditController as roomEdit" ng-init="roomEdit.init()" class="modal-dialog">
     <div class="modal-content">
         <!--header-->
         <div class="modal-header">
@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
                 <span class="sr-only">Close</span>
             </button>
-            <h5 class="modal-title">客房详情</h5>
+            <h5 class="modal-title">分区详情</h5>
         </div>
         <!--header end-->
         <!--body-->
@@ -17,18 +17,18 @@
                 <!--客房名-->
                 <ng-repeat ng-repeat="lang in roomEdit.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label for="roomNameCN">客房名 {{lang.name}}</label>
+                        <label for="roomNameCN">分区名 {{lang.name}}</label>
                         <input type="text" class="form-control" id="roomNameCN" placeholder="请输入客房名" ng-model="roomEdit.room.RoomTypeName[lang.code]" required placeholder="（必填）" />
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label for="roomNameEN">客房名 {{lang.name}}</label>
+                        <label for="roomNameEN">分区名 {{lang.name}}</label>
                         <input type="text" class="form-control" id="roomNameEN" placeholder="Enter the name" ng-model="roomEdit.room.RoomTypeName[lang.code]" />
                     </div>
                 </ng-repeat>
                 <!--/客房名-->
                 <!--客房图-->
                 <div class="form-group">
-                    <label>客房图片</label>
+                    <label>图片</label>
                     <small>建议使用宽高16:9、大小200kb以内的图片</small>
                     <div class="row">
                         <div class="col-xs-12">
@@ -52,23 +52,7 @@
                     </div>
                 </div>
                 <!--/客房图-->
-                <!--720酒店全景图地址-->
-                <div class="form-group">
-                    <div class="form-group">
-                        <label>720酒店全景图地址（如无，请不要填任何内容）：</label>
-                        <input type="text" class="form-control" ng-model="roomEdit.room.ViewURL" />
-                    </div>
-                </div>
-                <!--/720酒店全景图地址-->
-                <!--标签-->
-                <div class="form-group">
-                    <label>已选标签</label>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span ng-repeat="tag in roomEdit.tags track by $index" ng-model="roomEdit.ifCheckedTags[$index].checked" uib-btn-checkbox class="tag">{{tag.TagName[roomEdit.defaultLangCode]}}</span>
-                        </div>
-                    </div>
-                </div>
+
                 <!--/标签-->
                 <!-- 客房介绍摘要 -->
                 <!-- <ng-repeat ng-repeat="lang in roomEdit.editLangs">
@@ -85,11 +69,11 @@
                 <!-- 客房介绍 -->
                 <ng-repeat ng-repeat="lang in roomEdit.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label>客房介绍 {{lang.name}}</label>
+                        <label>分区介绍 {{lang.name}}</label>
                         <textarea ng-trim="false" class="form-control" rows="2" ng-model="roomEdit.room.Description[lang.code]" required placeholder="（必填）"></textarea>
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label>客房介绍 {{lang.name}}</label>
+                        <label>分区介绍 {{lang.name}}</label>
                         <textarea ng-trim="false" class="form-control" rows="2" ng-model="roomEdit.room.Description[lang.code]"></textarea>
                     </div>
                 </ng-repeat>

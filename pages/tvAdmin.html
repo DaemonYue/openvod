@@ -194,7 +194,11 @@
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_Scenic'
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_Canteen'
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_PublicArea'
-            || my_tree.get_selected_branch().data.type=='Hospital_Guide_RehabilitationDistrict'">
+            || my_tree.get_selected_branch().data.type=='Hospital_Guide_RehabilitationDistrict'
+
+            || my_tree.get_selected_branch().data.type=='Hospital_Disease_Science'
+            || my_tree.get_selected_branch().data.type=='Hospital_Recommended_Diet'
+            || my_tree.get_selected_branch().data.type=='Hospital_Discharge_Guide'">
             <!-- 标题 -->
             <h4>{{my_tree.get_selected_branch().label}}</h4>
             <hr>
@@ -405,7 +409,11 @@
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_Scenic'
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_Canteen'
             || my_tree.get_selected_branch().data.type=='Hospital_Guide_PublicArea'
-            || my_tree.get_selected_branch().data.type=='Hospital_Guide_RehabilitationDistrict'">
+            || my_tree.get_selected_branch().data.type=='Hospital_Guide_RehabilitationDistrict'
+
+            || my_tree.get_selected_branch().data.type=='Hospital_Disease_Science'
+            || my_tree.get_selected_branch().data.type=='Hospital_Recommended_Diet'
+            || my_tree.get_selected_branch().data.type=='Hospital_Discharge_Guide'">
             <div class="tab-pane padding-bottom-72" ng-class="{'in active':(tvAdmin.tab==1)}">
                 <ui-view></ui-view>
             </div>
