@@ -8,13 +8,6 @@
       "themeColor":"#fbb03b"
     },
     {
-      "id": 2,
-      "name": "消息插播",
-      "icon": "dist/imgs/app-icon-04.png",
-      "bgColor": "rgb(186,104,4)",
-      "themeColor":"#fbb03b"
-    },
-    {
       "id": 5,
       "name": "TV界面",
       "icon": "dist/imgs/app-icon-06.png",

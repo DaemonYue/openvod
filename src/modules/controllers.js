@@ -246,7 +246,7 @@
                     }).then(function successCallback(data, status, headers, config) {
                         if (data.data.rescode == "200") {
                             self.hotelList = data.data.data;
-                            console.log(self.hotelList);
+                           // console.log(self.hotelList);
                         } else if (data.data.rescode == "401") {
                             alert('访问超时，请重新登录');
                             $state.go('login')
@@ -371,11 +371,10 @@
                         url: util.getApiUrl('devinfo', '', 'server'),
                         data: data
                     }).then(function successCallback(data, status, headers, config) {
-                        console.log(data);
+                       // console.log(data);
                         if (data.data.rescode == '200') {
                             self.form.total = data.data.total;
-                            console.log(self.form.total);
-                            console.log(self.form.total);
+
                             self.form.online = data.data.online;
                         } else if (msg.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -1066,7 +1065,6 @@
                 }
 
                 self.cancel = function () {
-                    console.log('cancel')
                     $scope.app.showHideMask(false);
                 }
 
@@ -1283,7 +1281,6 @@
                 }
 
                 self.cancel = function () {
-                    console.log('cancel')
                     $scope.app.showHideMask(false);
                 }
 
@@ -1321,7 +1318,6 @@
                             "imgSrc": imgSrc
                         }
                     });
-                    console.log(data);
                     self.saving = true;
                     $http({
                         method: 'POST',
@@ -1475,7 +1471,7 @@
                 }
 
                 self.cancel = function () {
-                    console.log('cancel')
+
                     $scope.app.showHideMask(false);
                 };
 
@@ -1597,8 +1593,7 @@
         .controller('categoryAddController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util',
             function ($scope, $state, $http, $stateParams, $filter, util) {
                 console.log('categoryAddController');
-                console.log($stateParams);
-                console.log($scope.app.maskParams);
+
                 var self = this;
                 self.init = function () {
                     self.langStyle = util.langStyle();
@@ -1615,7 +1610,6 @@
                 }
 
                 self.cancel = function () {
-                    console.log('cancel')
                     $scope.app.showHideMask(false);
                 }
 
@@ -2000,7 +1994,11 @@
                                 self.seclist = data.sectionList;
                             }
                             deferred.resolve();
-                            $state.go($state.current.name, {'hotelId': id,'tagId': $stateParams.tagId});
+                            if($state.includes('app.hotelRoom.Hospital')){
+                                $state.go($state.current.name, {'hotelId': id,'tagId': $stateParams.tagId});
+                            }else {
+                                $state.go('app.hotelRoom.Hospital.history', {'hotelId': id,'tagId': $stateParams.tagId});
+                            }
 
                         } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -2022,9 +2020,7 @@
 
                 self.changeToSection = function (hotelid, sectionid) {
                    // $state.go('app.hotelRoom.section', {'hotelId': hotelid, 'secId': sectionid});
-                    console.log(hotelid)
                     $state.go('app.hotelRoom.section', {'hotelId': hotelid, 'secId': sectionid});
-                    console.log("aaaaaaa");
                 }
 
             }
@@ -2508,7 +2504,7 @@
                 }
 
                 self.secInfoAdd = function () {
-                    console.log(self.sectionId);
+
                     $scope.app.maskParams = {'sectionId': self.sectionId};
                     $scope.app.showHideMask(true,'pages/roomAdd.html');
                 }
@@ -2549,7 +2545,7 @@
                 self.alerts = [];
                 self.init = function () {
                     self.Info = $scope.app.maskParams.info;
-                    console.log(self.Info);
+
 
                     self.imgs = new Imgs([{"ImageURL": self.Info.PicURL, "ImageSize": self.Info.IconSize}], true);
                     self.imgs.initImgs();
@@ -2712,7 +2708,7 @@
                             }
                         );
                     }
-                    console.log(imgs)
+
 
                     if (imgs.length == 0) {
                         alert('请上传图片')
@@ -2728,7 +2724,7 @@
                         data: {
                             Text: self.room.Description,
                             Title: self.room.RoomTypeName,
-                            picURL: imgs[0].ImageURL,
+                            PicURL: imgs[0].ImageURL,
                             IconSize: imgs[0].ImageSize
                             // Roomsummary: self.room.Roomsummary
 
@@ -2884,7 +2880,6 @@
                 self.alerts = [];
                 self.init = function () {
                     self.secInfo = $scope.app.maskParams.sectionInfo;
-                    console.log(self.secInfo);
                     self.room = {};
                     self.room.RoomTypeName = self.secInfo.Title;
                     self.imgs = new Imgs([{"ImageURL": self.secInfo.PicURL, "ImageSize": self.secInfo.IconSize}], true);
@@ -2988,9 +2983,8 @@
                             ID: self.secInfo.ID,
                             Text: self.room.Description,
                             Title: self.room.RoomTypeName,
-                            picURL: imgs[0].ImageURL,
+                            PicURL: imgs[0].ImageURL,
                             IconSize: imgs[0].ImageSize,
-                            PicURLRelative: "dasdas"
                             // Roomsummary: self.room.Roomsummary
 
                         }
@@ -3228,7 +3222,7 @@
                                 self.tags[0].state = true;
                             }
                             if($stateParams.tagId) {
-                                console.log($stateParams.tagId);
+
                                 $state.go('app.hotelRoom.Hospital.history', {'tagId': $stateParams.tagId});     //医院历史
                             } else {
                                 $state.go('app.hotelRoom.Hospital.history', {'tagId': self.tags[0].ID});     //医院历史
@@ -3267,7 +3261,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             var sectioninfo = data.data.section_introduction;
-                            console.log(sectioninfo);
+
                             self.section = sectioninfo;
                             //self.section.Imgs = sectioninfo.Gallery;
                             //self.section.Name = sectioninfo.Name;
@@ -3449,7 +3443,7 @@
                 }
 
                 self.secInfoAdd = function () {
-                    console.log(self.sectionId);
+
                     $scope.app.maskParams = {'sectionId': self.sectionId};
                     $scope.app.showHideMask(true,'pages/roomAdd.html');
                 }
@@ -3526,7 +3520,7 @@
                 }
 
                 self.add = function() {
-                    console.log(self.hotelId);
+
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.loadList = self.loadList;
                     $scope.app.showHideMask(true,'pages/hospitalHistoryAdd.html');
@@ -3792,7 +3786,7 @@
                     self.Text = self.picInfo.Text;
                     self.imgs1 = new Imgs([{"ImageURL": self.picInfo.PicURL, "ImageSize": self.picInfo.PicSize}], true);
                     self.imgs1.initImgs();
-                    console.log(self.imgs1);
+
                 }
 
                 self.save = function() {
@@ -3982,7 +3976,7 @@
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
-                    console.log($stateParams.hotelId);
+
                     self.loadList();
                 }
 
@@ -4027,7 +4021,7 @@
                 }
 
                 self.add = function() {
-                    console.log(self.hotelId);
+
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.showHideMask(true,'pages/hospitalEquipmentAdd.html');
                 }
@@ -4048,7 +4042,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
-                            console.log(self.pics)
+
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -4292,7 +4286,7 @@
                     self.Text = self.picInfo.Text;
                     self.imgs1 = new Imgs([{"ImageURL": self.picInfo.PicURL, "ImageSize": self.picInfo.PicSize}], true);
                     self.imgs1.initImgs();
-                    console.log(self.imgs1);
+
                 }
 
                 self.save = function() {
@@ -4600,7 +4594,7 @@
                 }
 
                 self.save = function() {
-                    console.log($state);
+
                     var defaultLang;
                     //频道图片必填验证
                     for(var i=0; i<self.editLangs.length; i++) {
@@ -4630,7 +4624,7 @@
                             "PicSize":self.uplImgs[i].data[0].fileSize
                         }
                     }
-                    console.log(data);
+
                     data = JSON.stringify(data);
                     self.saving = true;
                     $http({
@@ -4858,7 +4852,7 @@
                         var size = self.upImgs[i].data[0].fileSize;
                         data.data[lang] = {"PicURL":url,"PicSize":size}
                     }
-                    console.log(data);
+
                     data = JSON.stringify(data);
                     self.saving = true;
                     // var URL = util.getApiUrl('commonview', '', 'server');
@@ -5053,7 +5047,7 @@
                             // for(var i=0;i<self.pics.length;i++){
                             //     self.defaultLangPic[i] = self.pics[i].SourceData[DFL]
                             // }
-                            console.log(self.pics);
+
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -5146,7 +5140,7 @@
                 }
 
                 self.save = function() {
-                    console.log($state);
+
                     var defaultLang;
                     //频道图片必填验证
                     for(var i=0; i<self.editLangs.length; i++) {
@@ -5176,7 +5170,7 @@
                             "PicSize":self.uplImgs[i].data[0].fileSize
                         }
                     }
-                    console.log(data);
+
                     data = JSON.stringify(data);
                     self.saving = true;
                     $http({
@@ -5404,7 +5398,7 @@
                         var size = self.upImgs[i].data[0].fileSize;
                         data.data[lang] = {"PicURL":url,"PicSize":size}
                     }
-                    console.log(data);
+
                     data = JSON.stringify(data);
                     self.saving = true;
                     // var URL = util.getApiUrl('commonview', '', 'server');
@@ -6206,12 +6200,12 @@
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.cateId = $scope.app.maskParams.cateId;
                     self.info = $scope.app.maskParams.info;
-                    console.log(self.info)
+
                     self.Seq = self.info.Seq;
                     self.Text = self.info.Text;
                     self.Title = self.info.Title;
                     self.Price = self.info.Price;
-                    console.log(self.Price)
+
 
                     // 获取编辑多语言信息
                     self.editLangs = util.getParams('editLangs');
@@ -7052,11 +7046,10 @@
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.cateId = $scope.app.maskParams.cateId;
                     self.info = $scope.app.maskParams.info;
-                    console.log(self.info)
+
                     self.Seq = self.info.Seq;
                     self.Text = self.info.Text;
                     self.Title = self.info.Title;
-                    console.log(self.Price)
 
                     // 获取编辑多语言信息
                     self.editLangs = util.getParams('editLangs');
@@ -7118,7 +7111,7 @@
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
                     self.tagId = $stateParams.tagId;
-                    console.log(self.tagId);
+
 
                     self.loadList();
                 }
@@ -7189,7 +7182,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
-                            console.log(self.pics);
+
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -7215,7 +7208,7 @@
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
-                    console.log(self.tagId);
+
 
                     // 获取编辑多语言信息
                     self.editLangs = util.getParams('editLangs');
@@ -7435,7 +7428,6 @@
 
                 self.setInfo = function () {
 
-                    console.log(self.picInfo)
                     self.Seq = self.picInfo.Seq;
                     self.Title = self.picInfo.Title;
                     self.Location = self.picInfo.Location;
@@ -7444,7 +7436,7 @@
                     self.Text = self.picInfo.Introduction;
                     self.imgs1 = new Imgs([{"ImageURL": self.picInfo.PicURL, "ImageSize": self.picInfo.PicSize}], true);
                     self.imgs1.initImgs();
-                    console.log(self.imgs1);
+
                 }
 
                 self.save = function() {
@@ -7683,7 +7675,7 @@
                 }
 
                 self.add = function() {
-                    console.log(self.hotelId);
+
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.loadList = self.loadList;
                     $scope.app.showHideMask(true,'pages/hospitalScenicAdd.html');
@@ -7948,7 +7940,7 @@
                     self.Text = self.picInfo.Text;
                     self.imgs1 = new Imgs([{"ImageURL": self.picInfo.PicURL, "ImageSize": self.picInfo.PicSize}], true);
                     self.imgs1.initImgs();
-                    console.log(self.imgs1);
+
                 }
 
                 self.save = function() {
