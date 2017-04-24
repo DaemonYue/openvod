@@ -2083,7 +2083,7 @@
                 /**
                  * 获取客房列表
                  */
-                self.search = function () {
+                /*self.search = function () {
 
                     var searchName = "";
                     if (self.searchName) {
@@ -2122,9 +2122,9 @@
                     }).finally(function () {
                         self.loading = false;
                     });
-                }
+                }*/
 
-                self.RAChanged = function (index) {
+                /*self.RAChanged = function (index) {
                     var roomObj = self.rooms[index];
                     if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
                         || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
@@ -2163,7 +2163,7 @@
                             self.loading = false;
                         });
                     }
-                }
+                }*/
 
                 self.hotelEdit = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'hotelInfo': self.hotel};
@@ -2172,6 +2172,7 @@
 
                 self.roomAdd = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId};
+                    $scope.app.maskParams.getList = self.getSectionsInfo;
                     $scope.app.showHideMask(true,'pages/roomAdd.html');
                 }
 
@@ -2504,9 +2505,10 @@
                 }
 
                 self.secInfoAdd = function () {
-
+                    $scope.app.maskParams.getList = self.getSectionInfo;
                     $scope.app.maskParams = {'sectionId': self.sectionId};
                     $scope.app.showHideMask(true,'pages/roomAdd.html');
+
                 }
 
               /*  self.roomEdit = function (roomId) {
@@ -2517,6 +2519,7 @@
                 self.secInfoEdit = function (roomId,index) {
                     $scope.app.maskParams = {'hotelId': self.hotelId};
                     $scope.app.maskParams.sectionInfo = self.section[index];
+                    $scope.app.maskParams.getList = self.getSectionInfo;
 
                     $scope.app.showHideMask(true,'pages/roomEdit.html');
                 }
@@ -2890,6 +2893,8 @@
                 }
 
                 self.cancel = function () {
+                    $scope.app.maskParams.getList();
+
                     $scope.app.showHideMask(false);
                 }
 
@@ -3776,6 +3781,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -3983,6 +3989,8 @@
                 self.edit = function(index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
+                    $scope.app.maskParams.getList = self.loadList;
+
                     $scope.app.maskParams.picInfo = self.pics[index];
                     $scope.app.showHideMask(true,'pages/hospitalEquipmentEdit.html');
                 }
@@ -4021,6 +4029,7 @@
                 }
 
                 self.add = function() {
+                    $scope.app.maskParams.getList = self.loadList;
 
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.showHideMask(true,'pages/hospitalEquipmentAdd.html');
@@ -4276,6 +4285,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -4320,7 +4330,8 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('修改成功');
-                            $state.reload();
+                            //$scope.app.maskParams.getList();
+                            self.cancel();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -4518,6 +4529,7 @@
                 self.addHonourPic = function () {
                     //console.log(self.hotelId);
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
+                    $scope.app.maskParams.getList = self.loadHospitalHonoursList;
                     $scope.app.showHideMask(true,'pages/hospitalHonoursAdd.html');
                 }
 
@@ -4525,6 +4537,7 @@
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.picInfo = self.pics[index];
+                    $scope.app.maskParams.getList = self.loadHospitalHonoursList;
                     $scope.app.showHideMask(true,'pages/hospitalHonoursEdit.html');
                 }
 
@@ -4620,9 +4633,10 @@
                     for(var i=0;i<self.editLangs.length; i++) {
                         var lang = self.editLangs[i].code;
                         data.data[0].SourceData[lang] = {
-                            "PicURL":self.uplImgs[i].data[0].src,
-                            "PicSize":self.uplImgs[i].data[0].fileSize
+                                "PicURL":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].src:'',
+                                "PicSize":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].fileSize:''
                         }
+
                     }
 
                     data = JSON.stringify(data);
@@ -4636,7 +4650,8 @@
                         if (data.rescode == '200') {
                             alert('添加成功');
                             $scope.app.showHideMask(false);
-                            $state.go('app.hotelRoom.Hospital.honour', {'tagId': self.tagId});
+                            $scope.app.maskParams.getList();
+
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -4804,6 +4819,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -4866,7 +4882,7 @@
                         if (data.rescode == '200') {
                             alert('修改成功');
                             $scope.app.showHideMask(false);
-                            $state.go('app.hotelRoom.Hospital.honour', {'tagId': self.tagId});
+                            $scope.app.maskParams.getList();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -5064,6 +5080,7 @@
                 self.add = function () {
                     //console.log(self.hotelId);
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
+                    $scope.app.maskParams.getList = self.loadHospitalHonoursList;
                     $scope.app.showHideMask(true,'pages/hospitalNotesAdd.html');
                 }
 
@@ -5071,6 +5088,8 @@
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.picInfo = self.pics[index];
+                    $scope.app.maskParams.getList = self.loadHospitalHonoursList;
+
                     $scope.app.showHideMask(true,'pages/hospitalNotesEdit.html');
                 }
 
@@ -5166,8 +5185,8 @@
                     for(var i=0;i<self.editLangs.length; i++) {
                         var lang = self.editLangs[i].code;
                         data.data[0].SourceData[lang] = {
-                            "PicURL":self.uplImgs[i].data[0].src,
-                            "PicSize":self.uplImgs[i].data[0].fileSize
+                            "PicURL":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].src:'',
+                            "PicSize":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].fileSize:''
                         }
                     }
 
@@ -5182,7 +5201,7 @@
                         if (data.rescode == '200') {
                             alert('添加成功');
                             $scope.app.showHideMask(false);
-                            $state.go('app.hotelRoom.Hospital.notes', {'tagId': self.tagId});
+                            $scope.app.maskParams.getList();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -5412,7 +5431,7 @@
                         if (data.rescode == '200') {
                             alert('修改成功');
                             $scope.app.showHideMask(false);
-                            $state.go('app.hotelRoom.Hospital.notes', {'tagId': self.tagId});
+                            $scope.app.maskParams.getList();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -5825,6 +5844,7 @@
                  * @method cancel
                  */
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -6218,6 +6238,8 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
+
                     $scope.app.showHideMask(false);
                 }
 
@@ -6802,6 +6824,7 @@
                  * @method cancel
                  */
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -7058,6 +7081,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -7423,6 +7447,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -7930,6 +7955,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -8209,7 +8235,7 @@
                 }
 
                 self.save = function () {
-                    var imgs = [];
+                   /* var imgs = [];
                     for (var i = 0; i < self.imgs1.data.length; i++) {
                         imgs[i] = {};
                         imgs[i].Seq = i;
@@ -8232,7 +8258,7 @@
                         if (self.ifCheckedHotelTags[i].checked) {
                             tags.push({"ID": self.ifCheckedHotelTags[i].ID});
                         }
-                    }
+                    }*/
                     self.saving = true;
                     var data = JSON.stringify({
                         action: "editHotel",
@@ -8246,14 +8272,14 @@
                             "CityName": self.hotel.CityName,
                             "LocationX": self.hotel.LocationX,
                             "LocationY": self.hotel.LocationY,
-                            "LogoURL": self.imgs2.data[0].src,
-                            "Features": tags,
+                            "LogoURL": '',
+                            "Features": [],
                             "TelePhone": null,
                             "Address": self.hotel.Address,
                             "Description": self.hotel.Description,
                             "OfficePhone": null,
                             "AdminPhoneNum": self.hotel.AdminPhoneNum,
-                            "Gallery": imgs
+                            "Gallery": []
                         }
                     })
                     $http({

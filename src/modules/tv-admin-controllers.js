@@ -17842,12 +17842,6 @@
         }
     ])
 
-
-
-
-
-
-
     .controller('tv3rdAppController', ['$scope', '$state', '$http', '$stateParams', 'util',
         function ($scope, $state, $http, $stateParams, util) {
             var self = this;
@@ -20696,6 +20690,7 @@
                  * @method cancel
                  */
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -20941,6 +20936,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -21379,6 +21375,7 @@
                  * @method cancel
                  */
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -21639,6 +21636,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
@@ -21830,6 +21828,8 @@
                 self.edit = function(index) {
                     $scope.app.maskParams.viewId = self.viewId;
                     $scope.app.maskParams.picInfo = self.pics[index];
+                    $scope.app.maskParams.getList = self.loadList;
+
                     $scope.app.showHideMask(true,'pages/tv/simplePicTextEdit_DietRecom.html');
                 }
 
@@ -21869,6 +21869,7 @@
 
                 self.add = function() {
                     $scope.app.maskParams.viewId = self.viewId;
+                    $scope.app.maskParams.getList = self.loadList;
                     $scope.app.showHideMask(true,'pages/tv/simplePicTextAdd_DietRecom.html');
                 }
 
@@ -21922,6 +21923,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -21955,7 +21957,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('添加成功');
-                            $state.reload();
+                            self.cancel();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');
@@ -22118,6 +22120,7 @@
 
 
                 self.cancel = function() {
+                    $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
 
@@ -22162,7 +22165,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('修改成功');
-                            $state.reload();
+                            self.cancel();
                         } else if(data.rescode == '401'){
                             alert('访问超时，请重新登录');
                             $state.go('login');

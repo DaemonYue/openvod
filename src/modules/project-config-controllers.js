@@ -252,13 +252,13 @@
                 self.save = function () {
                     // 菜单图片必填验证
                     if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
-                        alert('请上传菜单图片');
+                        alert('请上传分区图标');
                         return;
                     }
 
                     // 菜单高亮图片必填验证
                     if(self.imgs2.data.length == 0 || self.imgs2.data[0].progress < 100) {
-                        alert('请上传菜单高亮图片');
+                        alert('请上传分区高亮图标');
                         return;
                     }
 
@@ -445,6 +445,7 @@
 
                 self.cancel = function () {
                     $scope.app.showHideMask(false);
+                    $state.reload();
                 };
 
                 self.save = function () {

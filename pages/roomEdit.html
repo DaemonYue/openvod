@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
                 <span class="sr-only">Close</span>
             </button>
-            <h5 class="modal-title">分区详情</h5>
+            <h5 class="modal-title">编辑图文信息</h5>
         </div>
         <!--header end-->
         <!--body-->
@@ -17,12 +17,12 @@
                 <!--客房名-->
                 <ng-repeat ng-repeat="lang in roomEdit.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label for="roomNameCN">分区名 {{lang.name}}</label>
-                        <input type="text" class="form-control" id="roomNameCN" placeholder="请输入客房名" ng-model="roomEdit.room.RoomTypeName[lang.code]" required placeholder="（必填）" />
+                        <label for="roomNameCN">标题 {{lang.name}}</label>
+                        <input type="text" class="form-control" id="roomNameCN"  ng-model="roomEdit.room.RoomTypeName[lang.code]" required placeholder="（必填）" />
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label for="roomNameEN">分区名 {{lang.name}}</label>
-                        <input type="text" class="form-control" id="roomNameEN" placeholder="Enter the name" ng-model="roomEdit.room.RoomTypeName[lang.code]" />
+                        <label for="roomNameEN">标题 {{lang.name}}</label>
+                        <input type="text" class="form-control" id="roomNameEN"  ng-model="roomEdit.room.RoomTypeName[lang.code]" />
                     </div>
                 </ng-repeat>
                 <!--/客房名-->
@@ -69,11 +69,11 @@
                 <!-- 客房介绍 -->
                 <ng-repeat ng-repeat="lang in roomEdit.editLangs">
                     <div class="form-group" ng-if="lang.default">
-                        <label>分区介绍 {{lang.name}}</label>
+                        <label>详情 {{lang.name}}</label>
                         <textarea ng-trim="false" class="form-control" rows="2" ng-model="roomEdit.room.Description[lang.code]" required placeholder="（必填）"></textarea>
                     </div>
                     <div class="form-group" ng-if="lang.default !== true">
-                        <label>分区介绍 {{lang.name}}</label>
+                        <label>详情 {{lang.name}}</label>
                         <textarea ng-trim="false" class="form-control" rows="2" ng-model="roomEdit.room.Description[lang.code]"></textarea>
                     </div>
                 </ng-repeat>

@@ -99,13 +99,13 @@
                     <ng-repeat ng-repeat="lang in sinfoAdd.editLangs">
                         <ng-if ng-if="lang.default">
                             <div class="col-md-12 farm-group" style="margin-bottom: 20px;">
-                                <label>分区介绍 {{lang.name}}：</label>
+                                <label>详情 {{lang.name}}：</label>
                                 <textarea ng-trim="false" class="form-control" rows="2" ng-model="sinfoAdd.room.Description[lang.code]" required placeholder="（必填）"></textarea>
                             </div>
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">
                             <div class="col-md-12 form-group">
-                                <label>分区介绍 {{lang.name}}：</label>
+                                <label>详情{{lang.name}}：</label>
                                 <textarea ng-trim="false" class="form-control" rows="2" ng-model="sinfoAdd.room.Description[lang.code]"></textarea>
                             </div>
                         </ng-if>
