@@ -1,0 +1,161 @@
+<!-- 酒店/客房管理>添加客房弹窗 -->
+<div ng-controller="staffInfoAddController as stuffAdd" ng-init="stuffAdd.init();" class="autoscroll modal-dialog">
+    <div class="modal-content">
+        <!--header-->
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="stuffAdd.cancel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h5 class="modal-title">添加图文</h5>
+        </div>
+        <!--header end-->
+        <!--body-->
+        <div class="modal-body">
+            <div ng-show="loading">loading...</div>
+            <form id="stuffAddForm" name="stuffAddForm" ng-submit="stuffAddForm.$valid && stuffAdd.save()" role="form">
+                <!--客房名-->
+                <div class="form-group">
+                    <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
+                        <div class="form-group">
+                            <ng-if ng-if="lang.default">
+                                <label for="roomNameCN">姓名 {{lang.name}}：</label>
+                                <input type="text" class="form-control" id="roomNameCN" ng-model="stuffAdd.room.RoomTypeName[lang.code]" required placeholder="请输入姓名（必填）" />
+                            </ng-if>
+                        </div>
+                        <div class="form-group">
+                            <ng-if ng-if="lang.default !== true">
+                                <label for="roomNameEN">姓名 {{lang.name}}：</label>
+                                <input type="text" class="form-control" id="roomNameEN"  ng-model="stuffAdd.room.RoomTypeName[lang.code]" />
+                            </ng-if>
+                        </div>
+                    </ng-repeat>
+                </div>
+                <!--/客房名-->
+                <!--职称-->
+                <div class="form-group">
+                    <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
+                        <div class="form-group">
+                            <ng-if ng-if="lang.default">
+                                <label for="roomNameCN">职称{{lang.name}}：</label>
+                                <input type="text" class="form-control"  ng-model="stuffAdd.room.proTitle[lang.code]"  />
+                            </ng-if>
+                        </div>
+                        <div class="form-group">
+                            <ng-if ng-if="lang.default !== true">
+                                <label for="roomNameEN">职称 {{lang.name}}：</label>
+                                <input type="text" class="form-control"  ng-model="stuffAdd.room.proTitle[lang.code]" />
+                            </ng-if>
+                        </div>
+                    </ng-repeat>
+                </div>
+                <!--/职称-->
+                <!--客房图-->
+                <div class="form-group">
+                    <label>图片</label>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- 图 -->
+                            <div ng-repeat="img in stuffAdd.imgs.data" style="background-image: url({{img.src}})" class="form-thumbnail">
+                                <!-- 进度条 -->
+                                <div class="progress form-thumbnail-progress" ng-show="!({{img.progress}}==100)">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{img.progress}}%;">
+                                    </div>
+                                </div>
+                                <!-- 关闭按钮 -->
+                                <i ng-click="stuffAdd.imgs.deleteById(img.id);" class="form-thumbnail-delete icon ion-close"></i>
+                            </div>
+                            <!-- 上传按钮 -->
+                            <div ng-click="stuffAdd.clickUpload('upload')" class="form-thumbnail form-thumbnail-creat" ng-show="stuffAdd.imgs.data.length==0">
+                                <i class="icon ion-upload"></i> 上传图片
+                                <input id="upload" style="display: none;" type="file" file-model="myFile" data-e="hidenUpload" />
+                                <a id="hidenUpload" style="display: none;" ng-click="stuffAdd.imgs.uploadFile('myFile', stuffAdd.imgs)"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/客房图-->
+                <!--720酒店全景图地址-->
+                <!-- <div class="form-group">
+                     <div class="form-group">
+                         <label>720酒店全景图地址（如无，请不要填任何内容）：</label>
+                         <input type="text" class="form-control" ng-model="stuffAdd.room.ViewURL" />
+                     </div>
+                 </div>-->
+                <!--/720酒店全景图地址-->
+                <!--标签-->
+                <!-- <div class="form-group">
+                     <label>已选标签</label>
+                     <div class="row">
+                         <div class="col-xs-12">
+                             <span ng-repeat="tag in stuffAdd.tags track by $index" ng-model="stuffAdd.ifCheckedTags[$index].checked" uib-btn-checkbox class="tag">{{tag.TagName[stuffAdd.defaultLangCode]}}</span>
+                         </div>
+                     </div>
+                 </div>-->
+                <!--/标签-->
+                <div class="row">
+                    <!-- 客房介绍摘要 -->
+                    <!-- <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
+                        <ng-if ng-if="lang.default">
+                            <div class="col-md-12 form-group">
+                                <label>客房介绍摘要 {{lang.name}}：</label>
+                                <textarea class="form-control" rows="1" ng-model="stuffAdd.room.Roomsummary[lang.code]"
+                                          required placeholder="（必填）" maxlength="50"></textarea>
+                            </div>
+                        </ng-if>
+                        <ng-if ng-if="lang.default !== true">
+                            <div class="col-md-12 form-group">
+                                <label>客房介绍摘要 {{lang.name}}：</label>
+                                <textarea class="form-control" rows="1" ng-model="stuffAdd.room.Roomsummary[lang.code]"
+                                          maxlength="50"></textarea>
+                            </div>
+                        </ng-if>
+                    </ng-repeat> -->
+                    <!-- /客房介绍摘要 -->
+                    <!-- 客房介绍 -->
+                    <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
+                        <ng-if ng-if="lang.default">
+                            <div class="col-md-12 farm-group" style="margin-bottom: 20px;">
+                                <label>特长 {{lang.name}}：</label>
+                                <textarea ng-trim="false" class="form-control" rows="2" ng-model="stuffAdd.room.Skills[lang.code]"></textarea>
+                            </div>
+                        </ng-if>
+                        <ng-if ng-if="lang.default !== true">
+                            <div class="col-md-12 form-group">
+                                <label>特长 {{lang.name}}：</label>
+                                <textarea ng-trim="false" class="form-control" rows="2" ng-model="stuffAdd.room.Skills[lang.code]"></textarea>
+                            </div>
+                        </ng-if>
+                    </ng-repeat>
+                    <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
+                        <ng-if ng-if="lang.default">
+                            <div class="col-md-12 farm-group" style="margin-bottom: 20px;">
+                                <label>详细介绍 {{lang.name}}：</label>
+                                <textarea ng-trim="false" class="form-control" rows="2" ng-model="stuffAdd.room.Description[lang.code]"></textarea>
+                            </div>
+                        </ng-if>
+                        <ng-if ng-if="lang.default !== true">
+                            <div class="col-md-12 form-group">
+                                <label>详细介绍 {{lang.name}}：</label>
+                                <textarea ng-trim="false" class="form-control" rows="2" ng-model="stuffAdd.room.Description[lang.code]"></textarea>
+                            </div>
+                        </ng-if>
+                    </ng-repeat>
+                    <!-- /客房介绍 -->
+                </div>
+            </form>
+            <div ng-show="saving">saving</div>
+        </div>
+        <!--body end-->
+        <!--footer-->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-sm" ng-click="stuffAdd.cancel()">
+                {{'CANCEL' | translate}}
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" form="stuffAddForm">
+                <i class="icon ion-ios-checkmark-outline"></i> {{'SAVE' | translate}}
+            </button>
+        </div>
+        <!--footer end-->
+    </div>
+</div>

@@ -43,7 +43,7 @@
         <tr ng-repeat="pic in tvCTList.info[tvCTList.cateIndex].sub track by $index">
             <td>{{pic.Seq}}</td>
             <td>{{pic.Title[tvCTList.defaultLangCode]}}</td>
-            <td>{{pic.Text[tvCTList.defaultLangCode]}}</td>
+            <td style="max-width: 491px">{{pic.Text[tvCTList.defaultLangCode]}}</td>
             <td>
                 <!--编辑按钮-->
                 <a class="" ng-click="tvCTList.editPic($index)">编辑</a>

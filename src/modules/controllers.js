@@ -2335,7 +2335,8 @@
                     switch (tag.ID) {
                         case 1 :
                         case 2 :
-                            self.typestyle = 1;   //医护信息
+                            self.typestyle = 1;//医护信息
+                            self.type = tag.ID;
                             self.getDoctorInfo(self.sectionId,tag.ID);
                             break;
                         case 3:
@@ -2360,7 +2361,7 @@
                     self.tableParams = new NgTableParams(
                         {
                             page: 1,
-                            count: 15,
+                            count: 10,
                             url: ''
                         },
                         {
@@ -2386,10 +2387,11 @@
                                 }).then(function successCallback(response) {
                                     var data = response.data;
                                     if (data.rescode == '200') {
-                                        if(data.total == 0) {
+                                        console.log(params);
+                                        if(data.data.total == 0) {
                                             self.noData = true;
                                         }
-                                        params.total(data.total);
+                                        params.total(data.data.total);
                                         self.personal_info = data.data.personal_info;
                                         if(self.personal_info){
                                             for(var i=0;i<self.personal_info.length;i++){
@@ -2528,6 +2530,56 @@
                     $scope.app.maskParams.info = info;
 
                     $scope.app.showHideMask(true,'pages/dorcNurseDetail.html');
+                }
+
+                self.stuffInfoAdd = function (type) {
+                    $scope.app.maskParams.getList = self.getDoctorInfo;
+                    $scope.app.maskParams.sectionId = self.sectionId;
+                    $scope.app.maskParams.type = self.type;
+                    $scope.app.maskParams.styletype = self.type;
+                    $scope.app.showHideMask(true,'pages/doctorInfoAdd.html');
+
+                }
+                
+                self.edit = function (info) {
+                    $scope.app.maskParams.info = info;
+                    $scope.app.maskParams.sectionId = self.sectionId;
+                    $scope.app.maskParams.type = self.type;
+                    $scope.app.maskParams.getList = self.getDoctorInfo;
+                    $scope.app.showHideMask(true,'pages/doctorInfoEdit.html');
+                }
+
+                self.delete = function (id,index) {
+                    var index = index;
+                    if(!confirm('确认删除？')) {
+                        return;
+                    }
+                    var data = JSON.stringify({
+                        "token": util.getParams('token'),
+                        "action": "delete",
+                        "data": {
+                            "ID":id-0
+                        },
+                        "lang": util.langStyle()
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('personalInfo', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('删除成功');
+                            self.getDoctorInfo(self.sectionId,self.type);
+                        } else if(data.rescode == '401'){
+                            alert('访问超时，请重新登录');
+                            $state.go('login');
+                        } else{
+                            alert('删除失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert('连接服务器出错');
+                    });
                 }
 
                /* self.roomEditPrice = function (roomId) {
@@ -2678,7 +2730,435 @@
             }
         ])
 
+        /*-----------医护信息添加--------------------*/
+        .controller('staffInfoAddController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
+            function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
+                var self = this;
 
+                self.init = function () {
+                    self.sectionId = $scope.app.maskParams.sectionId;
+                    self.type = $scope.app.maskParams.type;
+
+                    self.sectionInfo = {};
+                    self.editLangs = util.getParams('editLangs');
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.styletype = $scope.app.maskParams.styletype;
+                    self.imgs = new Imgs([]);
+                    self.filelength = self.imgs.data.length;
+                }
+                self.cancel = function () {
+                    $scope.app.showHideMask(false);
+                }
+
+
+                /**
+                 * 保存
+                 */
+                self.save = function () {
+
+                    var imgs = [];
+                    for (var i = 0; i < self.imgs.data.length; i++) {
+                        imgs.push(
+                            {
+                                "Seq": i,
+                                "ImageURL": self.imgs.data[i].src,
+                                "ImageSize": self.imgs.data[i].fileSize
+                            }
+                        );
+                    }
+
+
+                    if (imgs.length == 0) {
+                        alert('请上传图片')
+                        return;
+                    }
+
+                    self.saving = true;
+                    var data = JSON.stringify({
+                        action: "add",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        sectionID: Number(self.sectionId),
+                        type: self.type,
+                        data: {
+                            Introduction: self.room.Description,
+                            Name: self.room.RoomTypeName,
+                            PicURL: imgs[0].ImageURL,
+                            IconSize: imgs[0].ImageSize,
+                            Professor: self.room.proTitle,
+                            Skill: self.room.Skills
+                            // Roomsummary: self.room.Roomsummary
+
+                        }
+                    })
+
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('personalInfo', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            alert('添加成功');
+                            $scope.app.maskParams.getList(self.sectionId,self.styletype);
+                            self.cancel();
+                        } else {
+                            alert('添加失败' + data.rescode + ' ' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                    }).finally(function (e) {
+                        self.saving = false;
+                    });
+                };
+
+                self.clickUpload = function (e) {
+                    setTimeout(function () {
+                        document.getElementById(e).click();
+                    }, 0);
+                }
+
+                function Imgs(imgList, single) {
+                    this.initImgList = imgList;
+                    this.data = [];
+                    this.maxId = 0;
+                    this.single = single ? true : false;
+                }
+
+                Imgs.prototype = {
+                    initImgs: function () {
+                        var l = this.initImgList;
+                        for (var i = 0; i < l.length; i++) {
+                            this.data[i] = {
+                                "src": l[i].ImageURL,
+                                "fileSize": l[i].ImageSize,
+                                "id": this.maxId++,
+                                "progress": 100
+                            };
+                        }
+                    },
+                    deleteById: function (id) {
+                        var l = this.data;
+                        for (var i = 0; i < l.length; i++) {
+                            if (l[i].id == id) {
+                                // 如果正在上传，取消上传
+                                if (l[i].progress < 100 && l[i].progress != -1) {
+                                    l[i].xhr.abort();
+                                }
+                                l.splice(i, 1);
+                                break;
+                            }
+                        }
+                    },
+
+                    add: function (xhr, fileName, fileSize) {
+                        this.data.push({
+                            "xhr": xhr,
+                            "fileName": fileName,
+                            "fileSize": fileSize,
+                            "progress": 0,
+                            "id": this.maxId
+                        });
+                        return this.maxId++;
+                    },
+
+                    update: function (id, progress, leftSize, fileSize) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            var f = this.data[i];
+                            if (f.id === id) {
+                                f.progress = progress;
+                                f.leftSize = leftSize;
+                                f.fileSize = fileSize;
+                                break;
+                            }
+                        }
+                    },
+
+                    setSrcSizeByXhr: function (xhr, src, size) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            if (this.data[i].xhr == xhr) {
+                                this.data[i].src = src;
+                                this.data[i].fileSize = size;
+                                break;
+                            }
+                        }
+                    },
+
+                    uploadFile: function (e, o) {
+
+                        // 如果这个对象只允许上传一张图片
+                        if (this.single) {
+                            // 删除第二张以后的图片
+                            for (var i = 1; i < this.data.length; i++) {
+                                this.deleteById(this.data[i].id);
+                            }
+                        }
+
+                        var file = $scope[e];
+                        var uploadUrl = CONFIG.uploadUrl;
+                        var xhr = new XMLHttpRequest();
+                        var fileId = this.add(xhr, file.name, file.size, xhr);
+                        // self.search();
+
+                        util.uploadFileToUrl(xhr, file, uploadUrl, 'normal',
+                            function (evt) {
+                                $scope.$apply(function () {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                                        o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
+                                        console.log(percentComplete);
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                var ret = JSON.parse(xhr.responseText);
+                                console && console.log(ret);
+                                $scope.$apply(function () {
+                                    o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
+                                    // 如果这个对象只允许上传一张图片
+                                    if (o.single) {
+                                        // 删除第一站图片
+                                        o.deleteById(o.data[0].id);
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                $scope.$apply(function () {
+                                    o.update(fileId, -1, '', '');
+                                });
+                                console.log('failure');
+                                xhr.abort();
+                            }
+                        );
+                    }
+                }
+            }
+        ])
+
+        /*-----------医护信息修改--------------------*/
+        .controller('staffInfoEditController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
+            function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
+                var self = this;
+                self.alerts = [];
+                self.init = function () {
+                    self.Info = $scope.app.maskParams.info;
+                    self.sectionId = $scope.app.maskParams.sectionId;
+                    self.type = $scope.app.maskParams.type;
+                    console.log(self.type);
+                    self.imgs = new Imgs([{"ImageURL": self.Info.PicURL, "ImageSize": self.Info.IconSize}], true);
+                    self.imgs.initImgs();
+                    self.editLangs = util.getParams('editLangs');
+                    self.defaultLangCode = util.getDefaultLangCode();
+                }
+
+                self.cancel = function () {
+                    $scope.app.maskParams.getList(self.sectionId,self.type);
+                    $scope.app.showHideMask(false);
+                }
+
+                /**
+                 * 添加alert
+                 * @param msg {String} 提示信息
+                 * @param reload {Boolean} 是否重载
+                 * @param type {String} alert类型
+                 */
+                self.addAlert = function(msg, reload, type) {
+                    self.alerts.push({type: type, msg: msg, reload: reload});
+                };
+                /**
+                 * 移除alert
+                 * @param index 位置
+                 * @param reload {Boolean} 是否重载
+                 */
+                self.closeAlert = function(index, reload) {
+                    self.alerts.splice(index, 1);
+                    if (reload) {
+                        $state.reload();
+                    }
+                };
+                /**
+                 * 保存
+                 */
+                self.save = function () {
+
+                    var imgs = [];
+                    for (var i = 0; i < self.imgs.data.length; i++) {
+                        imgs.push(
+                            {
+                                "Seq": i,
+                                "ImageURL": self.imgs.data[i].src,
+                                "ImageSize": self.imgs.data[i].fileSize
+                            }
+                        );
+                    }
+
+                    if (imgs.length == 0) {
+                        // alert('请上传图片')
+                        self.addAlert(' 请上传图片', false, 'warning');
+                        return;
+                    }
+
+                    self.saving = true;
+                    var data = JSON.stringify({
+                        action: "edit",
+                        token: util.getParams('token'),
+                        lang: util.langStyle(),
+                        data: {
+                            ID: self.Info.ID,
+                            Introduction: self.Info.Introduction,
+                            Name: self.Info.Name,
+                            PicURL: imgs[0].ImageURL,
+                            IconSize: imgs[0].ImageSize,
+                            Professor: self.Info.Professor,
+                            Skill: self.Info.Skill
+
+                        }
+                    })
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('personalInfo', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            // self.addAlert('保存成功', true, 'success');
+                            alert('保存成功')
+                            self.cancel();
+                        } else {
+                            alert('保存失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert(response.status + ' 服务器出错');
+                        // self.addAlert(response.status + ' 服务器出错', false, 'danger');
+                    }).finally(function (e) {
+                        self.saving = false;
+                    });
+                };
+
+                self.clickUpload = function (e) {
+                    setTimeout(function () {
+                        document.getElementById(e).click();
+                    }, 0);
+                }
+
+                function Imgs(imgList, single) {
+                    this.initImgList = imgList;
+                    this.data = [];
+                    this.maxId = 0;
+                    this.single = single ? true : false;
+                }
+
+                Imgs.prototype = {
+                    initImgs: function () {
+                        var l = this.initImgList;
+                        for (var i = 0; i < l.length; i++) {
+                            this.data[i] = {
+                                "src": l[i].ImageURL,
+                                "fileSize": l[i].ImageSize,
+                                "id": this.maxId++,
+                                "progress": 100
+                            };
+                        }
+                    },
+                    deleteById: function (id) {
+                        var l = this.data;
+                        for (var i = 0; i < l.length; i++) {
+                            if (l[i].id == id) {
+                                // 如果正在上传，取消上传
+                                if (l[i].progress < 100 && l[i].progress != -1) {
+                                    l[i].xhr.abort();
+                                }
+                                l.splice(i, 1);
+                                break;
+                            }
+                        }
+                    },
+
+                    add: function (xhr, fileName, fileSize) {
+                        this.data.push({
+                            "xhr": xhr,
+                            "fileName": fileName,
+                            "fileSize": fileSize,
+                            "progress": 0,
+                            "id": this.maxId
+                        });
+                        return this.maxId++;
+                    },
+
+                    update: function (id, progress, leftSize, fileSize) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            var f = this.data[i];
+                            if (f.id === id) {
+                                f.progress = progress;
+                                f.leftSize = leftSize;
+                                f.fileSize = fileSize;
+                                break;
+                            }
+                        }
+                    },
+
+                    setSrcSizeByXhr: function (xhr, src, size) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            if (this.data[i].xhr == xhr) {
+                                this.data[i].src = src;
+                                this.data[i].fileSize = size;
+                                break;
+                            }
+                        }
+                    },
+
+                    uploadFile: function (e, o) {
+
+                        // 如果这个对象只允许上传一张图片
+                        if (this.single) {
+                            // 删除第二张以后的图片
+                            for (var i = 1; i < this.data.length; i++) {
+                                this.deleteById(this.data[i].id);
+                            }
+                        }
+
+                        var file = $scope[e];
+                        var uploadUrl = CONFIG.uploadUrl;
+                        var xhr = new XMLHttpRequest();
+                        var fileId = this.add(xhr, file.name, file.size, xhr);
+                        // self.search();
+
+                        util.uploadFileToUrl(xhr, file, uploadUrl, 'normal',
+                            function (evt) {
+                                $scope.$apply(function () {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                                        o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
+                                        console.log(percentComplete);
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                var ret = JSON.parse(xhr.responseText);
+                                console && console.log(ret);
+                                $scope.$apply(function () {
+                                    o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
+                                    // 如果这个对象只允许上传一张图片
+                                    if (o.single) {
+                                        // 删除第一站图片
+                                        o.deleteById(o.data[0].id);
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                $scope.$apply(function () {
+                                    o.update(fileId, -1, '', '');
+                                });
+                                console.log('failure');
+                                xhr.abort();
+                            }
+                        );
+                    }
+                }
+            }
+        ])
+
+        /*-----------科室信息添加---------------------*/
         .controller('sectionInfoAddController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
                 var self = this;
@@ -2877,6 +3357,7 @@
             }
         ])
 
+        /*-----------科室信息修改----------------------*/
         .controller('sectionInfoEditController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
                 var self = this;
