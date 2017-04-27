@@ -798,7 +798,7 @@
                         self.guestName = data.data.GuestName;
 
                         // 酒店经理
-                        self.hotelManagerName = data.data.HotelManagerName;
+                        //self.hotelManagerName = data.data.HotelManagerName;
 
                         // 酒店经理签名图
                         /*if(data.data.HotelManageSignURL){
@@ -875,7 +875,7 @@
                       "LogoSize":self.imgs1.data[0].fileSize,
                       "WelcomeText": self.welcomeText,
                       "GuestName":self.guestName,
-                      "HotelManagerName":self.hotelManagerName,
+                      //"HotelManagerName":self.hotelManagerName,
                       /*"HotelManageSignURL":self.imgs2.data[0].src,
                       "HotelManageSignSize":self.imgs2.data[0].fileSize,*/
                       "HotelManageSignURL":"",

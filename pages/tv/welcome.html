@@ -6,7 +6,7 @@
         <form name="welInfoEdit" ng-submit="welInfoEdit.$valid && tvWelcome.save()" class="">
             <!--酒店logo图-->
             <div class="form-group ">
-                <label>酒店LOGO</label>
+                <label>医院LOGO</label>
                 <!--酒店logo图修改按钮-->
                 <a ng-click="tvWelcome.clickUpload('upload1')">上传</a>
                 <br>
@@ -31,11 +31,11 @@
             <!--酒店客人称呼-->
             <ng-repeat ng-repeat="lang in tvWelcome.editLangs">
                 <div ng-if="lang.default" class="form-group">
-                    <label>客户称呼 {{lang.name}}</label>
+                    <label>标题 {{lang.name}}</label>
                     <input ng-model="tvWelcome.guestName[lang.code]" required placeholder="（必填）" class="form-control" />
                 </div>
                 <div ng-if="lang.default !== true" class="form-group">
-                    <label>客户称呼 {{lang.name}}</label>
+                    <label>标题 {{lang.name}}</label>
                     <input ng-model="tvWelcome.guestName[lang.code]" class="form-control" />
                 </div>
             </ng-repeat>
@@ -43,17 +43,17 @@
             <!--酒店欢迎辞-->
             <ng-repeat ng-repeat="lang in tvWelcome.editLangs">
                 <div ng-if="lang.default" class="form-group">
-                    <label>欢迎辞 {{lang.name}}</label>
+                    <label>内容 {{lang.name}}</label>
                     <textarea ng-model="tvWelcome.welcomeText[lang.code]" ng-trim="false"  required placeholder="（必填）" class="form-control"></textarea>
                 </div>
                 <div ng-if="lang.default !== true" class="form-group">
-                    <label>欢迎辞 {{lang.name}}</label>
+                    <label>内容 {{lang.name}}</label>
                     <textarea ng-model="tvWelcome.welcomeText[lang.code]" ng-trim="false" class="form-control"></textarea>
                 </div>
             </ng-repeat>
             <!--酒店欢迎辞-->
             <!--酒店经理-->
-            <ng-repeat ng-repeat="lang in tvWelcome.editLangs">
+            <!--<ng-repeat ng-repeat="lang in tvWelcome.editLangs">
                 <div ng-if="lang.default" class="form-group">
                     <label>酒店经理 {{lang.name}}</label>
                     <input ng-model="tvWelcome.hotelManagerName[lang.code]" required placeholder="（必填）" class="form-control" />
@@ -62,7 +62,7 @@
                     <label>酒店经理 {{lang.name}}</label>
                     <input ng-model="tvWelcome.hotelManagerName[lang.code]" class="form-control" />
                 </div>
-            </ng-repeat>
+            </ng-repeat>-->
             <!--酒店经理
             <!--酒店经理签名图
             <div class="form-group">
