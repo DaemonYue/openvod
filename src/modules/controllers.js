@@ -2194,7 +2194,7 @@
         ])
 
 
-        //科室的医护
+        /*-----------科室的医护--------------------*/
         .controller('doctornurseController', ['$scope', '$http','$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams',
             function ($scope, $http,$state, $stateParams, $translate, $location, util, NgTableParams) {
                 var self = this;
@@ -2594,6 +2594,7 @@
             }
         ])
 
+        /*-----------医护详情--------------------*/
         .controller('doctorInfoController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $filter, util, CONFIG) {
                 var self = this;
