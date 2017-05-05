@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <ng-repeat ng-repeat="lang in scenicEdit.editLangs">
                         <ng-if ng-if="lang.default">
-                            <label>标题{{lang.name}}：</label>
+                            <label>标题 {{lang.name}}：</label>
                             <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
                             ng-model="scenicEdit.Title[lang.code]" required placeholder="（必填）" />
                         </ng-if>

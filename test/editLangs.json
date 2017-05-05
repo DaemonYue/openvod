@@ -3,11 +3,13 @@
     {
       "name": "中文",
       "code": "zh-CN",
+      "priceUnit": "元",
       "default": true
     },
     {
       "name": "en",
       "code": "en-US",
+      "priceUnit": "Dollors",
       "default": false
     }
   ]

@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <ng-repeat ng-repeat="lang in foodPicTextAdd.editLangs">
                         <ng-if ng-if="lang.default">
-                            <label>标题{{lang.name}}：</label>
+                            <label>标题 {{lang.name}}：</label>
                             <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
                             ng-model="foodPicTextAdd.Title[lang.code]" required placeholder="（必填）" />
                         </ng-if>
@@ -62,13 +62,13 @@
                 <div class="form-group">
                     <ng-repeat ng-repeat="lang in foodPicTextAdd.editLangs">
                         <ng-if ng-if="lang.default">
-                            <label>价格{{lang.name}}：</label>
-                            <input type="number" step="0.01" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
+                            <label>价格 {{lang.name}}({{lang.priceUnit}})：</label>
+                            <input type="number" step="0.01" min="0" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
                             ng-model="foodPicTextAdd.Price[lang.code]" required placeholder="（必填）" />
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">
-                            <label>价格 {{lang.name}}：</label>
-                            <input type="number" step="0.01" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
+                            <label>价格 {{lang.name}}({{lang.priceUnit}})：</label>
+                            <input type="number" step="0.01" min="0" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）""
                             ng-model="foodPicTextAdd.Price[lang.code]" />
                         </ng-if>
                     </ng-repeat>
@@ -78,7 +78,7 @@
                     <!--详情-->
                     <ng-repeat ng-repeat="lang in foodPicTextAdd.editLangs">
                         <ng-if ng-if="lang.default">
-                            <label>详情{{lang.name}}：</label>
+                            <label>详情 {{lang.name}}：</label>
                             <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" required placeholder="（必填）" ng-model="foodPicTextAdd.Text[lang.code]">{{foodPicTextAdd.Text[lang.code]}}</textarea>
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">

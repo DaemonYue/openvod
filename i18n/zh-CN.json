@@ -14,5 +14,7 @@
   "ACCEPT": "待入住",
   "COMPLETED": "订单完成",
   "REFUNDING": "退款中",
-  "CANCELED": "取消已完成"
+  "CANCELED": "取消已完成",
+  "PRICEUNIT": "元"
+
 }

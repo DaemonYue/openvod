@@ -37,7 +37,7 @@
             <th>图片</th>
             <th>标题</th>
             <th>详情</th>
-            <th>价格</th>
+            <th>价格({{'PRICEUNIT'|translate}})</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -49,7 +49,7 @@
             </td>
             <td>{{pic.Title[food.defaultLangCode]}}</td>
             <td>{{pic.Text[food.defaultLangCode]}}</td>
-            <td>{{pic.Price[food.defaultLangCode]}}</td>
+            <td>{{pic.Price[food.defaultLangCode]}}{{}}</td>
             <td>
                 <!--编辑按钮-->
                 <a class="" ng-click="food.editPic($index)">编辑</a>

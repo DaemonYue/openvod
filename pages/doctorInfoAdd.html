@@ -37,7 +37,7 @@
                     <ng-repeat ng-repeat="lang in stuffAdd.editLangs">
                         <div class="form-group">
                             <ng-if ng-if="lang.default">
-                                <label for="roomNameCN">职称{{lang.name}}：</label>
+                                <label for="roomNameCN">职称 {{lang.name}}：</label>
                                 <input type="text" class="form-control"  ng-model="stuffAdd.room.proTitle[lang.code]"  />
                             </ng-if>
                         </div>

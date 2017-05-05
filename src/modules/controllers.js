@@ -6505,7 +6505,6 @@
 
                     // 获取编辑多语言信息
                     self.editLangs = util.getParams('editLangs');
-
                     // 初始化频道图片
                     self.imgs1 = new Imgs([], true);
 
@@ -6651,42 +6650,42 @@
                         var uploadUrl = CONFIG.uploadUrl;
                         var xhr = new XMLHttpRequest();
                         var fileId = this.add(xhr, file.name, file.size, xhr);
-                        // self.search();
+                            // self.search();
 
                         util.uploadFileToUrl(xhr, file, uploadUrl, 'normal',
-                            function (evt) {
-                                $scope.$apply(function () {
-                                    if (evt.lengthComputable) {
-                                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-                                        o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
-                                        console && console.log(percentComplete);
-                                    }
-                                });
-                            },
-                            function (xhr) {
-                                var ret = JSON.parse(xhr.responseText);
-                                console && console.log(ret);
-                                $scope.$apply(function () {
-                                    o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
-                                    // 如果这个对象只允许上传一张图片
-                                    if (o.single) {
-                                        // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
-                                                o.deleteById(o.data[i].id);
+                             function (evt) {
+                                    $scope.$apply(function () {
+                                        if (evt.lengthComputable) {
+                                            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                                            o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
+                                            console && console.log(percentComplete);
+                                        }
+                                    });
+                                },
+                             function (xhr) {
+                                    var ret = JSON.parse(xhr.responseText);
+                                    console && console.log(ret);
+                                    $scope.$apply(function () {
+                                        o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
+                                        // 如果这个对象只允许上传一张图片
+                                        if (o.single) {
+                                            // 如果长度大于1张图片，删除前几张图片
+                                            if(o.data.length > 1) {
+                                                for(var i=0; i<o.data.length-1;i++) {
+                                                    o.deleteById(o.data[i].id);
+                                                }
                                             }
                                         }
-                                    }
-                                });
-                            },
-                            function (xhr) {
-                                $scope.$apply(function () {
-                                    o.update(fileId, -1, '', '');
-                                });
-                                console && console.log('failure');
-                                xhr.abort();
-                            }
-                        );
+                                    });
+                                },
+                             function (xhr) {
+                                    $scope.$apply(function () {
+                                        o.update(fileId, -1, '', '');
+                                    });
+                                    console && console.log('failure');
+                                    xhr.abort();
+                                }
+                            );
                     }
                 }
 
