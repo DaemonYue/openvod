@@ -36,7 +36,7 @@
                             util.setParams('userName', self.userName);
                             util.setParams('projectName', self.projectName);
                             util.setParams('token', msg.token);
-                            util.setParams('projectDes',msg.ProjectNameCN)
+                            util.setParams('projectDes', msg.ProjectNameCN)
                             self.getEditLangs();
                         } else {
                             alert(msg.rescode + ' ' + msg.errInfo);
@@ -66,9 +66,9 @@
             function ($http, $scope, $state, $stateParams, util) {
                 var self = this;
                 self.init = function () {
-                    if(util.getParams("projectDes")){
+                    if (util.getParams("projectDes")) {
                         this.projectDes = util.getParams("projectDes")
-                    }else {
+                    } else {
                         alert("访问超时，请重新登录")
                         $state.go('login')
                     }
@@ -105,8 +105,8 @@
                     // console.log(util.getParams('editLangs'))
                 }
 
-                self.feedback = function() {
-                    $scope.app.showHideMask(true,'pages/feedback.html');
+                self.feedback = function () {
+                    $scope.app.showHideMask(true, 'pages/feedback.html');
                 }
 
                 self.setFocusApp = function (id) {
@@ -134,7 +134,7 @@
 
                     switch (n) {
                         case 1:
-                            if(!$state.includes('app.hotelRoom')) {
+                            if (!$state.includes('app.hotelRoom')) {
                                 $state.go('app.hotelRoom', {'appId': n});
                             }
                             break;
@@ -142,31 +142,31 @@
                             $state.go('app.hotelOrderList', {'appId': n});
                             break;
                         case 3:
-                            if($state.current.name !== 'app.shop.goods.goodsList') {
+                            if ($state.current.name !== 'app.shop.goods.goodsList') {
                                 $state.go('app.shop', {'appId': n});
                             }
                             break;
                         case 4:
-                            $state.go('app.shopOrderList', { 'appId': n });
+                            $state.go('app.shopOrderList', {'appId': n});
                             break;
                         case 5:
                             if (!$state.includes("app.tvAdmin")) {
-                                $state.go('app.tvAdmin', { 'appId': n });
+                                $state.go('app.tvAdmin', {'appId': n});
                             }
                             break;
                         case 6:
-                            $state.go('app.terminal', { 'appId': n });
+                            $state.go('app.terminal', {'appId': n});
                             break;
                         case 7:
-                            $state.go('app.wxUser', { 'appId': n });
+                            $state.go('app.wxUser', {'appId': n});
                             break;
                         case 8:
-                            if(!$state.includes('app.projectConfig')) {
-                                $state.go('app.projectConfig', { 'appId': n });
+                            if (!$state.includes('app.projectConfig')) {
+                                $state.go('app.projectConfig', {'appId': n});
                             }
                             break;
                         case 9:
-                                $state.go('app.realTimeCommand', { 'appId': n });
+                            $state.go('app.realTimeCommand', {'appId': n});
                             break;
                         default:
                             break;
@@ -195,7 +195,7 @@
                 }
 
                 // 添加 删除 弹窗，增加一个样式的class
-                self.showHideMask = function(bool,url){
+                self.showHideMask = function (bool, url) {
                     // bool 为true时，弹窗出现
                     if (bool) {
                         $scope.app.maskUrl = url;
@@ -204,35 +204,35 @@
                         $scope.app.maskUrl = '';
                         $scope.app.showMaskClass = false;
                     }
-                    
+
                 }
             }
         ])
-        
-        .controller('feedbackController', ['$scope', function($scope) {
+
+        .controller('feedbackController', ['$scope', function ($scope) {
             var self = this;
-            self.init = function() {
+            self.init = function () {
 
             }
-            self.exit = function() {
+            self.exit = function () {
                 $scope.app.showHideMask(false);
             }
         }])
 
         // 终端管理
         .controller('terminalController', ['$q', '$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
-            function($q, $scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
+            function ($q, $scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
                 console.log('terminalController');
                 var self = this;
-                self.init = function() {
-                        self.form = {};
-                        self.defaultLangCode = util.getDefaultLangCode();
-                        self.langStyle = util.langStyle();
-                        self.multiLang = util.getParams('editLangs');
-                        self.searchHotelList();
-                    }
-                    //获取门店
-                self.searchHotelList = function() {
+                self.init = function () {
+                    self.form = {};
+                    self.defaultLangCode = util.getDefaultLangCode();
+                    self.langStyle = util.langStyle();
+                    self.multiLang = util.getParams('editLangs');
+                    self.searchHotelList();
+                }
+                //获取门店
+                self.searchHotelList = function () {
                     var data = {
                         "action": "getHotelList",
                         "token": util.getParams("token"),
@@ -246,7 +246,7 @@
                     }).then(function successCallback(data, status, headers, config) {
                         if (data.data.rescode == "200") {
                             self.hotelList = data.data.data;
-                           // console.log(self.hotelList);
+                            // console.log(self.hotelList);
                         } else if (data.data.rescode == "401") {
                             alert('访问超时，请重新登录');
                             $state.go('login')
@@ -256,7 +256,7 @@
 
                     }, function errorCallback(data, status, headers, config) {
                         alert('获取失败， ' + data.data.errInfo);
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     });
 
@@ -279,7 +279,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.section = {};
-                            if(data.sectionList){
+                            if (data.sectionList) {
                                 self.seclist = data.sectionList;
                             }
 
@@ -302,7 +302,7 @@
                 }
 
                 // 获取终端列表 带搜索和分页
-                self.getDevList = function() {
+                self.getDevList = function () {
                     self.noData = false;
                     self.loading = true;
                     self.tableParams = new NgTableParams({
@@ -311,7 +311,7 @@
                         url: ''
                     }, {
                         counts: [],
-                        getData: function(params) {
+                        getData: function (params) {
                             var data = {
                                 "action": "getDevList",
                                 "token": util.getParams("token"),
@@ -344,7 +344,7 @@
 
                             }, function errorCallback(response) {
                                 alert(response.status + ' 服务器出错');
-                            }).finally(function(value) {
+                            }).finally(function (value) {
                                 self.loading = false;
                             })
                         }
@@ -352,7 +352,7 @@
                 }
 
                 // 获取终端状态 总数目
-                self.getDevNum = function(ID, index) {
+                self.getDevNum = function (ID, index) {
                     self.idd = ID;
                     self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
                     self.form.HotelID = ID;
@@ -371,7 +371,7 @@
                         url: util.getApiUrl('devinfo', '', 'server'),
                         data: data
                     }).then(function successCallback(data, status, headers, config) {
-                       // console.log(data);
+                        // console.log(data);
                         if (data.data.rescode == '200') {
                             self.form.total = data.data.total;
 
@@ -384,7 +384,7 @@
                         }
                     }, function errorCallback(data, status, headers, config) {
                         alert(response.status + ' 服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     })
 
@@ -393,7 +393,7 @@
 
 
                 // 获取某分区终端列表 带搜索和分页
-                self.getSectionDevList = function() {
+                self.getSectionDevList = function () {
                     self.noData = false;
                     self.loading = true;
                     self.tableParams = new NgTableParams({
@@ -402,7 +402,7 @@
                         url: ''
                     }, {
                         counts: [],
-                        getData: function(params) {
+                        getData: function (params) {
                             var data = {
                                 "action": "getDevList",
                                 "token": util.getParams("token"),
@@ -435,7 +435,7 @@
 
                             }, function errorCallback(response) {
                                 alert(response.status + ' 服务器出错');
-                            }).finally(function(value) {
+                            }).finally(function (value) {
                                 self.loading = false;
                             })
                         }
@@ -443,8 +443,8 @@
                 }
 
                 // 获取某分区终端状态 总数目
-                self.getSectionDevNum = function(ID) {
-                   // self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
+                self.getSectionDevNum = function (ID) {
+                    // self.form.HotelName = self.hotelList[index].Name[self.defaultLangCode];
                     self.form.sectionID = ID;
 
                     self.getSectionDevList();
@@ -472,7 +472,7 @@
                         }
                     }, function errorCallback(data, status, headers, config) {
                         alert(response.status + ' 服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     })
 
@@ -480,10 +480,9 @@
                 }
 
 
-
-                self.delTerm = function(id) {
+                self.delTerm = function (id) {
                     var conf = confirm('确认删除？');
-                    if(!conf) {
+                    if (!conf) {
                         return;
                     }
                     var data = {
@@ -515,18 +514,18 @@
 
                 // 授权操作
                 // todo 未做批量操作
-                self.validDev = function(ID,Registered){
+                self.validDev = function (ID, Registered) {
                     // return;
                     var data = {
                         "action": "validDev",
                         "token": util.getParams("token"),
                         "lang": self.langStyle,
-                        "ID":[ID]
+                        "ID": [ID]
                     };
-                    if(Registered) {
-                        data.status =0;
+                    if (Registered) {
+                        data.status = 0;
                     } else {
-                        data.status =1;
+                        data.status = 1;
                     }
                     data = JSON.stringify(data);
                     $http({
@@ -536,7 +535,7 @@
                     }).then(function successCallback(data, status, headers, config) {
                         if (data.data.rescode == "200") {
                             alert('操作成功');
-                            $state.reload($state.current.name,$stateParams,true)
+                            $state.reload($state.current.name, $stateParams, true)
                         } else if (data.data.rescode == "401") {
                             alert('访问超时，请重新登录');
                             $state.go('login')
@@ -546,35 +545,36 @@
 
                     }, function errorCallback(data, status, headers, config) {
                         alert('操作失败， ' + data.data.errInfo);
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                     });
                 }
 
-                self.addDev = function() {
-                    $scope.app.maskParams = { 'HotelID': self.form.HotelID };
+                self.addDev = function () {
+                    $scope.app.maskParams = {'HotelID': self.form.HotelID};
                     $scope.app.showHideMask(true, 'pages/addDev.html');
                 }
             }
         ])
+
         // 添加终端
         .controller('addDevController', ['$scope', '$state', '$http', '$stateParams', '$translate', '$filter', 'util',
-            function($scope, $state, $http, $stateParams, $translate, $filter, util) {
+            function ($scope, $state, $http, $stateParams, $translate, $filter, util) {
                 console.log('addDevController');
                 var self = this;
-                self.init = function() {
+                self.init = function () {
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
                     self.maskParams = $scope.app.maskParams;
                     // 表单提交 商城信息
                     self.form = {};
-                   
+
                 }
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.addDev = function() {
+                self.addDev = function () {
                     self.saving = true;
                     var data = {
                         "action": "addDev",
@@ -595,7 +595,7 @@
                         if (data.data.rescode == "200") {
                             alert("终端添加成功");
                             self.cancel();
-                            $state.go($state.current, $stateParams, { reload: true });
+                            $state.go($state.current, $stateParams, {reload: true});
                         } else if (data.data.rescode == "401") {
                             alert('访问超时，请重新登录');
                             $state.go('login')
@@ -605,7 +605,7 @@
 
                     }, function errorCallback(data, status, headers, config) {
                         alert('获取失败， ' + data.data.errInfo);
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
 
@@ -614,14 +614,12 @@
             }
         ])
 
-
-        
         // 微信用户管理
         .controller('wxUserController', ['$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
-            function($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
+            function ($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
                 console.log('wxUserController');
                 var self = this;
-                self.init = function() {
+                self.init = function () {
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
                     self.getWxUserInfo();
@@ -629,7 +627,7 @@
 
 
                 // 获取微信用户信息
-                self.getWxUserInfo = function() {
+                self.getWxUserInfo = function () {
                     self.noData = false;
                     self.loading = true;
                     self.tableParams = new NgTableParams({
@@ -638,7 +636,7 @@
                         url: ''
                     }, {
                         counts: [],
-                        getData: function(params) {
+                        getData: function (params) {
                             var data = {
                                 "action": "getWxUserInfo",
                                 "token": util.getParams("token"),
@@ -668,7 +666,7 @@
 
                             }, function errorCallback(data, status, headers, config) {
                                 alert(response.status + ' 服务器出错');
-                            }).finally(function(value) {
+                            }).finally(function (value) {
                                 self.loading = false;
                             })
                         }
@@ -680,22 +678,22 @@
 
         // 字幕
         .controller('realTimeCommandController', ['$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
-            function($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
+            function ($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
                 console.log('realTimeCommandController');
                 var self = this;
-                self.init = function() {
+                self.init = function () {
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
                     self.realTimeCmdInfo = {
-                        Content:"test",
-                        startDate:new Date(),
-                        endDate:new Date(),
-                        Duration:2,
-                        switch:0
+                        Content: "test",
+                        startDate: new Date(),
+                        endDate: new Date(),
+                        Duration: 2,
+                        switch: 0
                     }
                 }
 
-                self.edit = function(info){
+                self.edit = function (info) {
                     $scope.app.maskParams = info;
                     $scope.app.showHideMask(true, 'pages/realTimeCommandEdit.html');
                 }
@@ -704,30 +702,30 @@
 
         // 字幕编辑
         .controller('realTimeCommandEditController', ['$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'NgTableParams', 'util',
-            function($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
+            function ($scope, $state, $translate, $http, $stateParams, $filter, NgTableParams, util) {
                 console.log('realTimeCommandEditController');
                 var self = this;
-                self.init = function() {
+                self.init = function () {
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
                     self.realTimeCmdInfo = $scope.app.maskParams;
                 }
                 // 添加字幕
-                self.addRealTimeCmd = function() {
+                self.addRealTimeCmd = function () {
                     var data = {
                         "action": "addRealTimeCmd",
                         "token": util.getParams("token"),
-                        
-                        "data":{
+
+                        "data": {
                             CmdType: "ScrollingMarquee",
                             // -1 为全部
-                            Terms:[-1],
-                            CmdParas:{
-                               Content:self.realTimeCmdInfo.Content,
-                               startDate:$filter('date')(self.realTimeCmdInfo.startDate,'yyyy-MM-dd'),
-                               endDate:$filter('date')(self.realTimeCmdInfo.endDate,'yyyy-MM-dd'),
-                               Duration:self.realTimeCmdInfo.Duration,
-                               switch:Number(self.realTimeCmdInfo.switch) 
+                            Terms: [-1],
+                            CmdParas: {
+                                Content: self.realTimeCmdInfo.Content,
+                                startDate: $filter('date')(self.realTimeCmdInfo.startDate, 'yyyy-MM-dd'),
+                                endDate: $filter('date')(self.realTimeCmdInfo.endDate, 'yyyy-MM-dd'),
+                                Duration: self.realTimeCmdInfo.Duration,
+                                switch: Number(self.realTimeCmdInfo.switch)
                             }
 
                         }
@@ -750,19 +748,19 @@
 
                     }, function errorCallback(data, status, headers, config) {
                         alert(response.status + ' 服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     })
                 }
-                self.cancel = function(){
+                self.cancel = function () {
                     $scope.app.showHideMask(false)
                 }
 
                 self.open = function (flag) {
                     if (flag == "start") {
-                      self.realTimeCmdInfo.startDate.opened = true;  
+                        self.realTimeCmdInfo.startDate.opened = true;
                     } else {
-                      self.realTimeCmdInfo.endDate.opened = true; 
+                        self.realTimeCmdInfo.endDate.opened = true;
                     }
                 };
 
@@ -770,10 +768,10 @@
         ])
 
         .controller('shopController', ['$scope', '$state', '$translate', '$http', '$stateParams', '$filter', 'util',
-            function($scope,$state,$translate,$http,$stateParams,$filter,util) {
+            function ($scope, $state, $translate, $http, $stateParams, $filter, util) {
                 console.log('shopController');
                 var self = this;
-                self.init = function() {
+                self.init = function () {
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
                     self.loading = false;
@@ -781,16 +779,16 @@
                     self.searchShopList();
                     // for page active
                     $scope.ShopID = $stateParams.ShopID;
-                        
+
                 }
 
 
-                self.searchShopList = function() {
+                self.searchShopList = function () {
                     self.loading = true;
                     var data = {
-                          "action": "getMgtHotelShopInfo",
-                          "token": util.getParams("token"),
-                          "lang": self.langStyle
+                        "action": "getMgtHotelShopInfo",
+                        "token": util.getParams("token"),
+                        "lang": self.langStyle
                     };
                     data = JSON.stringify(data);
                     $http({
@@ -806,8 +804,8 @@
                             self.shopList = data.data.data.shopList;
                             // 默认加载 指定 商城 or 第一个 商城
                             self.shopFirst = self.shopList[0];
-                            if($stateParams.ShopID) {
-                                for(var i = 0; i < self.shopList.length; i++) {
+                            if ($stateParams.ShopID) {
+                                for (var i = 0; i < self.shopList.length; i++) {
                                     if ($stateParams.ShopID == self.shopList[i].ShopID) {
                                         self.shopFirst = self.shopList[i];
                                         break;
@@ -823,20 +821,18 @@
                         }
                     }, function errorCallback(data, status, headers, config) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     });
 
                 }
-                
-                self.shopAdd = function(){
-                    $scope.app.showHideMask(true,'pages/shopAdd.html');
+
+                self.shopAdd = function () {
+                    $scope.app.showHideMask(true, 'pages/shopAdd.html');
                 }
 
-                 
 
-
-                self.goTo = function(ShopID, HotelID, ShopName, HotelName, ShopType) {
+                self.goTo = function (ShopID, HotelID, ShopName, HotelName, ShopType) {
                     $scope.app.maskParams.ShopName = ShopName;
                     $scope.app.maskParams.HotelName = HotelName;
                     $scope.app.maskParams.ShopType = ShopType;
@@ -846,7 +842,7 @@
                         $scope.ShopID = ShopID;
 
                         $state.go('app.shop.goods', {
-                            ShopID: ShopID, 
+                            ShopID: ShopID,
                             HotelID: HotelID
                         });
                     }
@@ -857,63 +853,63 @@
         ])
 
         .controller('shopAddController', ['$scope', '$state', '$http', '$stateParams', '$translate', '$filter', 'util',
-            function($scope,$state,$http,$stateParams,$translate,$filter,util) {
+            function ($scope, $state, $http, $stateParams, $translate, $filter, util) {
                 console.log('shopAddController');
                 var self = this;
-                self.init = function() {
-                     self.langStyle = util.langStyle();
-                     self.multiLang = util.getParams('editLangs');
-                     self.saving = false;
-                     self.searchHotelList();
-                     // 表单提交 商城信息
-                     self.form = {};
-                     // 多语言
-                     self.form.shopName = {};
+                self.init = function () {
+                    self.langStyle = util.langStyle();
+                    self.multiLang = util.getParams('editLangs');
+                    self.saving = false;
+                    self.searchHotelList();
+                    // 表单提交 商城信息
+                    self.form = {};
+                    // 多语言
+                    self.form.shopName = {};
 
-                     self.saving = false;
-                     self.loading = false;
+                    self.saving = false;
+                    self.loading = false;
                 }
 
-                self.cancel = function(){
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.searchHotelList = function() {
+                self.searchHotelList = function () {
                     self.loading = true;
                     var data = {
-                          "action": "getHotelList",
-                          "token": util.getParams("token"),
-                          "lang": self.langStyle
+                        "action": "getHotelList",
+                        "token": util.getParams("token"),
+                        "lang": self.langStyle
                     };
                     data = JSON.stringify(data);
-                        $http({
-                            method: $filter('ajaxMethod')(),
-                            url: util.getApiUrl('hotelroom', 'shopList','server'),
-                            data: data
-                        }).then(function successCallback(data, status, headers, config) {
-                            if (data.data.rescode == "200") {
-                                if (data.data.data.length == 0) {
-                                    self.noData = true;
-                                    return;
-                                }
-                                self.hotelList = data.data.data;
-                            } else if (data.data.rescode == "401") {
-                                alert('访问超时，请重新登录');
-                                $state.go('login')
-                            } else {
-                                alert('列表获取失败， ' + data.data.errInfo);
+                    $http({
+                        method: $filter('ajaxMethod')(),
+                        url: util.getApiUrl('hotelroom', 'shopList', 'server'),
+                        data: data
+                    }).then(function successCallback(data, status, headers, config) {
+                        if (data.data.rescode == "200") {
+                            if (data.data.data.length == 0) {
+                                self.noData = true;
+                                return;
                             }
+                            self.hotelList = data.data.data;
+                        } else if (data.data.rescode == "401") {
+                            alert('访问超时，请重新登录');
+                            $state.go('login')
+                        } else {
+                            alert('列表获取失败， ' + data.data.errInfo);
+                        }
 
-                        }, function errorCallback(data, status, headers, config) {
-                            alert('获取失败， ' + data.data.errInfo);
-                        }).finally(function(value) {
-                            self.loading = false;
-                        });
+                    }, function errorCallback(data, status, headers, config) {
+                        alert('获取失败， ' + data.data.errInfo);
+                    }).finally(function (value) {
+                        self.loading = false;
+                    });
 
                 }
 
-                self.saveForm = function() {
-                    if(!self.form.HotelID) {
+                self.saveForm = function () {
+                    if (!self.form.HotelID) {
                         alert('请选择门店');
                         return;
                     }
@@ -930,7 +926,7 @@
                     };
                     data = JSON.stringify(data);
                     self.saving = true;
-                    
+
                     $http({
                         method: $filter('ajaxMethod')(),
                         url: util.getApiUrl('shopinfo', 'shopList', 'server'),
@@ -947,7 +943,7 @@
                         }
                     }, function errorCallback(data, status, headers, config) {
                         alert('添加失败， ' + data.data.errInfo);
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
                 }
@@ -959,11 +955,11 @@
         .controller('goodsController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util',
             function ($scope, $state, $http, $stateParams, $filter, util) {
                 console.log('goodsController');
-                
+
                 var self = this;
                 self.init = function () {
                     self.maskParams = $scope.app.maskParams;
-                    
+
                     self.stateParams = $stateParams;
                     self.langStyle = util.langStyle();
                     self.multiLang = util.getParams('editLangs');
@@ -975,12 +971,12 @@
                     self.loading = false;
 
                     self.getGoodsCategory();
-                    
+
                 }
 
                 self.categoryAdd = function () {
                     $scope.app.maskParams = {'ShopID': self.stateParams.ShopID - 0};
-                    $scope.app.showHideMask(true,'pages/categoryAdd.html');
+                    $scope.app.showHideMask(true, 'pages/categoryAdd.html');
                 }
 
                 self.shopEdit = function () {
@@ -991,7 +987,7 @@
                         HotelID: $stateParams.HotelID,
                         ShopType: self.maskParams.ShopType
                     };
-                    $scope.app.showHideMask(true,'pages/shopEdit.html');
+                    $scope.app.showHideMask(true, 'pages/shopEdit.html');
                 }
                 // 商品分类列表
                 self.getGoodsCategory = function () {
@@ -1013,10 +1009,10 @@
                                 self.noData = true;
                             }
                             self.categoryList = data.data.data.categoryList;
-                            
+
                             self.gotoShopCate = {'id': 'all', name: {'en-US': 'All', 'zh-CN': '全部商城'}};
-                            if($stateParams.ShopGoodsCategoryID) {
-                                for(var i = 0; i < self.categoryList.length; i++) {
+                            if ($stateParams.ShopGoodsCategoryID) {
+                                for (var i = 0; i < self.categoryList.length; i++) {
                                     if ($stateParams.ShopGoodsCategoryID == self.categoryList[i].id) {
                                         self.gotoShopCate = self.categoryList[i];
                                         break;
@@ -1098,7 +1094,7 @@
                             "categoryId": self.shopGoodsCategoryId,
                             "name": self.name,
                             "invetory": self.invetory,
-                            "price": self.price*100,
+                            "price": self.price * 100,
                             "intro": self.intro,
                             "imgSrc": imgSrc
                         }
@@ -1313,7 +1309,7 @@
                             "productID": self.productId,
                             "name": self.name,
                             "invetory": self.invetory,
-                            "price": self.price*100,
+                            "price": self.price * 100,
                             "intro": self.intro,
                             "imgSrc": imgSrc
                         }
@@ -1511,7 +1507,7 @@
 
                 self.saveForm = function () {
                     self.saving = true;
-                    
+
                     var data = {
                         "action": "editMgtHotelShop",
                         "token": util.getParams("token"),
@@ -1655,7 +1651,7 @@
         .controller('categoryEditController', ['$scope', '$state', '$http', '$stateParams', '$filter', 'util',
             function ($scope, $state, $http, $stateParams, $filter, util) {
                 console.log('categoryEditController');
-    
+
                 var self = this;
                 self.init = function () {
                     self.stateParams = $stateParams;
@@ -1699,7 +1695,7 @@
                         $state.reload();
                     }, function errorCallback(data, status, headers, config) {
 
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     })
 
@@ -1724,7 +1720,7 @@
                 // 分类编辑
                 self.categoryEdit = function () {
                     $scope.app.maskParams.id = self.stateParams.ShopGoodsCategoryID;
-                    $scope.app.showHideMask(true,'pages/categoryEdit.html');
+                    $scope.app.showHideMask(true, 'pages/categoryEdit.html');
                 }
 
 
@@ -1755,7 +1751,7 @@
                         } else {
                             alert('删除失败， ' + data.data.errInfo);
                         }
-                        
+
                     }, function errorCallback(data, status, headers, config) {
                         alert('添加失败， ' + data.data.errInfo);
                     });
@@ -1766,12 +1762,12 @@
                         'shopId': self.stateParams.ShopID,
                         'shopGoodsCategoryId': self.stateParams.ShopGoodsCategoryID
                     }; //全部分类 ShopGoodsCategoryID －1
-                    $scope.app.showHideMask(true,'pages/goodsAdd.html');
+                    $scope.app.showHideMask(true, 'pages/goodsAdd.html');
                 }
 
                 self.goodsEdit = function (goodsId) {
                     $scope.app.maskParams = {'productId': goodsId};
-                    $scope.app.showHideMask(true,'pages/goodsEdit.html');
+                    $scope.app.showHideMask(true, 'pages/goodsEdit.html');
                 }
 
                 // 商品分类列表
@@ -1797,39 +1793,38 @@
                 // 商品列表
                 self.getProductList = function (ShopGoodsCategoryID) {
 
-              
-                            var data = {
-                                "action": "getMgtShopProductList",
-                                "token": util.getParams("token"),
-                                "lang": self.langStyle,
-                                "ShopID": self.stateParams.ShopID - 0,
-                                "count": 1000,
-                                "page":1
-                            }
 
-                            if (!(ShopGoodsCategoryID == "all")) {
-                                data.ShopGoodsCategoryID = self.stateParams.ShopGoodsCategoryID - 0;
-                                data.action = "getMgtProductList";
-                            }
-                            
-                            data = JSON.stringify(data);
+                    var data = {
+                        "action": "getMgtShopProductList",
+                        "token": util.getParams("token"),
+                        "lang": self.langStyle,
+                        "ShopID": self.stateParams.ShopID - 0,
+                        "count": 1000,
+                        "page": 1
+                    }
+
+                    if (!(ShopGoodsCategoryID == "all")) {
+                        data.ShopGoodsCategoryID = self.stateParams.ShopGoodsCategoryID - 0;
+                        data.action = "getMgtProductList";
+                    }
+
+                    data = JSON.stringify(data);
 
 
-                            $http({
-                                method: $filter('ajaxMethod')(),
-                                url: util.getApiUrl('shopinfo', 'shopList', 'server'),
-                                data: data
-                            }).then(function successCallback(data, status, headers, config) {
-                                // params.total(data.data.data.productTotal);
-                                var data = data.data.data.productList;
-                                self.goodsList  = data;
-                                // return data;
+                    $http({
+                        method: $filter('ajaxMethod')(),
+                        url: util.getApiUrl('shopinfo', 'shopList', 'server'),
+                        data: data
+                    }).then(function successCallback(data, status, headers, config) {
+                        // params.total(data.data.data.productTotal);
+                        var data = data.data.data.productList;
+                        self.goodsList = data;
+                        // return data;
 
-                            }, function errorCallback(data, status, headers, config) {
+                    }, function errorCallback(data, status, headers, config) {
 
-                            })
+                    })
 
-         
 
                 }
 
@@ -1847,7 +1842,7 @@
                     // 商品 的分类，保存在此对象
                     self.categoryObj = {};
                     self.categoryObj[productId] = [];
-                    console.log('categoryList '+categoryList)
+                    console.log('categoryList ' + categoryList)
                     for (var i = 0; i < categoryList.length; i++) {
                         self.categoryObj[productId].push(categoryList[i]['ShopGoodsCategoryID']);
                     }
@@ -1895,7 +1890,7 @@
                     if (status == true) {
                         status = 1;
                     } else {
-                        status =0;
+                        status = 0;
                     }
 
                     var data = {
@@ -1947,17 +1942,17 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.hotels = data.data;
-                            if(self.hotels.length == 0) {
-                              self.noData = true;
+                            if (self.hotels.length == 0) {
+                                self.noData = true;
                             }
                             else {
                                 self.idd = self.hotels[0].ID;
-                                if($stateParams.hotelId) {
-                                  $state.go('app.hotelRoom.Hospital', {hotelId: $stateParams.hotelId})
+                                if ($stateParams.hotelId) {
+                                    $state.go('app.hotelRoom.Hospital', {hotelId: $stateParams.hotelId})
                                 }
                                 else {
-                                  $state.go('app.hotelRoom.Hospital', {hotelId: self.hotels[0].ID})
-                               }
+                                    $state.go('app.hotelRoom.Hospital', {hotelId: self.hotels[0].ID})
+                                }
                             }
                         } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -1973,7 +1968,7 @@
                 }
 
                 self.getSectionsInfo = function (id) {
-                    self.idd = id ;
+                    self.idd = id;
                     var deferred = $q.defer();
                     self.loading1 = true;
                     var data = JSON.stringify({
@@ -1990,14 +1985,17 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.section = {};
-                            if(data.sectionList){
+                            if (data.sectionList) {
                                 self.seclist = data.sectionList;
                             }
                             deferred.resolve();
-                            if($state.includes('app.hotelRoom.Hospital')){
-                                $state.go($state.current.name, {'hotelId': id,'tagId': $stateParams.tagId});
-                            }else {
-                                $state.go('app.hotelRoom.Hospital.history', {'hotelId': id,'tagId': $stateParams.tagId});
+                            if ($state.includes('app.hotelRoom.Hospital')) {
+                                $state.go($state.current.name, {'hotelId': id, 'tagId': $stateParams.tagId});
+                            } else {
+                                $state.go('app.hotelRoom.Hospital.history', {
+                                    'hotelId': id,
+                                    'tagId': $stateParams.tagId
+                                });
                             }
 
                         } else if (data.rescode == '401') {
@@ -2019,7 +2017,7 @@
                 }
 
                 self.changeToSection = function (hotelid, sectionid) {
-                   // $state.go('app.hotelRoom.section', {'hotelId': hotelid, 'secId': sectionid});
+                    // $state.go('app.hotelRoom.section', {'hotelId': hotelid, 'secId': sectionid});
                     $state.go('app.hotelRoom.section', {'hotelId': hotelid, 'secId': sectionid});
                 }
 
@@ -2085,118 +2083,118 @@
                  */
                 /*self.search = function () {
 
-                    var searchName = "";
-                    if (self.searchName) {
-                        searchName = self.searchName;
-                    }
-                    var data = JSON.stringify({
-                        action: "getAllRoomInfo",
-                        token: util.getParams('token'),
-                        lang: lang,
-                        HotelID: Number(self.hotelId),
-                        page: 1,
-                        per_page: 10000,
-                        bookStartDate: util.getToday(),
-                        bookEndDate: util.getTomorrow()
-                    })
-                    self.loading = true;
-                    self.noData = false;
+                 var searchName = "";
+                 if (self.searchName) {
+                 searchName = self.searchName;
+                 }
+                 var data = JSON.stringify({
+                 action: "getAllRoomInfo",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 HotelID: Number(self.hotelId),
+                 page: 1,
+                 per_page: 10000,
+                 bookStartDate: util.getToday(),
+                 bookEndDate: util.getTomorrow()
+                 })
+                 self.loading = true;
+                 self.noData = false;
 
-                    return $http({
-                        method: 'POST',
-                        url: util.getApiUrl('room', '', 'server'),
-                        data: data
-                    }).then(function successCallback(response) {
-                        var msg = response.data;
-                        if (msg.rescode == '200') {
-                            self.rooms = msg.roomsInfo;
-                            // return msg.roomsInfo;
-                        } else if (msg.rescode == '401') {
-                            alert('访问超时，请重新登录');
-                            $location.path("pages/login.html");
-                        } else {
-                            alert('读取数据出错，' + msg.errInfo);
-                        }
-                    }, function errorCallback(response) {
-                        alert(response.status + ' 服务器出错');
-                    }).finally(function () {
-                        self.loading = false;
-                    });
-                }*/
+                 return $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 self.rooms = msg.roomsInfo;
+                 // return msg.roomsInfo;
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('读取数据出错，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }*/
 
                 /*self.RAChanged = function (index) {
-                    var roomObj = self.rooms[index];
-                    if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
-                        || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
-                        || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
-                        roomObj.RoomAvailable = 0;
-                        alert("未设置房间价格或数量，请设好后重试");
-                        return false;
-                    } else {
-                        var roomId = roomObj.ID,
-                            roomAvailable = roomObj.RoomAvailable
-                        var data = JSON.stringify({
-                            action: "setRoomAvailable",
-                            token: util.getParams('token'),
-                            lang: lang,
-                            roomID: roomId,
-                            RoomAvailable: roomAvailable == true ? 1 : 0
-                        })
-                        self.loading = true;
+                 var roomObj = self.rooms[index];
+                 if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
+                 || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
+                 || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
+                 roomObj.RoomAvailable = 0;
+                 alert("未设置房间价格或数量，请设好后重试");
+                 return false;
+                 } else {
+                 var roomId = roomObj.ID,
+                 roomAvailable = roomObj.RoomAvailable
+                 var data = JSON.stringify({
+                 action: "setRoomAvailable",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 roomID: roomId,
+                 RoomAvailable: roomAvailable == true ? 1 : 0
+                 })
+                 self.loading = true;
 
-                        $http({
-                            method: 'POST',
-                            url: util.getApiUrl('room', '', 'server'),
-                            data: data
-                        }).then(function successCallback(response) {
-                            var msg = response.data;
-                            if (msg.rescode == '200') {
-                            } else if (msg.rescode == '401') {
-                                alert('访问超时，请重新登录');
-                                $location.path("pages/login.html");
-                            } else {
-                                alert('操作失败，' + msg.errInfo);
-                            }
-                        }, function errorCallback(response) {
-                            alert(response.status + ' 服务器出错');
-                        }).finally(function () {
-                            self.loading = false;
-                        });
-                    }
-                }*/
+                 $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('操作失败，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }
+                 }*/
 
                 self.hotelEdit = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'hotelInfo': self.hotel};
-                    $scope.app.showHideMask(true,'pages/hotelEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hotelEdit.html');
                 }
 
                 self.roomAdd = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId};
                     $scope.app.maskParams.getList = self.getSectionsInfo;
-                    $scope.app.showHideMask(true,'pages/roomAdd.html');
+                    $scope.app.showHideMask(true, 'pages/roomAdd.html');
                 }
 
                 self.roomEdit = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEdit.html');
+                    $scope.app.showHideMask(true, 'pages/roomEdit.html');
                 }
 
                 self.roomEditPrice = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditPrice.html');
+                    $scope.app.showHideMask(true, 'pages/roomEditPrice.html');
                 }
 
                 self.roomEditNum = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditNum.html');
+                    $scope.app.showHideMask(true, 'pages/roomEditNum.html');
                 }
             }
         ])
 
 
         /*-----------科室的医护--------------------*/
-        .controller('doctornurseController', ['$scope', '$http','$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams',
-            function ($scope, $http,$state, $stateParams, $translate, $location, util, NgTableParams) {
+        .controller('doctornurseController', ['$scope', '$http', '$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams',
+            function ($scope, $http, $state, $stateParams, $translate, $location, util, NgTableParams) {
                 var self = this;
                 var lang;
 
@@ -2205,7 +2203,7 @@
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.sectionId = $stateParams.secId;
                     self.hotelId = $stateParams.hotelId;
-                  //  self.getSctionInfo();
+                    //  self.getSctionInfo();
                     self.getHotelInfo();
                     self.getSectionInfo();
                     self.getSectionTags();
@@ -2262,7 +2260,7 @@
                         action: "getSectionInfoClass",
                         token: util.getParams('token'),
                         lang: lang,
-                        sectionID : Number(self.sectionId)
+                        sectionID: Number(self.sectionId)
                     })
                     $http({
                         method: 'POST',
@@ -2271,10 +2269,10 @@
                     }).then(function successCallback(response) {
                         var data = response.data;
                         if (data.rescode == '200') {
-                            self.tags=data.data.secondPageType;
+                            self.tags = data.data.secondPageType;
                             self.sectionName = data.data.SectionName
-                            if(self.tags){
-                                for(var i=0;i<self.tags.length;i++){
+                            if (self.tags) {
+                                for (var i = 0; i < self.tags.length; i++) {
                                     self.tags.state = false
                                 }
                                 self.tags[0].state = true;
@@ -2337,7 +2335,7 @@
                         case 2 :
                             self.typestyle = 1;//医护信息
                             self.type = tag.ID;
-                            self.getDoctorInfo(self.sectionId,tag.ID);
+                            self.getDoctorInfo(self.sectionId, tag.ID);
                             break;
                         case 3:
                             self.typestyle = 2;
@@ -2345,19 +2343,19 @@
                         default:
                             break;
                     }
-                    if(self.tags){
-                        for(var i=0;i<self.tags.length;i++){
-                              if(self.tags[i].ID == tag.ID){
-                                  self.tags[i].state = true;
-                              }else {
-                                  self.tags[i].state = false;
-                              }
+                    if (self.tags) {
+                        for (var i = 0; i < self.tags.length; i++) {
+                            if (self.tags[i].ID == tag.ID) {
+                                self.tags[i].state = true;
+                            } else {
+                                self.tags[i].state = false;
+                            }
                         }
                     }
                 };
 
                 /*------获取医生护士的信息-------------*/
-                self.getDoctorInfo = function (secId,type) {
+                self.getDoctorInfo = function (secId, type) {
                     self.tableParams = new NgTableParams(
                         {
                             page: 1,
@@ -2366,7 +2364,7 @@
                         },
                         {
                             counts: false,
-                            getData: function(params) {
+                            getData: function (params) {
                                 var paramsUrl = params.url();
 
                                 var data = JSON.stringify({
@@ -2388,21 +2386,21 @@
                                     var data = response.data;
                                     if (data.rescode == '200') {
                                         console.log(params);
-                                        if(data.data.total == 0) {
+                                        if (data.data.total == 0) {
                                             self.noData = true;
                                         }
                                         params.total(data.data.total);
                                         self.personal_info = data.data.personal_info;
-                                        if(self.personal_info){
-                                            for(var i=0;i<self.personal_info.length;i++){
-                                                self.personal_info[i].num = i+1;
+                                        if (self.personal_info) {
+                                            for (var i = 0; i < self.personal_info.length; i++) {
+                                                self.personal_info[i].num = i + 1;
                                             }
                                         }
                                         return self.personal_info;
-                                    } else if(data.rescode == '401'){
+                                    } else if (data.rescode == '401') {
                                         alert('访问超时，请重新登录');
                                         $state.go('login');
-                                    } else{
+                                    } else {
                                         alert('获取信息失败，' + data.errInfo);
                                     }
                                 }, function errorCallback(response) {
@@ -2416,120 +2414,120 @@
                 }
 
 
-              /*  /!**
+                /*  /!**
                  * 获取客房列表
                  *!/
-                self.search = function () {
+                 self.search = function () {
 
-                    var searchName = "";
-                    if (self.searchName) {
-                        searchName = self.searchName;
-                    }
-                    var data = JSON.stringify({
-                        action: "getAllRoomInfo",
-                        token: util.getParams('token'),
-                        lang: lang,
-                        HotelID: Number(self.hotelId),
-                        page: 1,
-                        per_page: 10000,
-                        bookStartDate: util.getToday(),
-                        bookEndDate: util.getTomorrow()
-                    })
-                    self.loading = true;
-                    self.noData = false;
+                 var searchName = "";
+                 if (self.searchName) {
+                 searchName = self.searchName;
+                 }
+                 var data = JSON.stringify({
+                 action: "getAllRoomInfo",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 HotelID: Number(self.hotelId),
+                 page: 1,
+                 per_page: 10000,
+                 bookStartDate: util.getToday(),
+                 bookEndDate: util.getTomorrow()
+                 })
+                 self.loading = true;
+                 self.noData = false;
 
-                    return $http({
-                        method: 'POST',
-                        url: util.getApiUrl('room', '', 'server'),
-                        data: data
-                    }).then(function successCallback(response) {
-                        var msg = response.data;
-                        if (msg.rescode == '200') {
-                            self.rooms = msg.roomsInfo;
-                            // return msg.roomsInfo;
-                        } else if (msg.rescode == '401') {
-                            alert('访问超时，请重新登录');
-                            $location.path("pages/login.html");
-                        } else {
-                            alert('读取数据出错，' + msg.errInfo);
-                        }
-                    }, function errorCallback(response) {
-                        alert(response.status + ' 服务器出错');
-                    }).finally(function () {
-                        self.loading = false;
-                    });
-                }
+                 return $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 self.rooms = msg.roomsInfo;
+                 // return msg.roomsInfo;
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('读取数据出错，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }
 
-                self.RAChanged = function (index) {
-                    var roomObj = self.rooms[index];
-                    if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
-                        || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
-                        || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
-                        roomObj.RoomAvailable = 0;
-                        alert("未设置房间价格或数量，请设好后重试");
-                        return false;
-                    } else {
-                        var roomId = roomObj.ID,
-                            roomAvailable = roomObj.RoomAvailable
-                        var data = JSON.stringify({
-                            action: "setRoomAvailable",
-                            token: util.getParams('token'),
-                            lang: lang,
-                            roomID: roomId,
-                            RoomAvailable: roomAvailable == true ? 1 : 0
-                        })
-                        self.loading = true;
+                 self.RAChanged = function (index) {
+                 var roomObj = self.rooms[index];
+                 if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
+                 || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
+                 || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
+                 roomObj.RoomAvailable = 0;
+                 alert("未设置房间价格或数量，请设好后重试");
+                 return false;
+                 } else {
+                 var roomId = roomObj.ID,
+                 roomAvailable = roomObj.RoomAvailable
+                 var data = JSON.stringify({
+                 action: "setRoomAvailable",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 roomID: roomId,
+                 RoomAvailable: roomAvailable == true ? 1 : 0
+                 })
+                 self.loading = true;
 
-                        $http({
-                            method: 'POST',
-                            url: util.getApiUrl('room', '', 'server'),
-                            data: data
-                        }).then(function successCallback(response) {
-                            var msg = response.data;
-                            if (msg.rescode == '200') {
-                            } else if (msg.rescode == '401') {
-                                alert('访问超时，请重新登录');
-                                $location.path("pages/login.html");
-                            } else {
-                                alert('操作失败，' + msg.errInfo);
-                            }
-                        }, function errorCallback(response) {
-                            alert(response.status + ' 服务器出错');
-                        }).finally(function () {
-                            self.loading = false;
-                        });
-                    }
-                }
-               */
+                 $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('操作失败，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }
+                 }
+                 */
                 self.hotelEdit = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'hotelInfo': self.hotel};
-                    $scope.app.showHideMask(true,'pages/hotelEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hotelEdit.html');
                 }
 
                 self.secInfoAdd = function () {
                     $scope.app.maskParams.getList = self.getSectionInfo;
                     $scope.app.maskParams = {'sectionId': self.sectionId};
-                    $scope.app.showHideMask(true,'pages/roomAdd.html');
+                    $scope.app.showHideMask(true, 'pages/roomAdd.html');
 
                 }
 
-              /*  self.roomEdit = function (roomId) {
-                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEdit.html');
-                }*/
+                /*  self.roomEdit = function (roomId) {
+                 $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                 $scope.app.showHideMask(true,'pages/roomEdit.html');
+                 }*/
 
-                self.secInfoEdit = function (roomId,index) {
+                self.secInfoEdit = function (roomId, index) {
                     $scope.app.maskParams = {'hotelId': self.hotelId};
                     $scope.app.maskParams.sectionInfo = self.section[index];
                     $scope.app.maskParams.getList = self.getSectionInfo;
 
-                    $scope.app.showHideMask(true,'pages/roomEdit.html');
+                    $scope.app.showHideMask(true, 'pages/roomEdit.html');
                 }
 
                 self.gotoDetail = function (info) {
                     $scope.app.maskParams.info = info;
 
-                    $scope.app.showHideMask(true,'pages/dorcNurseDetail.html');
+                    $scope.app.showHideMask(true, 'pages/dorcNurseDetail.html');
                 }
 
                 self.stuffInfoAdd = function (type) {
@@ -2537,28 +2535,28 @@
                     $scope.app.maskParams.sectionId = self.sectionId;
                     $scope.app.maskParams.type = self.type;
                     $scope.app.maskParams.styletype = self.type;
-                    $scope.app.showHideMask(true,'pages/doctorInfoAdd.html');
+                    $scope.app.showHideMask(true, 'pages/doctorInfoAdd.html');
 
                 }
-                
+
                 self.edit = function (info) {
                     $scope.app.maskParams.info = info;
                     $scope.app.maskParams.sectionId = self.sectionId;
                     $scope.app.maskParams.type = self.type;
                     $scope.app.maskParams.getList = self.getDoctorInfo;
-                    $scope.app.showHideMask(true,'pages/doctorInfoEdit.html');
+                    $scope.app.showHideMask(true, 'pages/doctorInfoEdit.html');
                 }
 
-                self.delete = function (id,index) {
+                self.delete = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -2570,11 +2568,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.getDoctorInfo(self.sectionId,self.type);
-                        } else if(data.rescode == '401'){
+                            self.getDoctorInfo(self.sectionId, self.type);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -2582,15 +2580,15 @@
                     });
                 }
 
-               /* self.roomEditPrice = function (roomId) {
-                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditPrice.html');
-                }
+                /* self.roomEditPrice = function (roomId) {
+                 $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                 $scope.app.showHideMask(true,'pages/roomEditPrice.html');
+                 }
 
-                self.roomEditNum = function (roomId) {
-                    $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditNum.html');
-                }*/
+                 self.roomEditNum = function (roomId) {
+                 $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
+                 $scope.app.showHideMask(true,'pages/roomEditNum.html');
+                 }*/
             }
         ])
 
@@ -2801,7 +2799,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('添加成功');
-                            $scope.app.maskParams.getList(self.sectionId,self.styletype);
+                            $scope.app.maskParams.getList(self.sectionId, self.styletype);
                             self.cancel();
                         } else {
                             alert('添加失败' + data.rescode + ' ' + data.errInfo);
@@ -2953,7 +2951,7 @@
                 }
 
                 self.cancel = function () {
-                    $scope.app.maskParams.getList(self.sectionId,self.type);
+                    $scope.app.maskParams.getList(self.sectionId, self.type);
                     $scope.app.showHideMask(false);
                 }
 
@@ -2963,7 +2961,7 @@
                  * @param reload {Boolean} 是否重载
                  * @param type {String} alert类型
                  */
-                self.addAlert = function(msg, reload, type) {
+                self.addAlert = function (msg, reload, type) {
                     self.alerts.push({type: type, msg: msg, reload: reload});
                 };
                 /**
@@ -2971,7 +2969,7 @@
                  * @param index 位置
                  * @param reload {Boolean} 是否重载
                  */
-                self.closeAlert = function(index, reload) {
+                self.closeAlert = function (index, reload) {
                     self.alerts.splice(index, 1);
                     if (reload) {
                         $state.reload();
@@ -3370,7 +3368,7 @@
                     self.imgs = new Imgs([{"ImageURL": self.secInfo.PicURL, "ImageSize": self.secInfo.IconSize}], true);
                     self.imgs.initImgs();
                     self.room.Description = self.secInfo.Text,
-                    self.editLangs = util.getParams('editLangs');
+                        self.editLangs = util.getParams('editLangs');
                     self.defaultLangCode = util.getDefaultLangCode();
                 }
 
@@ -3386,7 +3384,7 @@
                  * @param reload {Boolean} 是否重载
                  * @param type {String} alert类型
                  */
-                self.addAlert = function(msg, reload, type) {
+                self.addAlert = function (msg, reload, type) {
                     self.alerts.push({type: type, msg: msg, reload: reload});
                 };
                 /**
@@ -3394,7 +3392,7 @@
                  * @param index 位置
                  * @param reload {Boolean} 是否重载
                  */
-                self.closeAlert = function(index, reload) {
+                self.closeAlert = function (index, reload) {
                     self.alerts.splice(index, 1);
                     if (reload) {
                         $state.reload();
@@ -3622,14 +3620,14 @@
         ])
 
         /*------------医院的各种信息-------------------*/
-        .controller('hospitalController', ['$scope', '$http','$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams','CONFIG',
-            function ($scope, $http,$state, $stateParams, $translate, $location, util, NgTableParams,CONFIG) {
+        .controller('hospitalController', ['$scope', '$http', '$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams', 'CONFIG',
+            function ($scope, $http, $state, $stateParams, $translate, $location, util, NgTableParams, CONFIG) {
                 var self = this;
                 var lang;
 
                 self.init = function () {
                     lang = util.langStyle();
-                    if(CONFIG.hospitalTagNow != -1){
+                    if (CONFIG.hospitalTagNow != -1) {
                         self.typestyle = CONFIG.hospitalTagNow;
                     }
                     self.defaultLangCode = util.getDefaultLangCode();
@@ -3701,14 +3699,14 @@
                     }).then(function successCallback(response) {
                         var data = response.data;
                         if (data.rescode == '200') {
-                            self.tags=data.data.hospitalClassification;
-                            if(self.tags){
-                                for(var i=0;i<self.tags.length;i++){
+                            self.tags = data.data.hospitalClassification;
+                            if (self.tags) {
+                                for (var i = 0; i < self.tags.length; i++) {
                                     self.tags.state = false
                                 }
                                 self.tags[0].state = true;
                             }
-                            if($stateParams.tagId) {
+                            if ($stateParams.tagId) {
 
                                 $state.go('app.hotelRoom.Hospital.history', {'tagId': $stateParams.tagId});     //医院历史
                             } else {
@@ -3769,11 +3767,11 @@
                 };
 
                 self.changTagStyle = function (tag) {
-                    if(self.tags){
-                        for(var i=0;i<self.tags.length;i++){
-                            if(self.tags[i].ID == tag.ID){
+                    if (self.tags) {
+                        for (var i = 0; i < self.tags.length; i++) {
+                            if (self.tags[i].ID == tag.ID) {
                                 self.tags[i].state = true;
-                            }else {
+                            } else {
                                 self.tags[i].state = false;
                             }
                         }
@@ -3802,152 +3800,150 @@
                             $state.go('app.hotelRoom.Hospital.scenic', {'tagId': tag.ID});    //周边风景
                             break;
                         case 11:
-                         /*   $state.go('app.hotelRoom.Hospital.canteen', {'tagId': tag.ID});    //医院食堂
-                            break;*/
+                        /*   $state.go('app.hotelRoom.Hospital.canteen', {'tagId': tag.ID});    //医院食堂
+                         break;*/
                         case 12:
 
                         case 13:
                             $state.go('app.hotelRoom.Hospital.publicarea', {'tagId': tag.ID});    //公共活动区
                             break;
-                           /* $state.go('app.hotelRoom.Hospital.recure', {'tagId': tag.ID});    //康复区
-                            break;*/
+                        /* $state.go('app.hotelRoom.Hospital.recure', {'tagId': tag.ID});    //康复区
+                         break;*/
                         default:
                             break;
                     }
-                   /* switch (tag.ID) {
-                        case 4 :
-                            self.typestyle = 4;   //医院历史
-                            //self.getDoctorInfo(self.sectionId,tag.ID);
-                            break;
-                        case 5 :
-                            self.typestyle = 5;   //医院荣耀
-                            self.loadHospitalHonoursList();
-                            break;
-                        case 6:
-                            self.typestyle = 6;   //医疗设备
-                            break;
-                        case 7:
-                            self.typestyle = 7;    //入院须知
-                            break;
-                        default:
-                            break;
-                    }*/
+                    /* switch (tag.ID) {
+                     case 4 :
+                     self.typestyle = 4;   //医院历史
+                     //self.getDoctorInfo(self.sectionId,tag.ID);
+                     break;
+                     case 5 :
+                     self.typestyle = 5;   //医院荣耀
+                     self.loadHospitalHonoursList();
+                     break;
+                     case 6:
+                     self.typestyle = 6;   //医疗设备
+                     break;
+                     case 7:
+                     self.typestyle = 7;    //入院须知
+                     break;
+                     default:
+                     break;
+                     }*/
 
                 };
 
 
-
-
-/*
-                /!**
+                /*
+                 /!**
                  * 获取客房列表
                  *!/
-                self.search = function () {
+                 self.search = function () {
 
-                    var searchName = "";
-                    if (self.searchName) {
-                        searchName = self.searchName;
-                    }
-                    var data = JSON.stringify({
-                        action: "getAllRoomInfo",
-                        token: util.getParams('token'),
-                        lang: lang,
-                        HotelID: Number(self.hotelId),
-                        page: 1,
-                        per_page: 10000,
-                        bookStartDate: util.getToday(),
-                        bookEndDate: util.getTomorrow()
-                    })
-                    self.loading = true;
-                    self.noData = false;
+                 var searchName = "";
+                 if (self.searchName) {
+                 searchName = self.searchName;
+                 }
+                 var data = JSON.stringify({
+                 action: "getAllRoomInfo",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 HotelID: Number(self.hotelId),
+                 page: 1,
+                 per_page: 10000,
+                 bookStartDate: util.getToday(),
+                 bookEndDate: util.getTomorrow()
+                 })
+                 self.loading = true;
+                 self.noData = false;
 
-                    return $http({
-                        method: 'POST',
-                        url: util.getApiUrl('room', '', 'server'),
-                        data: data
-                    }).then(function successCallback(response) {
-                        var msg = response.data;
-                        if (msg.rescode == '200') {
-                            self.rooms = msg.roomsInfo;
-                            // return msg.roomsInfo;
-                        } else if (msg.rescode == '401') {
-                            alert('访问超时，请重新登录');
-                            $location.path("pages/login.html");
-                        } else {
-                            alert('读取数据出错，' + msg.errInfo);
-                        }
-                    }, function errorCallback(response) {
-                        alert(response.status + ' 服务器出错');
-                    }).finally(function () {
-                        self.loading = false;
-                    });
-                }
+                 return $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 self.rooms = msg.roomsInfo;
+                 // return msg.roomsInfo;
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('读取数据出错，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }
 
-                self.RAChanged = function (index) {
-                    var roomObj = self.rooms[index];
-                    if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
-                        || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
-                        || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
-                        roomObj.RoomAvailable = 0;
-                        alert("未设置房间价格或数量，请设好后重试");
-                        return false;
-                    } else {
-                        var roomId = roomObj.ID,
-                            roomAvailable = roomObj.RoomAvailable
-                        var data = JSON.stringify({
-                            action: "setRoomAvailable",
-                            token: util.getParams('token'),
-                            lang: lang,
-                            roomID: roomId,
-                            RoomAvailable: roomAvailable == true ? 1 : 0
-                        })
-                        self.loading = true;
+                 self.RAChanged = function (index) {
+                 var roomObj = self.rooms[index];
+                 if (roomObj.PriceMonday == null || roomObj.PriceTuesday == null || roomObj.PriceWednesday == null
+                 || roomObj.PriceThursday == null || roomObj.PriceFriday == null || roomObj.PriceSaturday == null
+                 || roomObj.PriceSunday == null || roomObj.AvailableNum == null) {
+                 roomObj.RoomAvailable = 0;
+                 alert("未设置房间价格或数量，请设好后重试");
+                 return false;
+                 } else {
+                 var roomId = roomObj.ID,
+                 roomAvailable = roomObj.RoomAvailable
+                 var data = JSON.stringify({
+                 action: "setRoomAvailable",
+                 token: util.getParams('token'),
+                 lang: lang,
+                 roomID: roomId,
+                 RoomAvailable: roomAvailable == true ? 1 : 0
+                 })
+                 self.loading = true;
 
-                        $http({
-                            method: 'POST',
-                            url: util.getApiUrl('room', '', 'server'),
-                            data: data
-                        }).then(function successCallback(response) {
-                            var msg = response.data;
-                            if (msg.rescode == '200') {
-                            } else if (msg.rescode == '401') {
-                                alert('访问超时，请重新登录');
-                                $location.path("pages/login.html");
-                            } else {
-                                alert('操作失败，' + msg.errInfo);
-                            }
-                        }, function errorCallback(response) {
-                            alert(response.status + ' 服务器出错');
-                        }).finally(function () {
-                            self.loading = false;
-                        });
-                    }
-                }
- */
+                 $http({
+                 method: 'POST',
+                 url: util.getApiUrl('room', '', 'server'),
+                 data: data
+                 }).then(function successCallback(response) {
+                 var msg = response.data;
+                 if (msg.rescode == '200') {
+                 } else if (msg.rescode == '401') {
+                 alert('访问超时，请重新登录');
+                 $location.path("pages/login.html");
+                 } else {
+                 alert('操作失败，' + msg.errInfo);
+                 }
+                 }, function errorCallback(response) {
+                 alert(response.status + ' 服务器出错');
+                 }).finally(function () {
+                 self.loading = false;
+                 });
+                 }
+                 }
+                 */
                 self.hotelEdit = function () {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'hotelInfo': self.hotel};
-                    $scope.app.showHideMask(true,'pages/hotelEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hotelEdit.html');
                 }
 
                 self.secInfoAdd = function () {
 
                     $scope.app.maskParams = {'sectionId': self.sectionId};
-                    $scope.app.showHideMask(true,'pages/roomAdd.html');
+                    $scope.app.showHideMask(true, 'pages/roomAdd.html');
                 }
 
                 self.roomEdit = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEdit.html');
+                    $scope.app.showHideMask(true, 'pages/roomEdit.html');
                 }
 
                 self.roomEditPrice = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditPrice.html');
+                    $scope.app.showHideMask(true, 'pages/roomEditPrice.html');
                 }
 
                 self.roomEditNum = function (roomId) {
                     $scope.app.maskParams = {'hotelId': self.hotelId, 'roomId': roomId};
-                    $scope.app.showHideMask(true,'pages/roomEditNum.html');
+                    $scope.app.showHideMask(true, 'pages/roomEditNum.html');
                 }
             }
         ])
@@ -3958,31 +3954,31 @@
                 var self = this;
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
                     self.loadList();
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.loadList = self.loadList;
                     $scope.app.maskParams.picInfo = self.pics[index];
-                    $scope.app.showHideMask(true,'pages/hospitalHistoryEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalHistoryEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -3994,11 +3990,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4006,18 +4002,18 @@
                     });
                 }
 
-                self.add = function() {
+                self.add = function () {
 
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.loadList = self.loadList;
-                    $scope.app.showHideMask(true,'pages/hospitalHistoryAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalHistoryAdd.html');
                 }
 
-                self.loadList = function() {
+                self.loadList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle()
                     })
                     self.loading = true;
@@ -4029,10 +4025,10 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4050,7 +4046,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -4064,14 +4060,14 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
                         alert('请上传图片');
                         return;
                     }
@@ -4080,7 +4076,7 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
-                        "data":{
+                        "data": {
                             "PicURL": self.imgs1.data[0].src,
                             "Seq": self.Seq,
                             "Text": self.Text,
@@ -4101,10 +4097,10 @@
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadList();
                             //$state.go('app.hotelRoom.Hospital.history', {'tagId': self.tagId});
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4223,8 +4219,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -4250,7 +4246,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.viewId = $scope.app.maskParams.viewId;
                     self.picInfo = $scope.app.maskParams.picInfo;
 
@@ -4262,7 +4258,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
@@ -4277,10 +4273,10 @@
 
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0) {
+                    if (self.imgs1.data.length == 0) {
                         alert('请上传频道图片');
                         return;
                     }
@@ -4288,7 +4284,7 @@
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "edit",
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -4310,10 +4306,10 @@
                             alert('修改成功');
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadList();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4432,8 +4428,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -4460,7 +4456,7 @@
                 var self = this;
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
@@ -4468,25 +4464,25 @@
                     self.loadList();
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.getList = self.loadList;
 
                     $scope.app.maskParams.picInfo = self.pics[index];
-                    $scope.app.showHideMask(true,'pages/hospitalEquipmentEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalEquipmentEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -4498,11 +4494,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4510,18 +4506,18 @@
                     });
                 }
 
-                self.add = function() {
+                self.add = function () {
                     $scope.app.maskParams.getList = self.loadList;
 
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
-                    $scope.app.showHideMask(true,'pages/hospitalEquipmentAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalEquipmentAdd.html');
                 }
 
-                self.loadList = function() {
+                self.loadList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle()
                     })
                     self.loading = true;
@@ -4534,10 +4530,10 @@
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
 
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4555,7 +4551,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -4569,14 +4565,14 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
                         alert('请上传图片');
                         return;
                     }
@@ -4585,7 +4581,7 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
-                        "data":{
+                        "data": {
                             "PicURL": self.imgs1.data[0].src,
                             "Seq": self.Seq,
                             "Text": self.Text,
@@ -4605,10 +4601,10 @@
                             alert('添加成功');
                             $scope.app.showHideMask(false);
                             $state.go('app.hotelRoom.Hospital.equipment', {'tagId': self.tagId});
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4727,8 +4723,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -4754,7 +4750,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.viewId = $scope.app.maskParams.viewId;
                     self.picInfo = $scope.app.maskParams.picInfo;
 
@@ -4766,7 +4762,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
@@ -4781,10 +4777,10 @@
 
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0) {
+                    if (self.imgs1.data.length == 0) {
                         alert('请上传频道图片');
                         return;
                     }
@@ -4792,7 +4788,7 @@
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "edit",
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -4814,10 +4810,10 @@
                             alert('修改成功');
                             //$scope.app.maskParams.getList();
                             self.cancel();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -4936,8 +4932,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -4959,8 +4955,8 @@
         ])
 
         /*-------------医院荣耀-----------------------*/
-        .controller('hospitalHonourController', ['$scope', '$http','$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams','CONFIG',
-            function ($scope, $http,$state, $stateParams, $translate, $location, util, NgTableParams,CONFIG) {
+        .controller('hospitalHonourController', ['$scope', '$http', '$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams', 'CONFIG',
+            function ($scope, $http, $state, $stateParams, $translate, $location, util, NgTableParams, CONFIG) {
                 var self = this;
                 var lang;
 
@@ -4973,11 +4969,11 @@
 
                 /*------获取医院荣耀的信息-------------*/
 
-                self.loadHospitalHonoursList = function() {
+                self.loadHospitalHonoursList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle()
                     })
                     self.loading = true;
@@ -4994,10 +4990,10 @@
                             // for(var i=0;i<self.pics.length;i++){
                             //     self.defaultLangPic[i] = self.pics[i].SourceData[DFL]
                             // }
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5012,27 +5008,27 @@
                     //console.log(self.hotelId);
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.getList = self.loadHospitalHonoursList;
-                    $scope.app.showHideMask(true,'pages/hospitalHonoursAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalHonoursAdd.html');
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.picInfo = self.pics[index];
                     $scope.app.maskParams.getList = self.loadHospitalHonoursList;
-                    $scope.app.showHideMask(true,'pages/hospitalHonoursEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalHonoursEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -5044,11 +5040,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5066,7 +5062,7 @@
                 var self = this;
                 self.uplImgs = [];
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -5077,27 +5073,27 @@
                     self.defaultLangCode = util.getDefaultLangCode();
 
                     // 初始化频道图片
-                    for(var i=0; i<self.editLangs.length; i++) {
+                    for (var i = 0; i < self.editLangs.length; i++) {
                         self.uplImgs[i] = new Imgs([], true);
                     }
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     //console.log($state);
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     var defaultLang;
                     //频道图片必填验证
-                    for(var i=0; i<self.editLangs.length; i++) {
-                        if(self.editLangs[i].code == self.defaultLangCode){
+                    for (var i = 0; i < self.editLangs.length; i++) {
+                        if (self.editLangs[i].code == self.defaultLangCode) {
                             defaultLang = i;
                         }
                     }
-                    if(self.uplImgs[defaultLang].data.length == 0 || self.uplImgs[defaultLang].data[0].progress < 100) {
+                    if (self.uplImgs[defaultLang].data.length == 0 || self.uplImgs[defaultLang].data[0].progress < 100) {
                         alert('请上传默认语言图片');
                         return;
                     }
@@ -5106,17 +5102,17 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
-                        "data":[{
-                            "Seq":self.Seq,
-                            "SourceData":{}
+                        "data": [{
+                            "Seq": self.Seq,
+                            "SourceData": {}
                         }],
                         "lang": util.langStyle()
                     };
-                    for(var i=0;i<self.editLangs.length; i++) {
+                    for (var i = 0; i < self.editLangs.length; i++) {
                         var lang = self.editLangs[i].code;
                         data.data[0].SourceData[lang] = {
-                                "PicURL":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].src:'',
-                                "PicSize":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].fileSize:''
+                            "PicURL": self.uplImgs[i].data[0] ? self.uplImgs[i].data[0].src : '',
+                            "PicSize": self.uplImgs[i].data[0] ? self.uplImgs[i].data[0].fileSize : ''
                         }
 
                     }
@@ -5134,10 +5130,10 @@
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.getList();
 
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5147,8 +5143,6 @@
                     });
 
                 }
-
-
 
 
                 // 图片上传相关
@@ -5257,8 +5251,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -5284,7 +5278,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     self.tagId = $scope.app.maskParams.tagId;
 
@@ -5300,7 +5294,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.getList();
                     $scope.app.showHideMask(false);
                 }
@@ -5309,24 +5303,27 @@
                     self.Seq = self.picInfo.Seq;
                     self.images = self.picInfo.SourceData;
                     //多语言信息数组
-                    for(var key in self.images){
-                        for(var i=0;i<self.editLangs.length;i++){
-                            if(key == self.editLangs[i].code){
+                    for (var key in self.images) {
+                        for (var i = 0; i < self.editLangs.length; i++) {
+                            if (key == self.editLangs[i].code) {
                                 self.langNameArr.push(self.editLangs[i].name);
                                 self.langArr.push(key);
                             }
                         }
                     }
                     //创建图片实例
-                    for(var i =0;i<self.langArr.length;i++){
+                    for (var i = 0; i < self.langArr.length; i++) {
                         var lang = self.langArr[i];
-                        self.upImgs[i] = new Imgs([{"ImageURL": self.images[lang].PicURL, "ImageSize": self.images[lang].PicSize}], true);
+                        self.upImgs[i] = new Imgs([{
+                            "ImageURL": self.images[lang].PicURL,
+                            "ImageSize": self.images[lang].PicSize
+                        }], true);
                         self.upImgs[i].initImgs();
                         console.log(self.upImgs[i]);
                     }
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证(新建的时候验证，编辑的时候不可能为空，所以不用验证)
                     // if(self.imgs1.data.length == 0) {
@@ -5338,17 +5335,17 @@
                         "token": util.getParams('token'),
                         "action": "edit",
                         "viewID": Number(self.viewId),
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq
                         },
                         "lang": util.langStyle()
                     }
-                    for(var i =0;i<self.langArr.length;i++) {
+                    for (var i = 0; i < self.langArr.length; i++) {
                         var lang = self.langArr[i];
                         var url = self.upImgs[i].data[0].src;
                         var size = self.upImgs[i].data[0].fileSize;
-                        data.data[lang] = {"PicURL":url,"PicSize":size}
+                        data.data[lang] = {"PicURL": url, "PicSize": size}
                     }
 
                     data = JSON.stringify(data);
@@ -5365,10 +5362,10 @@
                             alert('修改成功');
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.getList();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5487,8 +5484,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -5510,8 +5507,8 @@
         ])
 
         /*-------------入院须知-----------------------*/
-        .controller('hospitalNotesController', ['$scope', '$http','$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams','CONFIG',
-            function ($scope, $http,$state, $stateParams, $translate, $location, util, NgTableParams,CONFIG) {
+        .controller('hospitalNotesController', ['$scope', '$http', '$state', '$stateParams', '$translate', '$location', 'util', 'NgTableParams', 'CONFIG',
+            function ($scope, $http, $state, $stateParams, $translate, $location, util, NgTableParams, CONFIG) {
                 var self = this;
                 var lang;
 
@@ -5524,11 +5521,11 @@
 
                 /*------获取医院荣耀的信息-------------*/
 
-                self.loadHospitalHonoursList = function() {
+                self.loadHospitalHonoursList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle()
                     })
                     self.loading = true;
@@ -5546,10 +5543,10 @@
                             //     self.defaultLangPic[i] = self.pics[i].SourceData[DFL]
                             // }
 
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5563,28 +5560,28 @@
                     //console.log(self.hotelId);
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.getList = self.loadHospitalHonoursList;
-                    $scope.app.showHideMask(true,'pages/hospitalNotesAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalNotesAdd.html');
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.picInfo = self.pics[index];
                     $scope.app.maskParams.getList = self.loadHospitalHonoursList;
 
-                    $scope.app.showHideMask(true,'pages/hospitalNotesEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalNotesEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -5596,11 +5593,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5618,7 +5615,7 @@
                 var self = this;
                 self.uplImgs = [];
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -5629,27 +5626,27 @@
                     self.defaultLangCode = util.getDefaultLangCode();
 
                     // 初始化频道图片
-                    for(var i=0; i<self.editLangs.length; i++) {
+                    for (var i = 0; i < self.editLangs.length; i++) {
                         self.uplImgs[i] = new Imgs([], true);
                     }
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     //console.log($state);
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     var defaultLang;
                     //频道图片必填验证
-                    for(var i=0; i<self.editLangs.length; i++) {
-                        if(self.editLangs[i].code == self.defaultLangCode){
+                    for (var i = 0; i < self.editLangs.length; i++) {
+                        if (self.editLangs[i].code == self.defaultLangCode) {
                             defaultLang = i;
                         }
                     }
-                    if(self.uplImgs[defaultLang].data.length == 0 || self.uplImgs[defaultLang].data[0].progress < 100) {
+                    if (self.uplImgs[defaultLang].data.length == 0 || self.uplImgs[defaultLang].data[0].progress < 100) {
                         alert('请上传默认语言图片');
                         return;
                     }
@@ -5658,17 +5655,17 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
-                        "data":[{
-                            "Seq":self.Seq,
-                            "SourceData":{}
+                        "data": [{
+                            "Seq": self.Seq,
+                            "SourceData": {}
                         }],
                         "lang": util.langStyle()
                     };
-                    for(var i=0;i<self.editLangs.length; i++) {
+                    for (var i = 0; i < self.editLangs.length; i++) {
                         var lang = self.editLangs[i].code;
                         data.data[0].SourceData[lang] = {
-                            "PicURL":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].src:'',
-                            "PicSize":self.uplImgs[i].data[0]?self.uplImgs[i].data[0].fileSize:''
+                            "PicURL": self.uplImgs[i].data[0] ? self.uplImgs[i].data[0].src : '',
+                            "PicSize": self.uplImgs[i].data[0] ? self.uplImgs[i].data[0].fileSize : ''
                         }
                     }
 
@@ -5684,10 +5681,10 @@
                             alert('添加成功');
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.getList();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -5697,8 +5694,6 @@
                     });
 
                 }
-
-
 
 
                 // 图片上传相关
@@ -5807,8 +5802,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -5834,7 +5829,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     self.tagId = $scope.app.maskParams.tagId;
 
@@ -5850,7 +5845,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
@@ -5858,24 +5853,27 @@
                     self.Seq = self.picInfo.Seq;
                     self.images = self.picInfo.SourceData;
                     //多语言信息数组
-                    for(var key in self.images){
-                        for(var i=0;i<self.editLangs.length;i++){
-                            if(key == self.editLangs[i].code){
+                    for (var key in self.images) {
+                        for (var i = 0; i < self.editLangs.length; i++) {
+                            if (key == self.editLangs[i].code) {
                                 self.langNameArr.push(self.editLangs[i].name);
                                 self.langArr.push(key);
                             }
                         }
                     }
                     //创建图片实例
-                    for(var i =0;i<self.langArr.length;i++){
+                    for (var i = 0; i < self.langArr.length; i++) {
                         var lang = self.langArr[i];
-                        self.upImgs[i] = new Imgs([{"ImageURL": self.images[lang].PicURL, "ImageSize": self.images[lang].PicSize}], true);
+                        self.upImgs[i] = new Imgs([{
+                            "ImageURL": self.images[lang].PicURL,
+                            "ImageSize": self.images[lang].PicSize
+                        }], true);
                         self.upImgs[i].initImgs();
                         console.log(self.upImgs[i]);
                     }
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证(新建的时候验证，编辑的时候不可能为空，所以不用验证)
                     // if(self.imgs1.data.length == 0) {
@@ -5887,17 +5885,17 @@
                         "token": util.getParams('token'),
                         "action": "edit",
                         "viewID": Number(self.viewId),
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq
                         },
                         "lang": util.langStyle()
                     }
-                    for(var i =0;i<self.langArr.length;i++) {
+                    for (var i = 0; i < self.langArr.length; i++) {
                         var lang = self.langArr[i];
                         var url = self.upImgs[i].data[0].src;
                         var size = self.upImgs[i].data[0].fileSize;
-                        data.data[lang] = {"PicURL":url,"PicSize":size}
+                        data.data[lang] = {"PicURL": url, "PicSize": size}
                     }
 
                     data = JSON.stringify(data);
@@ -5914,10 +5912,10 @@
                             alert('修改成功');
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.getList();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -6036,8 +6034,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -6066,7 +6064,7 @@
                 self.cateIndex; // 当前选中分类index
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
@@ -6078,10 +6076,10 @@
                  *
                  * @method addCategory
                  */
-                self.addCategory = function() {
+                self.addCategory = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalFoodCategoryAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalFoodCategoryAdd.html');
                 }
 
                 /**
@@ -6089,8 +6087,8 @@
                  *
                  * @method delCate
                  */
-                self.delCate = function() {
-                    if(!confirm('确认删除？')){
+                self.delCate = function () {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
@@ -6116,7 +6114,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.cateDeleting = false;
                     });
                 }
@@ -6126,11 +6124,11 @@
                  *
                  * @method editCate
                  */
-                self.editCate = function() {
+                self.editCate = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.info = self.info[self.cateIndex];
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalFoodCategoryEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalFoodCategoryEdit.html');
                 }
 
                 /**
@@ -6144,7 +6142,7 @@
                     $scope.app.maskParams.cateId = self.info[self.cateIndex].ID;
                     $scope.app.maskParams.info = self.info[self.cateIndex].sub[index];
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalFoodPicTextEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalFoodPicTextEdit.html');
                 }
 
                 /**
@@ -6152,11 +6150,11 @@
                  *
                  * @method addPic
                  */
-                self.addPic = function() {
+                self.addPic = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.cateId = self.info[self.cateIndex].ID;
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalFoodPicTextAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalFoodPicTextAdd.html');
                 }
 
                 /**
@@ -6165,8 +6163,8 @@
                  * @method delPic
                  * @param index 图文在列表中的序号
                  */
-                self.delPic = function(index) {
-                    if(!confirm('确认删除？')){
+                self.delPic = function (index) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
@@ -6192,7 +6190,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.picDeleting = false;
                     });
                 }
@@ -6202,7 +6200,7 @@
                  *
                  * @method loadInfo
                  */
-                self.loadInfo = function() {
+                self.loadInfo = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
@@ -6218,11 +6216,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.info = data.data.res;
-                            if(!self.cateIndex || (self.cateIndex + 1) > self.info.length) {
+                            if (!self.cateIndex || (self.cateIndex + 1) > self.info.length) {
                                 self.cateIndex = 0;
                             }
                             //判断分类下内容为空时，sub属性为空数组，不然模板的ng-repeat会报错
-                            if(self.info.length ==0 ){
+                            if (self.info.length == 0) {
                                 self.info[0].sub = [];
                             }
                         }
@@ -6231,7 +6229,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     });
                 }
@@ -6256,7 +6254,7 @@
                 self.imgs1 = null;
                 self.editLangs = util.getParams('editLangs');
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
 
                 }
@@ -6266,7 +6264,7 @@
                  *
                  * @method cancel
                  */
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
@@ -6275,12 +6273,12 @@
                  *
                  * @method save
                  */
-                self.save = function() {
+                self.save = function () {
 
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "add",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle(),
                         "data": {
                             "Title": self.cateName,
@@ -6299,7 +6297,7 @@
                         $scope.app.maskParams.loadInfo();
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
                 }
@@ -6313,7 +6311,7 @@
                 var self = this;
                 self.editLangs = util.getParams('editLangs');
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.info = $scope.app.maskParams.info;
                     self.Seq = self.info.Seq;
@@ -6325,7 +6323,7 @@
                  *
                  * @method cancel
                  */
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
@@ -6335,7 +6333,7 @@
                  *
                  * @method save
                  */
-                self.save = function() {
+                self.save = function () {
 
 
                     var data = JSON.stringify({
@@ -6360,7 +6358,7 @@
                         $scope.app.maskParams.loadInfo();
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
                 }
@@ -6472,8 +6470,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -6499,7 +6497,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.cateId = $scope.app.maskParams.cateId;
 
@@ -6511,14 +6509,14 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
                         alert('请上传图片');
                         return;
                     }
@@ -6527,7 +6525,7 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hotelId),
-                        "data":{
+                        "data": {
                             "PID": self.cateId,
                             "PicURL": self.imgs1.data[0].src,
                             "Seq": self.Seq,
@@ -6548,218 +6546,10 @@
                         if (data.rescode == '200') {
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadInfo();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
-                            alert('添加失败，' + data.errInfo);
-                        }
-                    }, function errorCallback(response) {
-                        alert('连接服务器出错');
-                    }).finally(function (value) {
-                        self.saving = false;
-                    });
-
-                }
-
-
-                // 图片上传相关
-                self.clickUpload = function (e) {
-                    setTimeout(function () {
-                        document.getElementById(e).click();
-                    }, 0);
-                }
-
-                function Imgs(imgList, single) {
-                    this.initImgList = imgList;
-                    this.data = [];
-                    this.maxId = 0;
-                    this.single = single ? true : false;
-                }
-
-                Imgs.prototype = {
-                    initImgs: function () {
-                        var l = this.initImgList;
-                        for (var i = 0; i < l.length; i++) {
-                            this.data[i] = {
-                                "src": l[i].ImageURL,
-                                "fileSize": l[i].ImageSize,
-                                "id": this.maxId++,
-                                "progress": 100
-                            };
-                        }
-                    },
-                    deleteById: function (id) {
-                        var l = this.data;
-                        for (var i = 0; i < l.length; i++) {
-                            if (l[i].id == id) {
-                                // 如果正在上传，取消上传
-                                if (l[i].progress < 100 && l[i].progress != -1) {
-                                    l[i].xhr.abort();
-                                }
-                                l.splice(i, 1);
-                                break;
-                            }
-                        }
-                    },
-
-                    add: function (xhr, fileName, fileSize) {
-                        this.data.push({
-                            "xhr": xhr,
-                            "fileName": fileName,
-                            "fileSize": fileSize,
-                            "progress": 0,
-                            "id": this.maxId
-                        });
-                        return this.maxId++;
-                    },
-
-                    update: function (id, progress, leftSize, fileSize) {
-                        for (var i = 0; i < this.data.length; i++) {
-                            var f = this.data[i];
-                            if (f.id === id) {
-                                f.progress = progress;
-                                f.leftSize = leftSize;
-                                f.fileSize = fileSize;
-                                break;
-                            }
-                        }
-                    },
-
-                    setSrcSizeByXhr: function (xhr, src, size) {
-                        for (var i = 0; i < this.data.length; i++) {
-                            if (this.data[i].xhr == xhr) {
-                                this.data[i].src = src;
-                                this.data[i].fileSize = size;
-                                break;
-                            }
-                        }
-                    },
-
-                    uploadFile: function (e, o) {
-
-                        // 如果这个对象只允许上传一张图片
-                        if (this.single) {
-                            // 删除第二张以后的图片
-                            for (var i = 1; i < this.data.length; i++) {
-                                this.deleteById(this.data[i].id);
-                            }
-                        }
-
-                        var file = $scope[e];
-                        var uploadUrl = CONFIG.uploadUrl;
-                        var xhr = new XMLHttpRequest();
-                        var fileId = this.add(xhr, file.name, file.size, xhr);
-                            // self.search();
-
-                        util.uploadFileToUrl(xhr, file, uploadUrl, 'normal',
-                             function (evt) {
-                                    $scope.$apply(function () {
-                                        if (evt.lengthComputable) {
-                                            var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-                                            o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
-                                            console && console.log(percentComplete);
-                                        }
-                                    });
-                                },
-                             function (xhr) {
-                                    var ret = JSON.parse(xhr.responseText);
-                                    console && console.log(ret);
-                                    $scope.$apply(function () {
-                                        o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
-                                        // 如果这个对象只允许上传一张图片
-                                        if (o.single) {
-                                            // 如果长度大于1张图片，删除前几张图片
-                                            if(o.data.length > 1) {
-                                                for(var i=0; i<o.data.length-1;i++) {
-                                                    o.deleteById(o.data[i].id);
-                                                }
-                                            }
-                                        }
-                                    });
-                                },
-                             function (xhr) {
-                                    $scope.$apply(function () {
-                                        o.update(fileId, -1, '', '');
-                                    });
-                                    console && console.log('failure');
-                                    xhr.abort();
-                                }
-                            );
-                    }
-                }
-
-            }
-        ])
-
-        /*-------------编辑医院餐饮分类下的图文-------------------*/
-        .controller('hosFoodPicTextEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
-            function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
-                var self = this;
-
-                self.init = function() {
-                    self.hotelId = $scope.app.maskParams.hotelId;
-                    self.cateId = $scope.app.maskParams.cateId;
-                    self.info = $scope.app.maskParams.info;
-
-                    self.Seq = self.info.Seq;
-                    self.Text = self.info.Text;
-                    self.Title = self.info.Title;
-                    self.Price = self.info.Price;
-
-
-                    // 获取编辑多语言信息
-                    self.editLangs = util.getParams('editLangs');
-
-                    // 初始化频道图片
-                    self.imgs1 = new Imgs([{"ImageURL": self.info.PicURL, "ImageSize": self.info.PicSize}], true);
-                    self.imgs1.initImgs();
-
-                }
-
-
-                self.cancel = function() {
-                    $scope.app.maskParams.loadInfo();
-
-                    $scope.app.showHideMask(false);
-                }
-
-                self.save = function() {
-
-                    //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
-                        alert('请上传图片');
-                        return;
-                    }
-
-                    var data = JSON.stringify({
-                        "token": util.getParams('token'),
-                        "action": "edit",
-                        "data":{
-                            "PID": self.info.ID,
-                            "PicURL": self.imgs1.data[0].src,
-                            "Seq": self.Seq,
-                            "Text": self.Text,
-                            "Title": self.Title,
-                            "Price": self.Price,
-                            "PicSize": self.imgs1.data[0].fileSize
-                        },
-                        "lang": util.langStyle()
-                    })
-                    self.saving = true;
-                    $http({
-                        method: 'POST',
-                        url: util.getApiUrl('hospitalFood', '', 'server'),
-                        data: data
-                    }).then(function successCallback(response) {
-                        var data = response.data;
-                        if (data.rescode == '200') {
-                            $scope.app.showHideMask(false);
-                            $scope.app.maskParams.loadInfo();
-                        } else if(data.rescode == '401'){
-                            alert('访问超时，请重新登录');
-                            $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -6878,8 +6668,216 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
+                                                o.deleteById(o.data[i].id);
+                                            }
+                                        }
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                $scope.$apply(function () {
+                                    o.update(fileId, -1, '', '');
+                                });
+                                console && console.log('failure');
+                                xhr.abort();
+                            }
+                        );
+                    }
+                }
+
+            }
+        ])
+
+        /*-------------编辑医院餐饮分类下的图文-------------------*/
+        .controller('hosFoodPicTextEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
+            function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
+                var self = this;
+
+                self.init = function () {
+                    self.hotelId = $scope.app.maskParams.hotelId;
+                    self.cateId = $scope.app.maskParams.cateId;
+                    self.info = $scope.app.maskParams.info;
+
+                    self.Seq = self.info.Seq;
+                    self.Text = self.info.Text;
+                    self.Title = self.info.Title;
+                    self.Price = self.info.Price;
+
+
+                    // 获取编辑多语言信息
+                    self.editLangs = util.getParams('editLangs');
+
+                    // 初始化频道图片
+                    self.imgs1 = new Imgs([{"ImageURL": self.info.PicURL, "ImageSize": self.info.PicSize}], true);
+                    self.imgs1.initImgs();
+
+                }
+
+
+                self.cancel = function () {
+                    $scope.app.maskParams.loadInfo();
+
+                    $scope.app.showHideMask(false);
+                }
+
+                self.save = function () {
+
+                    //频道图片必填验证
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                        alert('请上传图片');
+                        return;
+                    }
+
+                    var data = JSON.stringify({
+                        "token": util.getParams('token'),
+                        "action": "edit",
+                        "data": {
+                            "PID": self.info.ID,
+                            "PicURL": self.imgs1.data[0].src,
+                            "Seq": self.Seq,
+                            "Text": self.Text,
+                            "Title": self.Title,
+                            "Price": self.Price,
+                            "PicSize": self.imgs1.data[0].fileSize
+                        },
+                        "lang": util.langStyle()
+                    })
+                    self.saving = true;
+                    $http({
+                        method: 'POST',
+                        url: util.getApiUrl('hospitalFood', '', 'server'),
+                        data: data
+                    }).then(function successCallback(response) {
+                        var data = response.data;
+                        if (data.rescode == '200') {
+                            $scope.app.showHideMask(false);
+                            $scope.app.maskParams.loadInfo();
+                        } else if (data.rescode == '401') {
+                            alert('访问超时，请重新登录');
+                            $state.go('login');
+                        } else {
+                            alert('添加失败，' + data.errInfo);
+                        }
+                    }, function errorCallback(response) {
+                        alert('连接服务器出错');
+                    }).finally(function (value) {
+                        self.saving = false;
+                    });
+
+                }
+
+
+                // 图片上传相关
+                self.clickUpload = function (e) {
+                    setTimeout(function () {
+                        document.getElementById(e).click();
+                    }, 0);
+                }
+
+                function Imgs(imgList, single) {
+                    this.initImgList = imgList;
+                    this.data = [];
+                    this.maxId = 0;
+                    this.single = single ? true : false;
+                }
+
+                Imgs.prototype = {
+                    initImgs: function () {
+                        var l = this.initImgList;
+                        for (var i = 0; i < l.length; i++) {
+                            this.data[i] = {
+                                "src": l[i].ImageURL,
+                                "fileSize": l[i].ImageSize,
+                                "id": this.maxId++,
+                                "progress": 100
+                            };
+                        }
+                    },
+                    deleteById: function (id) {
+                        var l = this.data;
+                        for (var i = 0; i < l.length; i++) {
+                            if (l[i].id == id) {
+                                // 如果正在上传，取消上传
+                                if (l[i].progress < 100 && l[i].progress != -1) {
+                                    l[i].xhr.abort();
+                                }
+                                l.splice(i, 1);
+                                break;
+                            }
+                        }
+                    },
+
+                    add: function (xhr, fileName, fileSize) {
+                        this.data.push({
+                            "xhr": xhr,
+                            "fileName": fileName,
+                            "fileSize": fileSize,
+                            "progress": 0,
+                            "id": this.maxId
+                        });
+                        return this.maxId++;
+                    },
+
+                    update: function (id, progress, leftSize, fileSize) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            var f = this.data[i];
+                            if (f.id === id) {
+                                f.progress = progress;
+                                f.leftSize = leftSize;
+                                f.fileSize = fileSize;
+                                break;
+                            }
+                        }
+                    },
+
+                    setSrcSizeByXhr: function (xhr, src, size) {
+                        for (var i = 0; i < this.data.length; i++) {
+                            if (this.data[i].xhr == xhr) {
+                                this.data[i].src = src;
+                                this.data[i].fileSize = size;
+                                break;
+                            }
+                        }
+                    },
+
+                    uploadFile: function (e, o) {
+
+                        // 如果这个对象只允许上传一张图片
+                        if (this.single) {
+                            // 删除第二张以后的图片
+                            for (var i = 1; i < this.data.length; i++) {
+                                this.deleteById(this.data[i].id);
+                            }
+                        }
+
+                        var file = $scope[e];
+                        var uploadUrl = CONFIG.uploadUrl;
+                        var xhr = new XMLHttpRequest();
+                        var fileId = this.add(xhr, file.name, file.size, xhr);
+                        // self.search();
+
+                        util.uploadFileToUrl(xhr, file, uploadUrl, 'normal',
+                            function (evt) {
+                                $scope.$apply(function () {
+                                    if (evt.lengthComputable) {
+                                        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                                        o.update(fileId, percentComplete, evt.total - evt.loaded, evt.total);
+                                        console && console.log(percentComplete);
+                                    }
+                                });
+                            },
+                            function (xhr) {
+                                var ret = JSON.parse(xhr.responseText);
+                                console && console.log(ret);
+                                $scope.$apply(function () {
+                                    o.setSrcSizeByXhr(xhr, ret.upload_path, ret.size);
+                                    // 如果这个对象只允许上传一张图片
+                                    if (o.single) {
+                                        // 如果长度大于1张图片，删除前几张图片
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -6908,7 +6906,7 @@
                 self.cateIndex; // 当前选中分类index
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
@@ -6920,10 +6918,10 @@
                  *
                  * @method addCategory
                  */
-                self.addCategory = function() {
+                self.addCategory = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalAroundCategoryAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalAroundCategoryAdd.html');
                 }
 
                 /**
@@ -6931,8 +6929,8 @@
                  *
                  * @method delCate
                  */
-                self.delCate = function() {
-                    if(!confirm('确认删除？')){
+                self.delCate = function () {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
@@ -6958,7 +6956,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.cateDeleting = false;
                     });
                 }
@@ -6968,11 +6966,11 @@
                  *
                  * @method editCate
                  */
-                self.editCate = function() {
+                self.editCate = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.info = self.info[self.cateIndex];
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalAroundCategoryEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalAroundCategoryEdit.html');
                 }
 
                 /**
@@ -6986,7 +6984,7 @@
                     $scope.app.maskParams.cateId = self.info[self.cateIndex].ID;
                     $scope.app.maskParams.info = self.info[self.cateIndex].sub[index];
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalAroundPicTextEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalAroundPicTextEdit.html');
                 }
 
                 /**
@@ -6994,11 +6992,11 @@
                  *
                  * @method addPic
                  */
-                self.addPic = function() {
+                self.addPic = function () {
                     $scope.app.maskParams.hotelId = self.hotelId;
                     $scope.app.maskParams.cateId = self.info[self.cateIndex].ID;
                     $scope.app.maskParams.loadInfo = self.loadInfo;
-                    $scope.app.showHideMask(true,'pages/hospitalAroundPicTextAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalAroundPicTextAdd.html');
                 }
 
                 /**
@@ -7007,8 +7005,8 @@
                  * @method delPic
                  * @param index 图文在列表中的序号
                  */
-                self.delPic = function(index) {
-                    if(!confirm('确认删除？')){
+                self.delPic = function (index) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
@@ -7034,7 +7032,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.picDeleting = false;
                     });
                 }
@@ -7044,7 +7042,7 @@
                  *
                  * @method loadInfo
                  */
-                self.loadInfo = function() {
+                self.loadInfo = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
@@ -7060,11 +7058,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.info = data.data.res;
-                            if(!self.cateIndex || (self.cateIndex + 1) > self.info.length) {
+                            if (!self.cateIndex || (self.cateIndex + 1) > self.info.length) {
                                 self.cateIndex = 0;
                             }
                             //判断分类下内容为空时，sub属性为空数组，不然模板的ng-repeat会报错
-                            if(self.info.length ==0 ){
+                            if (self.info.length == 0) {
                                 self.info[0].sub = [];
                             }
                         }
@@ -7073,7 +7071,7 @@
                         }
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.loading = false;
                     });
                 }
@@ -7098,7 +7096,7 @@
                 self.imgs1 = null;
                 self.editLangs = util.getParams('editLangs');
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.imgs1 = new Imgs([], true);
 
@@ -7109,7 +7107,7 @@
                  *
                  * @method cancel
                  */
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
@@ -7118,8 +7116,8 @@
                  *
                  * @method save
                  */
-                self.save = function() {
-                    if(!(self.imgs1.data[0] && self.imgs1.data[0].src)) {
+                self.save = function () {
+                    if (!(self.imgs1.data[0] && self.imgs1.data[0].src)) {
                         alert('请上传图片');
                         return;
                     }
@@ -7127,13 +7125,13 @@
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "add",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle(),
                         "data": {
                             "Title": self.cateName,
                             "Seq": self.Seq,
                             "PicURL": self.imgs1.data[0].src,
-                            "PicSize": self.imgs1.data[0].fileSize-0
+                            "PicSize": self.imgs1.data[0].fileSize - 0
 
                         }
                     });
@@ -7149,7 +7147,7 @@
                         $scope.app.maskParams.loadInfo();
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
                 }
@@ -7261,8 +7259,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -7290,12 +7288,12 @@
                 var self = this;
                 self.editLangs = util.getParams('editLangs');
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.info = $scope.app.maskParams.info;
                     self.Seq = self.info.Seq;
                     self.cateName = self.info.Title;
-                    self.imgs1 = new Imgs([{ "ImageURL": self.info.PicURL, "ImageSize": self.info.PicSize }], true);
+                    self.imgs1 = new Imgs([{"ImageURL": self.info.PicURL, "ImageSize": self.info.PicSize}], true);
                     self.imgs1.initImgs();
                 }
 
@@ -7304,7 +7302,7 @@
                  *
                  * @method cancel
                  */
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
@@ -7314,9 +7312,9 @@
                  *
                  * @method save
                  */
-                self.save = function() {
+                self.save = function () {
 
-                    if(!(self.imgs1.data[0] && self.imgs1.data[0].src)) {
+                    if (!(self.imgs1.data[0] && self.imgs1.data[0].src)) {
                         alert('请上传图片');
                         return;
                     }
@@ -7330,7 +7328,7 @@
                             "Title": self.cateName,
                             "Seq": self.Seq,
                             "PicURL": self.imgs1.data[0].src,
-                            "PicSize": self.imgs1.data[0].fileSize-0
+                            "PicSize": self.imgs1.data[0].fileSize - 0
 
                         }
                     });
@@ -7346,7 +7344,7 @@
                         $scope.app.maskParams.loadInfo();
                     }, function errorCallback(response) {
                         alert('连接服务器出错');
-                    }).finally(function(value) {
+                    }).finally(function (value) {
                         self.saving = false;
                     });
                 }
@@ -7458,8 +7456,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -7485,7 +7483,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.cateId = $scope.app.maskParams.cateId;
 
@@ -7496,17 +7494,17 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hotelId),
-                        "data":{
+                        "data": {
                             "PID": self.cateId,
                             "Seq": self.Seq,
                             "Text": self.Text,
@@ -7524,10 +7522,10 @@
                         if (data.rescode == '200') {
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadInfo();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -7546,7 +7544,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hotelId = $scope.app.maskParams.hotelId;
                     self.cateId = $scope.app.maskParams.cateId;
                     self.info = $scope.app.maskParams.info;
@@ -7561,17 +7559,17 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadInfo();
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "edit",
-                        "data":{
+                        "data": {
                             "PID": self.info.ID,
                             "Seq": self.Seq,
                             "Text": self.Text,
@@ -7589,10 +7587,10 @@
                         if (data.rescode == '200') {
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadInfo();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -7611,7 +7609,7 @@
                 var self = this;
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
@@ -7621,25 +7619,25 @@
                     self.loadList();
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.tagId;
                     $scope.app.maskParams.loadList = self.loadList;
 
                     $scope.app.maskParams.picInfo = self.pics[index];
-                    $scope.app.showHideMask(true,'pages/hospitalPublicAreaEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalPublicAreaEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -7651,11 +7649,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -7663,18 +7661,18 @@
                     });
                 }
 
-                self.add = function() {
+                self.add = function () {
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.tagId};
                     $scope.app.maskParams.loadList = self.loadList;
 
-                    $scope.app.showHideMask(true,'pages/hospitalPublicAreaAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalPublicAreaAdd.html');
                 }
 
-                self.loadList = function() {
+                self.loadList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle(),
                         "moduleID": self.tagId
                     })
@@ -7688,10 +7686,10 @@
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
 
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -7709,7 +7707,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -7724,14 +7722,14 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
                         alert('请上传图片');
                         return;
                     }
@@ -7741,7 +7739,7 @@
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
                         "moduleID": Number(self.tagId),
-                        "data":{
+                        "data": {
                             "PicURL": self.imgs1.data[0].src,
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -7763,13 +7761,13 @@
                         if (data.rescode == '200') {
                             alert('添加成功');
                             $scope.app.showHideMask(false);
-                           // $state.reload();
+                            // $state.reload();
                             $scope.app.maskParams.loadList();
                             //$state.go('app.hotelRoom.Hospital.publicarea', {'tagId': self.tagId});
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -7888,8 +7886,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -7915,7 +7913,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.viewId = $scope.app.maskParams.viewId;
                     self.picInfo = $scope.app.maskParams.picInfo;
 
@@ -7927,7 +7925,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
@@ -7945,10 +7943,10 @@
 
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0) {
+                    if (self.imgs1.data.length == 0) {
                         alert('请上传频道图片');
                         return;
                     }
@@ -7956,7 +7954,7 @@
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "edit",
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -7982,10 +7980,10 @@
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadList();
 
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -8104,8 +8102,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -8132,31 +8130,31 @@
                 var self = this;
                 var lang;
 
-                self.init = function() {
+                self.init = function () {
                     lang = util.langStyle();
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $stateParams.hotelId;
                     self.loadList();
                 }
 
-                self.edit = function(index) {
+                self.edit = function (index) {
                     $scope.app.maskParams.hospitalId = self.hotelId;
                     $scope.app.maskParams.tagId = self.typestyle;
                     $scope.app.maskParams.loadList = self.loadList;
                     $scope.app.maskParams.picInfo = self.pics[index];
-                    $scope.app.showHideMask(true,'pages/hospitalScenicEdit.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalScenicEdit.html');
                 }
 
-                self.del = function(id, index) {
+                self.del = function (id, index) {
                     var index = index;
-                    if(!confirm('确认删除？')) {
+                    if (!confirm('确认删除？')) {
                         return;
                     }
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "delete",
                         "data": {
-                            "ID":id-0
+                            "ID": id - 0
                         },
                         "lang": util.langStyle()
                     })
@@ -8168,11 +8166,11 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             alert('删除成功');
-                            self.pics.splice(index,1);
-                        } else if(data.rescode == '401'){
+                            self.pics.splice(index, 1);
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('删除失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -8180,18 +8178,18 @@
                     });
                 }
 
-                self.add = function() {
+                self.add = function () {
 
                     $scope.app.maskParams = {'hospitalId': self.hotelId, 'tagId': self.typestyle};
                     $scope.app.maskParams.loadList = self.loadList;
-                    $scope.app.showHideMask(true,'pages/hospitalScenicAdd.html');
+                    $scope.app.showHideMask(true, 'pages/hospitalScenicAdd.html');
                 }
 
-                self.loadList = function() {
+                self.loadList = function () {
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "get",
-                        "hotelID": self.hotelId-0,
+                        "hotelID": self.hotelId - 0,
                         "lang": util.langStyle()
                     })
                     self.loading = true;
@@ -8203,10 +8201,10 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.pics = data.data.res;
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('加载信息失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -8224,7 +8222,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.hospitalId = $scope.app.maskParams.hospitalId;
                     //console.log(self.hospitalId);
                     self.tagId = $scope.app.maskParams.tagId;
@@ -8238,14 +8236,14 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.showHideMask(false);
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
+                    if (self.imgs1.data.length == 0 || self.imgs1.data[0].progress < 100) {
                         alert('请上传图片');
                         return;
                     }
@@ -8254,7 +8252,7 @@
                         "token": util.getParams('token'),
                         "action": "add",
                         "hotelID": Number(self.hospitalId),
-                        "data":{
+                        "data": {
                             "PicURL": self.imgs1.data[0].src,
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -8274,10 +8272,10 @@
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadList();
                             //$state.go('app.hotelRoom.Hospital.history', {'tagId': self.tagId});
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('添加失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -8396,8 +8394,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -8423,7 +8421,7 @@
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
 
-                self.init = function() {
+                self.init = function () {
                     self.viewId = $scope.app.maskParams.viewId;
                     self.picInfo = $scope.app.maskParams.picInfo;
 
@@ -8435,7 +8433,7 @@
                 }
 
 
-                self.cancel = function() {
+                self.cancel = function () {
                     $scope.app.maskParams.loadList();
                     $scope.app.showHideMask(false);
                 }
@@ -8450,10 +8448,10 @@
 
                 }
 
-                self.save = function() {
+                self.save = function () {
 
                     //频道图片必填验证
-                    if(self.imgs1.data.length == 0) {
+                    if (self.imgs1.data.length == 0) {
                         alert('请上传频道图片');
                         return;
                     }
@@ -8461,7 +8459,7 @@
                     var data = JSON.stringify({
                         "token": util.getParams('token'),
                         "action": "edit",
-                        "data":{
+                        "data": {
                             "ID": Number(self.picInfo.ID),
                             "Seq": self.Seq,
                             "Title": self.Title,
@@ -8482,10 +8480,10 @@
                             alert('修改成功');
                             $scope.app.showHideMask(false);
                             $scope.app.maskParams.loadList();
-                        } else if(data.rescode == '401'){
+                        } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $state.go('login');
-                        } else{
+                        } else {
                             alert('修改失败，' + data.errInfo);
                         }
                     }, function errorCallback(response) {
@@ -8604,8 +8602,8 @@
                                     // 如果这个对象只允许上传一张图片
                                     if (o.single) {
                                         // 如果长度大于1张图片，删除前几张图片
-                                        if(o.data.length > 1) {
-                                            for(var i=0; i<o.data.length-1;i++) {
+                                        if (o.data.length > 1) {
+                                            for (var i = 0; i < o.data.length - 1; i++) {
                                                 o.deleteById(o.data[i].id);
                                             }
                                         }
@@ -8634,17 +8632,17 @@
                 self.init = function () {
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.hotelId = $scope.app.maskParams.hotelId;
-                    if(!$scope.app.maskParams.hotelInfo) {
-                        self.getHotelInfo().then(function() {
+                    if (!$scope.app.maskParams.hotelInfo) {
+                        self.getHotelInfo().then(function () {
                             self.init2();
                         })
-                    } else{
+                    } else {
                         self.hotel = $scope.app.maskParams.hotelInfo;
                         self.init2();
                     }
-                    
+
                 }
-                self.init2 = function() {
+                self.init2 = function () {
                     self.ifCheckedHotelTags = [];
                     self.editLangs = util.getParams('editLangs');
 
@@ -8716,30 +8714,30 @@
                 }
 
                 self.save = function () {
-                   /* var imgs = [];
-                    for (var i = 0; i < self.imgs1.data.length; i++) {
-                        imgs[i] = {};
-                        imgs[i].Seq = i;
-                        imgs[i].ImageURL = self.imgs1.data[i].src;
-                        imgs[i].ImageSize = self.imgs1.data[i].fileSize;
-                    }
-                    //检查图片未上传
-                    if (imgs.length == 0) {
-                        alert('请上传酒店图片')
-                        return;
-                    }
-                    //检查logo上传
-                    if (self.imgs2.data.length == 0) {
-                        alert('请上传酒店LOGO')
-                        return;
-                    }
+                    /* var imgs = [];
+                     for (var i = 0; i < self.imgs1.data.length; i++) {
+                     imgs[i] = {};
+                     imgs[i].Seq = i;
+                     imgs[i].ImageURL = self.imgs1.data[i].src;
+                     imgs[i].ImageSize = self.imgs1.data[i].fileSize;
+                     }
+                     //检查图片未上传
+                     if (imgs.length == 0) {
+                     alert('请上传酒店图片')
+                     return;
+                     }
+                     //检查logo上传
+                     if (self.imgs2.data.length == 0) {
+                     alert('请上传酒店LOGO')
+                     return;
+                     }
 
-                    var tags = [];
-                    for (var i = 0; i < self.ifCheckedHotelTags.length; i++) {
-                        if (self.ifCheckedHotelTags[i].checked) {
-                            tags.push({"ID": self.ifCheckedHotelTags[i].ID});
-                        }
-                    }*/
+                     var tags = [];
+                     for (var i = 0; i < self.ifCheckedHotelTags.length; i++) {
+                     if (self.ifCheckedHotelTags[i].checked) {
+                     tags.push({"ID": self.ifCheckedHotelTags[i].ID});
+                     }
+                     }*/
                     self.saving = true;
                     var data = JSON.stringify({
                         action: "editHotel",
@@ -9204,7 +9202,7 @@
                  * @param reload {Boolean} 是否重载
                  * @param type {String} alert类型
                  */
-                self.addAlert = function(msg, reload, type) {
+                self.addAlert = function (msg, reload, type) {
                     self.alerts.push({type: type, msg: msg, reload: reload});
                 };
                 /**
@@ -9212,7 +9210,7 @@
                  * @param index 位置
                  * @param reload {Boolean} 是否重载
                  */
-                self.closeAlert = function(index, reload) {
+                self.closeAlert = function (index, reload) {
                     self.alerts.splice(index, 1);
                     if (reload) {
                         $state.reload();
@@ -9299,7 +9297,7 @@
                         self.loading = false;
                     });
                 }
-                
+
                 self.deleteRoom = function () {
                     if (confirm("确定要此客房吗？")) {
                         var data = JSON.stringify({
@@ -9543,11 +9541,11 @@
                 self.saveAddPrice = function () {
                     self.savingAddPrice = true;
                     var addPriceData = [];
-                    for(var i = 0; i < self.addPrice.length; i++) {
+                    for (var i = 0; i < self.addPrice.length; i++) {
                         addPriceData[i] = {};
                         addPriceData[i].Name = self.addPrice[i].Name;
                         addPriceData[i].Desc = self.addPrice[i].Desc;
-                        addPriceData[i].Price = self.addPrice[i].Price*100;
+                        addPriceData[i].Price = self.addPrice[i].Price * 100;
                     }
 
                     var data = JSON.stringify({
@@ -9581,7 +9579,7 @@
                 }
 
                 self.addAddPrice = function () {
-                    self.addPrice.push ({Name: {}, Desc: {}, Price: ''});
+                    self.addPrice.push({Name: {}, Desc: {}, Price: ''});
                 }
 
                 self.loadAddPrice = function () {
@@ -9600,7 +9598,7 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.addPrice = data.data;
-                            for(var i = 0; i < self.addPrice.length; i++) {
+                            for (var i = 0; i < self.addPrice.length; i++) {
                                 self.addPrice[i].Price /= 100;
                             }
                         } else if (data.rescode == '401') {
@@ -9711,7 +9709,7 @@
                             PriceType: "basic"
                         })
                     }
-                    if(!countJson(specialPrice, 'PriceDate')) {
+                    if (!countJson(specialPrice, 'PriceDate')) {
                         alert('同一天不能重复设置');
                         self.saving = false;
                         return false;
@@ -9886,7 +9884,7 @@
                             AvailableNumSet: Number(self.SpecialNum[i].AvailableNumCurrent)
                         })
                     }
-                    if(!countJson(availableInfo, 'AvailableDate')) {
+                    if (!countJson(availableInfo, 'AvailableDate')) {
                         alert('同一天不能重复设置');
                         self.saving = false;
                         return false;
@@ -9908,8 +9906,8 @@
                     }).then(function successCallback(response) {
                         var msg = response.data;
                         if (msg.rescode == '200') {
-                              alert('保存成功');
-                              $state.reload(); 
+                            alert('保存成功');
+                            $state.reload();
                         } else if (msg.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $location.path("pages/login.html");
@@ -9928,19 +9926,19 @@
                  * 删除客房数量信息
                  */
                 self.deleteDate = function () {
-                    if(self.delAvailableDate.length == 0) {
+                    if (self.delAvailableDate.length == 0) {
                         self.save();
                         return;
                     }
                     self.saving = true;
                     var dellist = [];
-                    for(var i = 0; i < self.delAvailableDate.length; i++) {
+                    for (var i = 0; i < self.delAvailableDate.length; i++) {
                         dellist[i] = {};
                         dellist[i].RoomID = self.roomId + "";
                         dellist[i].AvailableDate = self.delAvailableDate[i];
                     }
-                    
-                    
+
+
                     var data = JSON.stringify({
                         action: "delRoomNum",
                         lang: lang,
@@ -9955,7 +9953,7 @@
                     }).then(function successCallback(response) {
                         var msg = response.data;
                         if (msg.rescode == '200') {
-                              self.save();
+                            self.save();
                         } else if (msg.rescode == '401') {
                             alert('访问超时，请重新登录');
                             $location.path("pages/login.html");

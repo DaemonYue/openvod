@@ -151,14 +151,13 @@
                     url: '/tvAdmin',
                     templateUrl: 'pages/tvAdmin.html',
                     resolve: {
-                        resA:['$http', '$state', 'util', function($http, $state, util) {
+                        resA: ['$http', '$state', 'util', function ($http, $state, util) {
                             var data = JSON.stringify({
                                 "token": util.getParams('token'),
                                 "action": "getMainMenu",
                                 "viewID": 1,
                                 "lang": util.langStyle()
                             });
-
                             // 加载服务器树的数据
                             return $http({
                                 method: 'POST',
@@ -170,19 +169,18 @@
                                     var defaultLang = util.getDefaultLangCode();
                                     var preData = data.data.Content;
                                     var menu = [];
-                                    var mainMenu = 
+                                    var mainMenu =
                                     {
-                                      label: '首页',
-                                      data: {
-                                        type: "menuRoot",
-                                        styleImg: data.data.ViewTemplateImage,
-                                        viewName: data.data.ViewType
-                                      },
-                                      children: menu
+                                        label: '首页',
+                                        data: {
+                                            type: "menuRoot",
+                                            styleImg: data.data.ViewTemplateImage,
+                                            viewName: data.data.ViewType
+                                        },
+                                        children: menu
                                     };
-
                                     // 添加菜单data
-                                    for(var i = 0; i < preData.length; i++) {
+                                    for (var i = 0; i < preData.length; i++) {
                                         // 添加一级菜单
                                         menu.push({
                                             "label": preData[i].Name[defaultLang],
@@ -199,13 +197,13 @@
                                                 "focusImgSize": preData[i].IconFocusSize,
                                                 "seq": preData[i].Seq,
                                                 "showType": preData[i].ShowType
-                                              }
+                                            }
                                         });
                                         // 添加二级菜单
-                                        if(preData[i].NextViewID == -1) {
+                                        if (preData[i].NextViewID == -1) {
                                             menu[i].children = [];
                                             var secondMenu = preData[i].Second.Content;
-                                            for(var j = 0; j < secondMenu.length; j++) {
+                                            for (var j = 0; j < secondMenu.length; j++) {
                                                 menu[i].children.push({
                                                     "label": secondMenu[j].Name[defaultLang],
                                                     "data": {
@@ -217,40 +215,35 @@
                                                         "name": secondMenu[j].Name,
                                                         "img": secondMenu[j].IconURL,
                                                         "imgSize": secondMenu[j].IconSize,
-                                                        "focusImg":secondMenu[j].IconFocusURL,
+                                                        "focusImg": secondMenu[j].IconFocusURL,
                                                         "focusImgSize": secondMenu[j].IconFocusSize,
                                                         "seq": secondMenu[j].Seq,
                                                         "showType": preData[i].ShowType
-
                                                     }
                                                 })
                                             }
                                         }
                                     }
                                     // type: MainMenu_THJ_SecondMenu, Live, MovieCommon, ...
-                                    return{value: mainMenu};
-                                    
-                                    
-                                    
-                                } else if(data.rescode == '401'){
+                                    return {value: mainMenu};
+                                } else if (data.rescode == '401') {
                                     alert('访问超时，请重新登录');
                                     $state.go('login');
-                                } else{
+                                } else {
                                     alert('加载菜单信息失败，' + data.errInfo);
                                 }
                             }, function errorCallback(response) {
                                 alert('连接服务器出错');
                             }).finally(function (value) {
-                                
+
                             });
                         }],
-                        resWelcome: ['$http', '$state', 'util', function($http, $state, util) {
+                        resWelcome: ['$http', '$state', 'util', function ($http, $state, util) {
                             var data = JSON.stringify({
                                 "token": util.getParams('token'),
                                 "action": "getWelcomePageTemplate",
                                 "lang": util.langStyle()
                             });
-
                             // 加载服务器树的数据
                             return $http({
                                 method: 'POST',
@@ -260,54 +253,50 @@
                                 var data = response.data;
                                 if (data.rescode == '200') {
                                     var defaultLang = util.getDefaultLangCode();
-
-                                    var welMenu = 
+                                    var welMenu =
                                     {
-                                      label: '欢迎页面',
-                                      data: {
-                                        type: "welcome",
-                                        styleImg: data.data.SamplePic,
-                                        viewName: data.data.Name
-                                      }
+                                        label: '欢迎页面',
+                                        data: {
+                                            type: "welcome",
+                                            styleImg: data.data.SamplePic,
+                                            viewName: data.data.Name
+                                        }
                                     };
-                                    return{value: welMenu};
-                                    
-                                    
-                                    
-                                } else if(data.rescode == '401'){
+                                    return {value: welMenu};
+                                } else if (data.rescode == '401') {
                                     alert('访问超时，请重新登录');
                                     $state.go('login');
-                                } else{
+                                } else {
                                     alert('加载菜单信息失败，' + data.errInfo);
                                 }
                             }, function errorCallback(response) {
                                 alert('连接服务器出错');
                             }).finally(function (value) {
-                                
+
                             });
                         }]
                     },
-                    controller:['$scope', 'resA', 'resWelcome' ,function($scope, resA, resWelcome){
+                    controller: ['$scope', 'resA', 'resWelcome', function ($scope, resA, resWelcome) {
                         var treedata = [
-                            resWelcome.value, 
+                            resWelcome.value,
                             resA.value,
                             {
-                              label: '广告位设置',
-                              data: {
-                                type: "guangGaoWei"
-                              }
+                                label: '广告位设置',
+                                data: {
+                                    type: "guangGaoWei"
+                                }
                             },
                             {
-                              label: '项目设置',
-                              data: {
-                                type: "projectConfig"
-                              }
+                                label: '项目设置',
+                                data: {
+                                    type: "projectConfig"
+                                }
                             },
                             {
-                              label: '提交版本',
-                              data: {
-                                type: "version"
-                              }
+                                label: '提交版本',
+                                data: {
+                                    type: "version"
+                                }
                             }
                         ];
                         $scope.my_data = treedata;
@@ -317,8 +306,7 @@
                     url: '/welcome?label',
                     templateUrl: 'pages/tv/welcome.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
                         }]
                     }
                 })
@@ -326,8 +314,8 @@
                     url: '/version?label',
                     templateUrl: 'pages/tv/version.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -335,8 +323,8 @@
                     url: '/guangGaoWei?label',
                     templateUrl: 'pages/tv/guangGaoWei.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -344,8 +332,8 @@
                     url: '/projectConfig?label',
                     templateUrl: 'pages/tv/projectConfig.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -353,8 +341,8 @@
                     url: '/live?moduleId&label',
                     templateUrl: 'pages/tv/live.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -362,8 +350,8 @@
                     url: '/simplePicText?moduleId&label',
                     templateUrl: 'pages/tv/simplePicText.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -371,7 +359,7 @@
                     url: '/multPic?moduleId&label',
                     templateUrl: 'pages/tv/multPic.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -380,7 +368,7 @@
                     url: '/Samsung_MultPic_Flight?moduleId&label',
                     templateUrl: 'pages/tv/flight_Samsung.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -389,7 +377,7 @@
                     url: '/Samsung_Link_Bill?moduleId&label',
                     templateUrl: 'pages/tv/Billing_URL.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -398,7 +386,7 @@
                     url: '/Samsung_MultPic_OutOfTheHotel?moduleId&label',
                     templateUrl: 'pages/tv/checkOutPic.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -407,7 +395,7 @@
                     url: '/LiFeng_MultPic?moduleId&label',
                     templateUrl: 'pages/tv/multPic_LiFeng.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -416,7 +404,7 @@
                     url: '/ZheFei_MultPic?moduleId&label',
                     templateUrl: 'pages/tv/multPic_ZheFei.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -425,7 +413,7 @@
                     url: '/PicText_Classification?moduleId&label',
                     templateUrl: 'pages/tv/PicText_Classification.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -434,17 +422,17 @@
                     url: '/SimpleSmallPicText?moduleId&label',
                     templateUrl: 'pages/tv/SimpleSmallPicText.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-                 //雅思特 小图 Yeste_SimpleSmallPicText Lengxue
+                //雅思特 小图 Yeste_SimpleSmallPicText Lengxue
                 .state('app.tvAdmin.Yeste_SimpleSmallPicText', {
                     url: '/Yeste_SimpleSmallPicText?moduleId&label',
                     templateUrl: 'pages/tv/Yeste_SimpleSmallPicText.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -454,133 +442,126 @@
                     url: '/SiMaTai_SimpleSmallPicText?moduleId&label',
                     templateUrl: 'pages/tv/SimpleSmallPicText_SiMaTai.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 //司马台 二级分类图文 SiMaTai_SimpleSmallPicText
                 .state('app.tvAdmin.SiMaTai_PicText_Classification', {
                     url: '/SiMaTai_PicText_Classification?moduleId&label',
                     templateUrl: 'pages/tv/PicText_Classification_SiMaTai.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 //司马台 三级分类图文 SiMaTai_PicText_Classification_ThreeLevel
                 .state('app.tvAdmin.SiMaTai_PicText_Classification_ThreeLevel', {
                     url: '/SiMaTai_PicText_Classification_ThreeLevel?moduleId&label',
                     templateUrl: 'pages/tv/PicText_Classification_SiMaTai_ThreeLevel.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 //雅思特 天气 Yeste_Weather
                 .state('app.tvAdmin.Yeste_Weather', {
                     url: '/Yeste_Weather?moduleId&label',
                     templateUrl: 'pages/tv/Weather_Yeste.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 //三星 天气 Samsung_Weather
                 .state('app.tvAdmin.Samsung_Weather', {
                     url: '/Samsung_Weather?moduleId&label',
                     templateUrl: 'pages/tv/Weather_Samsung.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 //通用天气（土豪金） WeatherCommon
                 .state('app.tvAdmin.WeatherCommon', {
                     url: '/WeatherCommon?moduleId&label',
                     templateUrl: 'pages/tv/Weather_Common.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
-
                 //三星午餐 Samsung_PicText_Classification
                 .state('app.tvAdmin.Samsung_PicText_Classification', {
                     url: '/Samsung_PicText_Classification?moduleId&label',
                     templateUrl: 'pages/tv/PicText_Classification_Samsung.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
-
                 //SkyworthDTMB
                 .state('app.tvAdmin.SkyworthDTMB', {
                     url: '/SkyworthDTMB?moduleId&label',
                     templateUrl: 'pages/tv/live_SkyworthDTMB.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
-                 // 丽枫酒店 多语言标题 介绍 图片(不需要多语言) 序号
+                // 丽枫酒店 多语言标题 介绍 图片(不需要多语言) 序号
                 .state('app.tvAdmin.SimpleSmallPicText_LiFeng', {
                     url: '/SimpleSmallPicText_LiFeng?moduleId&label',
                     templateUrl: 'pages/tv/SimpleSmallPicText_LiFeng.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 .state('app.tvAdmin.LiFeng_SimpleSmallPicText_Left', {
                     url: '/LiFeng_SimpleSmallPicText_Left?moduleId&label',
                     templateUrl: 'pages/tv/LiFeng_SimpleSmallPicText_Left.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-                 // 喆啡酒店 
+                // 喆啡酒店
                 .state('app.tvAdmin.ZheFei_PicText_Classification', {
                     url: '/ZheFei_PicText_Classification?moduleId&label',
                     templateUrl: 'pages/tv/ZheFei_PicText_Classification.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-                 // 喆啡酒店 
+                // 喆啡酒店
                 .state('app.tvAdmin.ZheFei_SimpleSmallPicText_Small', {
                     url: '/ZheFei_SimpleSmallPicText_Small?moduleId&label',
                     templateUrl: 'pages/tv/ZheFei_SimpleSmallPicText_Small.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-                 // 喆啡酒店 
+                // 喆啡酒店
                 .state('app.tvAdmin.ZheFei_SimpleSmallPicText_Carousel', {
                     url: '/ZheFei_SimpleSmallPicText_Carousel?moduleId&label',
                     templateUrl: 'pages/tv/ZheFei_SimpleSmallPicText_Carousel.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -590,17 +571,16 @@
                     url: '/Yeste_SimpleSmallPicText_Carousel?moduleId&label',
                     templateUrl: 'pages/tv/Yeste_SimpleSmallPicText_Carousel.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
                 })
-
                 .state('app.tvAdmin.MultPic_SX_Small', {
                     url: '/MultPic_SX_Small?moduleId&label',
                     templateUrl: 'pages/tv/MultPic_SX_Small.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -609,7 +589,7 @@
                     url: '/MultPic_SX_Big?moduleId&label',
                     templateUrl: 'pages/tv/MultPic_SX_Big.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -618,7 +598,7 @@
                     url: '/SimplePicText_Price?moduleId&label',
                     templateUrl: 'pages/tv/SimplePicText_Price.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -627,7 +607,7 @@
                     url: '/SimplePicText_SX?moduleId&label',
                     templateUrl: 'pages/tv/SimplePicText_SX.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -636,7 +616,7 @@
                     url: '/PicText_Classification_SX?moduleId&label',
                     templateUrl: 'pages/tv/PicText_Classification_SX.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -645,8 +625,8 @@
                     url: '/3rdApp?moduleId&label',
                     templateUrl: 'pages/tv/3rdApp.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -654,8 +634,8 @@
                     url: '/apkEntry?moduleId&label',
                     templateUrl: 'pages/tv/apkEntry.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -663,8 +643,8 @@
                     url: '/worldClock?moduleId&label',
                     templateUrl: 'pages/tv/worldClock.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -673,7 +653,7 @@
                     url: '/Yeste_WorldClock?moduleId&label',
                     templateUrl: 'pages/tv/WorldClock_Yeste.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -682,8 +662,8 @@
                     url: '/SkyworthATV?moduleId&label',
                     templateUrl: 'pages/tv/SkyworthATV.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -691,8 +671,8 @@
                     url: '/SkyworthHDMI?moduleId&label',
                     templateUrl: 'pages/tv/SkyworthHDMI.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -700,7 +680,7 @@
                     url: '/BaoFengHDMI?moduleId&label',
                     templateUrl: 'pages/tv/BaoFengHDMI.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -709,8 +689,8 @@
                     url: '/SkyworthDTV?moduleId&label',
                     templateUrl: 'pages/tv/SkyworthDTV.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -718,8 +698,8 @@
                     url: '/shop?moduleId&label',
                     templateUrl: 'pages/tv/shop.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -727,8 +707,8 @@
                     url: '/movieCommon?moduleId&label',
                     templateUrl: 'pages/tv/movieCommon.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -736,8 +716,8 @@
                     url: '/movieCommonFree?moduleId&label',
                     templateUrl: 'pages/tv/movieCommonFree.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -745,8 +725,8 @@
                     url: '/movieCommonAdv?moduleId&label',
                     templateUrl: 'pages/tv/movieCommonAdv.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -755,8 +735,8 @@
                     url: '/musicCommon?moduleId&label',
                     templateUrl: 'pages/tv/MusicCommon.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
-                            
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
                         }]
                     }
                 })
@@ -765,7 +745,7 @@
                     url: '/MusicCommon_SX?moduleId&label',
                     templateUrl: 'pages/tv/MusicCommon_SX.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -776,7 +756,7 @@
                     url: '/Live_SX?moduleId&label',
                     templateUrl: 'pages/tv/Live_SX.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -787,7 +767,7 @@
                     url: '/Weather_SX?moduleId&label',
                     templateUrl: 'pages/tv/Weather_SX.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -798,7 +778,7 @@
                     url: '/NurseInfo?moduleId&label&type',
                     templateUrl: 'pages/tv/docNurSet.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -809,7 +789,7 @@
                     url: '/ExpertInfo?moduleId&label&type',
                     templateUrl: 'pages/tv/docNurSet.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -820,7 +800,7 @@
                     url: '/SectionInfo?moduleId&label',
                     templateUrl: 'pages/tv/docNurSet.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -831,7 +811,7 @@
                     url: '/History?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -842,7 +822,7 @@
                     url: '/Honours?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -853,7 +833,7 @@
                     url: '/Equipment?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -864,7 +844,7 @@
                     url: '/Notes?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -875,7 +855,7 @@
                     url: '/Food?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -886,7 +866,7 @@
                     url: '/Around?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -897,7 +877,7 @@
                     url: '/Scenic?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -908,7 +888,7 @@
                     url: '/Canteen?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -919,7 +899,7 @@
                     url: '/PublicArea?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -930,7 +910,7 @@
                     url: '/RehabilitationDistrict?moduleId&label',
                     templateUrl: 'pages/tv/blank.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -941,7 +921,7 @@
                     url: '/diseaseIntroduction?moduleId&label',
                     templateUrl: 'pages/tv/categoryText_DiseaseInfo.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -952,7 +932,7 @@
                     url: '/recommendDiet?moduleId&label',
                     templateUrl: 'pages/tv/simplePicText_recommendDiet.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -963,7 +943,7 @@
                     url: '/dischargeGuide?moduleId&label',
                     templateUrl: 'pages/tv/categoryPic_Guide.html',
                     resolve: {
-                        resB: ['resA', 'resWelcome', function(resA, resWelcome){
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
 
                         }]
                     }
@@ -1002,5 +982,36 @@
             test: false,
             hospitalTagNow: -1
         })
+
+        .controller('RootController', ['$rootScope', '$scope', '$http', function ($scope, $http, $rootScope) {
+            var self = this;
+
+            //添加表单的限制
+            self.setLimit = function (obj,limits) {
+               // console.log(obj.target);
+                var target = obj;
+                var isChecked = 0;
+                for(var j in limits) {
+                    switch (j) {
+                        case 'max':
+                            if (target.value && target.value.length > Number(limits[j])) {
+                                target.setCustomValidity('输入超长,请输入' + limits[j] + '字以内!');
+                                isChecked = 1;
+                            } else {
+                                target.setCustomValidity('')
+                            }
+                            break;
+                    }
+                    if(isChecked){
+                        break;
+                    }
+                }
+          //  obj.target.setCustomValidity('');
+            }
+
+
+
+        }]);
+
 
 })();

@@ -1038,8 +1038,6 @@
 
         }
     ])
-    
-
 
     .controller('tvSimplePicTextEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -1444,7 +1442,6 @@
         }
     ])
 
-
     .controller('tvSimplePicTextController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
             var self = this;
@@ -1738,7 +1735,6 @@
 
         }
     ])
-
 
     // (丽枫酒店 多语言标题 介绍 图片(不需要多语言) 序号)    编辑
     .controller('tvSimpleSmallPicTextLFEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
@@ -2156,7 +2152,6 @@
         }
     ])
 
-
     .controller('tvSimpleSmallPicTextZFEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
             var self = this;
@@ -2572,8 +2567,6 @@
        }
     ])
 
-
-
     .controller('tvSimpleSmallPicTextAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
             var self = this;
@@ -2768,6 +2761,7 @@
 
         }
     ])
+
     // (丽枫酒店 多语言标题 介绍 图片(不需要多语言) 序号)    添加
     .controller('tvSimpleSmallPicTextLFAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -2963,7 +2957,6 @@
 
         }
     ])
-
 
     .controller('tvApkEntryController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
         function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
@@ -3572,7 +3565,6 @@
         }
     ])
 
-
     .controller('tvSimpleSmallPicTextLFLeftAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function($scope, $state, $http, $stateParams, $location, util, CONFIG) {
             var self = this;
@@ -3767,7 +3759,6 @@
 
         }
     ])
-
 
     .controller('tvSimpleSmallPicTextController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
@@ -4207,6 +4198,7 @@
 
             }
         ])
+
     // 雅思特 小图 Add controler
     .controller('tvSimpleSmallPicTextYesteAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -4400,6 +4392,7 @@
 
         }
     ])
+
     //雅思特 小图 Edit Yeste_SimpleSmallPicText
     .controller('tvSimpleSmallPicTextYesteEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -4606,6 +4599,7 @@
 
         }
     ])
+
     //雅思特 轮播图 Yeste_SimpleSmallPicText_Carousel
     .controller('Yeste_SimpleSmallPicText_Carousel', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
@@ -4694,6 +4688,7 @@
 
         }
     ])
+
     //雅思特 轮播图 Add Yeste_SimpleSmallPicText_Carousel_Add
     .controller('Yeste_SimpleSmallPicText_Carousel_Add', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -4884,6 +4879,7 @@
 
         }
     ])
+
     //雅思特 轮播图 Edit Yeste_SimpleSmallPicText_Carousel_Edit
     .controller('Yeste_SimpleSmallPicText_Carousel_Edit', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -5086,6 +5082,7 @@
 
         }
     ])
+
     //雅思特 世界时钟 Yeste_WorldClock
     .controller('Yeste_WorldClock', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
             function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
@@ -5227,6 +5224,7 @@
 
         }
     ])
+
     //雅思特天气 Add Yeste_Weather
     .controller('Yeste_Weather_Add_Controler',['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -5291,6 +5289,7 @@
             };
         }
     ])
+
     //雅思特天气 Edit Yeste_Weather
     .controller('Yeste_Weather_Edit_Controler', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -5349,7 +5348,6 @@
             }
         }
     ])
-
 
     //司马台 小图 SiMaTai_SimpleSmallPicTextControler
     .controller('SiMaTai_SimpleSmallPicTextControler', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
@@ -5439,6 +5437,7 @@
 
         }
     ])
+
     //司马台 小图 Add SiMaTai_SimpleSmallPicTextControler_Add
     .controller('SiMaTai_SimpleSmallPicTextControler_Add', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -5633,6 +5632,7 @@
 
         }
     ])
+
     //司马台 小图 Edit SiMaTai_SimpleSmallPicTextControler_Edit
     .controller('SiMaTai_SimpleSmallPicTextControler_Edit', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -5838,6 +5838,7 @@
 
         }
     ])
+
     //司马台 二级分类图文 SiMaTai_PicText_Classification
     .controller('SiMaTai_PicText_ClassificationController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
@@ -6029,6 +6030,7 @@
 
         }
     ])
+
     //司马台 二级分类图文Add SiMaTai_PicText_ClassificationController_Add
     .controller('SiMaTai_PicText_ClassificationController_Add', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -6224,6 +6226,7 @@
 
         }
     ])
+
     //司马台 二级分类图文Edit SiMaTai_PicText_ClassificationController_Edit
     .controller('SiMaTai_PicText_ClassificationController_Edit', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -6426,6 +6429,7 @@
 
             }
         ])
+
     //司马台 二级分类图文 分类下的Edit ClassPicTextEdit_SiMaTai_Controller
     .controller('ClassPicTextEdit_SiMaTai_Controller', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -6628,6 +6632,7 @@
 
             }
         ])
+
     //司马台 二级分类图文 分类下的Add ClassPicTextAdd_SiMaTai_Controller
     .controller('ClassPicTextAdd_SiMaTai_Controller', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -6825,6 +6830,7 @@
 
             }
         ])
+
     //司马台 三级分类图文 SiMaTai_PicText_Classification_ThreeLevel
     .controller('SiMaTai_PicText_Classification_ThreeLevel_Controller', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
@@ -6984,6 +6990,7 @@
 
             }
         ])
+
     //司马台 三级分类图文Add SiMaTai_PicText_Classification_ThreeLevel_Controller_Add
     .controller('SiMaTai_PicText_Classification_ThreeLevel_Controller_Add', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -7197,6 +7204,7 @@
 
             }
         ])
+
     //司马台 三级分类图文Edit SiMaTai_PicText_Classification_ThreeLevel_Controller_Edit
     .controller('SiMaTai_PicText_Classification_ThreeLevel_Controller_Edit', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -7536,6 +7544,7 @@
 
             }
         ])
+
     //三星天气 Add Samsung_Weather
     .controller('Samsung_Weather_Add_Controler',['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -7600,6 +7609,7 @@
                 };
             }
         ])
+
     //三星天气 Edit Samsung_Weather
     .controller('Samsung_Weather_Edit_Controler', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -7659,7 +7669,7 @@
             }
         ])
 
-    /*退房——一张图片——三星*/
+    // 退房——一张图片——三星
     .controller('tvCheckOutPicSamsangController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -7752,7 +7762,7 @@
             }
         ])
 
-    /*一张图片的上传*/
+    // 一张图片的上传
     .controller('tvOnePicAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -7964,7 +7974,7 @@
             }
         ])
 
-    /*一张图片的修改*/
+    // 一张图片的修改
     .controller('tvOnePicEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -8188,7 +8198,7 @@
             }
         ])
 
-    /*航班——两张图片——三星*/
+    // 航班——两张图片——三星
     .controller('tvFlightSamsangController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -8281,7 +8291,7 @@
             }
         ])
 
-    /*航班图片的添加*/
+    // 航班图片的添加
     .controller('tvflifhtPicAddSamsungController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -8491,7 +8501,7 @@
             }
         ])
 
-    /*航班图片的修改*/
+    // 航班图片的修改
     .controller('tvflightPicEditSamsungController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -8715,7 +8725,7 @@
             }
         ])
 
-    /*账单URL*/
+    // 账单URL
     .controller('BillingUrlController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -8791,7 +8801,6 @@
 
             }
         ])
-
 
     //通用天气（土豪金） WeatherCommon
     .controller('WeatherCommon_Controler', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
@@ -8925,6 +8934,7 @@
 
         }
     ])
+
     //通用天气（土豪金 Add WeatherCommon
     .controller('WeatherCommon_Add_Controler',['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -8989,6 +8999,7 @@
             };
         }
     ])
+
     //通用天气（土豪金 Edit WeatherCommon
     .controller('WeatherCommon_Edit_Controler', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -9238,6 +9249,7 @@
 
             }
         ])
+
     //分类图文 Add
     .controller('tvPicTextClassCateAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -9430,6 +9442,7 @@
 
             }
         ])
+
     //分类图文Edit
     .controller('tvPicTextClassCateEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -9627,6 +9640,7 @@
 
             }
         ])
+
     //分类图文 分类下的Add
     .controller('tvClassPicTextAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -9824,6 +9838,7 @@
 
             }
         ])
+
     //分类图文 分类下的Edit
     .controller('tvClassPicTextEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -10219,6 +10234,7 @@
 
             }
         ])
+
     //三星午餐分类图文 Add分类
     .controller('tvPicTextClassCateAddController_Samsung', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -10411,6 +10427,7 @@
 
         }
     ])
+
     //三星午餐分类图文 Edit分类
     .controller('tvPicTextClassCateEditController_Samsung', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -10608,6 +10625,7 @@
 
         }
     ])
+
     //三星午餐分类图文 Add图文
     .controller('tvClassPicTextAddController_Samsung', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -10807,6 +10825,7 @@
 
         }
     ])
+
     //三星午餐分类图文 Edit图文
     .controller('tvClassPicTextEditController_Samsung', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -11102,6 +11121,7 @@
 
             }
         ])
+
     // 添加“Live“模块内的直播
     .controller('tvLiveAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -11297,6 +11317,7 @@
 
         }
     ])
+
     // 编辑“Live“模块内的直播
     .controller('tvLiveEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -11504,7 +11525,6 @@
             }
         ])
 
-
     //SkyworthDTMB
     .controller('tvLiveController_SkyworthDTMB', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
@@ -11594,6 +11614,7 @@
 
         }
     ])
+
     // SkyworthDTMB添加
     .controller('tvLiveAddController_SkyworthDTMB', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -11789,6 +11810,7 @@
 
         }
     ])
+
     // SkyworthDTMB编辑
     .controller('tvLiveEditController_SkyworthDTMB', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -15792,6 +15814,7 @@
 
         }
     ])
+
     //书香分类图文
     .controller('tvPicTextClassListSXController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
         function ($scope, $state, $http, $stateParams, $location, util) {
@@ -16175,8 +16198,6 @@
 
         }
     ])
-
-
 
     .controller('tvPicTextClassCateAddSXController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
         function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
@@ -17770,6 +17791,7 @@
 
         }
     ])
+
     .controller('tvShopController', ['$scope', '$state', '$http', '$stateParams', 'util',
         function ($scope, $state, $http, $stateParams, util) {
             var self = this;
@@ -19408,7 +19430,7 @@
                         self.imgs2.data[0] = {
                             src: self.projectData.Signature.Data.URL,
                             progress: 100,
-                            fileSize: self.projectData.Font.Data.Size
+                            fileSize: self.projectData.Signature.Data.Size
                         };
                     } else if (data.rescode == '401') {
                         alert('访问超时，请重新登录');
@@ -19424,6 +19446,9 @@
             }
 
             self.saveProjectConfig = function() {
+                console.log(self.imgs1);
+                console.log(self.imgs2);
+
                 var date= angular.element(document.querySelector("#restartTime")).val(),
                 re = /\d*:\d*:*\d*/;
                 var dateString = re.exec(date)[0];
@@ -19438,7 +19463,7 @@
                         "Font": {
                             "Data":{
                                 "URL":self.imgs1.data[0].src,
-                                "Size":Number(self.imgs1.data[0].fileSize)
+                                "Size":self.imgs1.data[0].fileSize?Number(self.imgs1.data[0].fileSize):self.imgs1.data[0].fileSize
                             },
                             "Enable": Number(self.projectData.Font.Enable)
                         },
@@ -19449,7 +19474,7 @@
                         "Signature": {
                             "Data":{
                                 "URL":self.imgs2.data[0].src,
-                                "Size":Number(self.imgs2.data[0].fileSize)
+                                "Size":self.imgs2.data[0].fileSize?Number(self.imgs2.data[0].fileSize):self.imgs2.data[0].fileSize
                             },
                             "Enable": Number(self.projectData.Signature.Enable)
                         }
@@ -19621,7 +19646,6 @@
         }
     ])
 
-
     .controller('tvSkyworthATVController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
         function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
             console.log('tvSkyworthATVController')
@@ -19641,6 +19665,7 @@
             }
         }
     ])
+
     //BaoFengHDMI
     .controller('tvBaoFengHDMIController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
         function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
@@ -19662,7 +19687,7 @@
         }
     ])
 
-        //书香天气
+    //书香天气
     .controller('tvWeatherSXController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
         function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
             console.log('tvWeatherSXController')
@@ -20203,8 +20228,8 @@
 
             }
         ])
-
-    // 医护信息展示分区的配置
+/*----------------------------------------------------------------------------------------------------*/
+    /*-----------------医护信息展示分区的配置-----------------------*/
     .controller('DocNurSetController', ['$q', '$scope', '$state', '$http', '$stateParams', '$filter', 'util', 'CONFIG',
             function($q, $scope, $state, $http, $stateParams, $filter, util, CONFIG) {
                 console.log('DocNurSetController')
@@ -20295,7 +20320,7 @@
             }
         ])
 
-    //分类文本——疾病科普
+    /*-----------------分类文本——疾病科普--------------------------*/
     .controller('tvCatTextListController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -20306,24 +20331,16 @@
                     self.viewId = $stateParams.moduleId;
                     self.defaultLangCode = util.getDefaultLangCode();
                     self.loadInfo();
-                }
+                };
 
-                /**
-                 * 添加该模版的图文分类
-                 *
-                 * @method addCategory
-                 */
+                // 添加该模版的图文分类
                 self.addCategory = function() {
                     $scope.app.maskParams.viewId = self.viewId;
                     $scope.app.maskParams.loadInfo = self.loadInfo;
                     $scope.app.showHideMask(true,'pages/tv/categoryText_DI_CatAdd.html');
-                }
+                };
 
-                /**
-                 * 删除图文分类
-                 *
-                 * @method delCate
-                 */
+                // 删除图文分类
                 self.delCate = function() {
                     if(!confirm('确认删除？')){
                         return;
@@ -20357,11 +20374,7 @@
                     });
                 }
 
-                /**
-                 * 编辑该模版的图文分类
-                 *
-                 * @method editCate
-                 */
+                // 编辑该模版的图文分类
                 self.editCate = function() {
                     $scope.app.maskParams.viewId = self.viewId;
                     $scope.app.maskParams.info = self.info[self.cateIndex];
@@ -20486,7 +20499,7 @@
             }
         ])
 
-    //分类文本——疾病科普——分类添加
+    /*-----------------分类文本——疾病科普——分类添加-----------------*/
     .controller('tvTextCateAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -20670,7 +20683,7 @@
             }
         ])
 
-    //分类文本——疾病科普——分类修改
+    /*-----------------分类文本——疾病科普——分类修改-----------------*/
     .controller('tvTextCateEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -20858,7 +20871,7 @@
             }
         ])
 
-    //分类文本——疾病科普——分类下的文本添加
+    /*-----------------分类文本——疾病科普——分类下的文本添加----------*/
     .controller('tvTextAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -20917,7 +20930,7 @@
             }
         ])
 
-    //分类文本——疾病科普——分类下的文本修改
+    /*-----------------分类文本——疾病科普——分类下的文本修改-----------*/
     .controller('tvTextEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -20980,8 +20993,7 @@
             }
         ])
 
-
-    //分类图片——出院指南
+    /*-----------------分类图片——出院指南-----------------*/
     .controller('tvCategoryPicListController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -21172,7 +21184,7 @@
             }
         ])
 
-    //分类图片——出院指南——分类添加
+    /*-----------------分类图片——出院指南——分类添加-----------------*/
     .controller('tvCatPicCateAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -21355,7 +21367,7 @@
             }
         ])
 
-    //分类图片——出院指南——分类修改
+    /*-----------------分类图片——出院指南——分类修改-----------------*/
     .controller('tvCatPicCateEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -21417,7 +21429,7 @@
             }
         ])
 
-    //分类图片——出院指南——分类下的图片添加
+    /*-----------------分类图片——出院指南——分类下的图片添加-----------------*/
     .controller('tvCatPicAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -21613,7 +21625,7 @@
             }
         ])
 
-    //分类图片——出院指南——分类下的图片修改
+    /*-----------------分类图片——出院指南——分类下的图片修改-----------------*/
     .controller('tvCatPicEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -21815,7 +21827,7 @@
             }
         ])
 
-    //图文——饮食推荐
+    /*-----------------图文——饮食推荐-----------------*/
     .controller('tvSimplePicTextDietRecomController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util',
             function ($scope, $state, $http, $stateParams, $location, util) {
                 var self = this;
@@ -21906,7 +21918,7 @@
             }
         ])
 
-    // 添加图文模块内的图文饮食推荐
+    /*-----------------添加图文模块内的图文饮食推荐-----------------*/
     .controller('tvSimplePicTextDietRecomAddController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;
@@ -22103,7 +22115,7 @@
             }
         ])
 
-    // 添加图文模块内的图文饮食推荐
+   /*-----------------添加图文模块内的图文饮食推荐---------------*/
     .controller('tvSimplePicTextDietRecomEditController', ['$scope', '$state', '$http', '$stateParams', '$location', 'util', 'CONFIG',
             function ($scope, $state, $http, $stateParams, $location, util, CONFIG) {
                 var self = this;

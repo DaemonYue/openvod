@@ -15,7 +15,7 @@
    <!--<link rel="stylesheet" href="src/style/app.css" />-->
   <link rel="shortcut icon" href="dist/imgs/favicon4.ico" />
 </head>
-<body ng-app="openvod">
+<body ng-app="openvod" ng-controller="RootController as root">
 
   <div class="bg" style="background-image: url('dist/imgs/bg-01.png'); "></div>
   <ui-view></ui-view>
@@ -34,15 +34,15 @@
   <script src="node_modules/angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.js"></script>
   <script src="node_modules/angular-bootstrap-nav-tree/dist/abn_tree_directive.js"></script>
 
-  <!--<script src="dist/js/app.min.js"></script>-->
+  <script src="dist/js/app.min.js"></script>
   <script src="src/modules/app.js"></script>
-   <script src="src/modules/controllers.js"></script>
+  <!-- <script src="src/modules/controllers.js"></script>
    <script src="src/modules/tv-admin-controllers.js"></script>
    <script src="src/modules/project-config-controllers.js"></script>
    <script src="src/modules/orders-controllers.js"></script>
    <script src="src/modules/directives.js"></script>
    <script src="src/modules/filters.js"></script>
-   <script src="src/modules/services.js"></script>
+   <script src="src/modules/services.js"></script>-->
 
   <!--<script src="src/modules/controllers.js"></script>-->
   <!--<script src="src/modules/tv-admin-controllers.js"></script>-->
@@ -51,6 +51,7 @@
   <!--<script src="src/modules/directives.js"></script>-->
   <!--<script src="src/modules/filters.js"></script>-->
   <!--<script src="src/modules/services.js"></script>-->
+
 
 </body>
 </html>
