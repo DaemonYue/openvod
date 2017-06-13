@@ -51,7 +51,18 @@
                     <textarea ng-model="tvWelcome.welcomeText[lang.code]" ng-trim="false" class="form-control"></textarea>
                 </div>
             </ng-repeat>
-            <!--酒店欢迎辞-->
+            <!--通告-->
+            <ng-repeat ng-repeat="lang in tvWelcome.editLangs">
+                <div ng-if="lang.default" class="form-group">
+                    <label>通告 {{lang.name}}</label>
+                    <textarea ng-model="tvWelcome.Announcement[lang.code]" ng-trim="false"   class="form-control"></textarea>
+                </div>
+                <div ng-if="lang.default !== true" class="form-group">
+                    <label>通告 {{lang.name}}</label>
+                    <textarea ng-model="tvWelcome.Announcement[lang.code]" ng-trim="false" class="form-control"></textarea>
+                </div>
+            </ng-repeat>
+            <!--通告-->
             <!--酒店经理-->
             <!--<ng-repeat ng-repeat="lang in tvWelcome.editLangs">
                 <div ng-if="lang.default" class="form-group">

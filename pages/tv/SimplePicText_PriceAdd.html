@@ -63,11 +63,11 @@
                     <ng-repeat ng-repeat="lang in tvSimplePicTextPriceAdd.editLangs">
                         <ng-if ng-if="lang.default">
                             <label>详情{{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" required placeholder="（必填）" ng-model="tvSimplePicTextPriceAdd.Text[lang.code]">{{tvSimplePicTextPriceAdd.Text[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required placeholder="（必填）" ng-model="tvSimplePicTextPriceAdd.Text[lang.code]">{{tvSimplePicTextPriceAdd.Text[lang.code]}}</textarea>
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">
                             <label>详情 {{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" ng-model="tvSimplePicTextPriceAdd.Text[lang.code]">{{tvSimplePicTextPriceAdd.Text[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-model="tvSimplePicTextPriceAdd.Text[lang.code]">{{tvSimplePicTextPriceAdd.Text[lang.code]}}</textarea>
                         </ng-if>
                     </ng-repeat>
                     <!--/详情-->
@@ -78,11 +78,11 @@
                     <ng-repeat ng-repeat="lang in tvSimplePicTextPriceAdd.editLangs">
                         <ng-if ng-if="lang.default">
                             <label>价格{{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" required placeholder="（必填）" ng-model="tvSimplePicTextPriceAdd.Price[lang.code]">{{tvSimplePicTextPriceAdd.Price[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required placeholder="（必填）" ng-model="tvSimplePicTextPriceAdd.Price[lang.code]">{{tvSimplePicTextPriceAdd.Price[lang.code]}}</textarea>
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">
                             <label>价格 {{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" ng-model="tvSimplePicTextPriceAdd.Price[lang.code]">{{tvSimplePicTextPriceAdd.Price[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-model="tvSimplePicTextPriceAdd.Price[lang.code]">{{tvSimplePicTextPriceAdd.Price[lang.code]}}</textarea>
                         </ng-if>
                     </ng-repeat>
                     <!--/详情-->

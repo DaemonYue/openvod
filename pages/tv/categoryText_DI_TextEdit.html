@@ -40,11 +40,11 @@
                     <ng-repeat ng-repeat="lang in tvTextEdit.editLangs">
                         <ng-if ng-if="lang.default">
                             <label>详情 {{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" required placeholder="（必填）" ng-model="tvTextEdit.Text[lang.code]">{{tvTextEdit.Text[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" required placeholder="（必填）" ng-model="tvTextEdit.Text[lang.code]">{{tvTextEdit.Text[lang.code]}}</textarea>
                         </ng-if>
                         <ng-if ng-if="lang.default !== true">
                             <label>详情 {{lang.name}}：</label>
-                            <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required placeholder="（必填）"" ng-model="tvTextEdit.Text[lang.code]">{{tvTextEdit.Text[lang.code]}}</textarea>
+                            <textarea ng-trim="false" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-model="tvTextEdit.Text[lang.code]">{{tvTextEdit.Text[lang.code]}}</textarea>
                         </ng-if>
                     </ng-repeat>
                     <!--/详情-->
