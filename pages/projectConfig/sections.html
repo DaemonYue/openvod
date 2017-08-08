@@ -3,16 +3,11 @@
     <div ng-show="sectionCtrl.loading">loading...</div>
     <!--loading-->
     <!--添加门店-->
-    <h4>{{sectionCtrl.hotel.Name[sectionCtrl.defaultLangCode]}}——分区信息</h4>
-    <a ng-click="sectionCtrl.add()" class="button button-light">
-        <i class="icon ion-ios-plus-outline"></i> 添加分区
-    </a>
+    <h4>{{sectionCtrl.secName}}——子科室</h4>
     <!--添加门店-->
     <ul class="list-group">
         <li ng-repeat="section in sectionCtrl.list track by $index" class="list-group-item">
-            {{section.Name[sectionCtrl.defaultLangCode]}}
-            <a ng-click="sectionCtrl.del(section.ID)"  class="btn pull-right" ng-hide="section.IsOther == 1">删除</a>
-            <a ng-click="sectionCtrl.edit(section.ID, $index)" class="btn pull-right" ng-hide="section.IsOther == 1">编辑</a>
+            {{section.Name}}
             <br>
         </li>
     </ul>

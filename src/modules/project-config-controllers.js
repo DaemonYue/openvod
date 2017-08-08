@@ -17,8 +17,8 @@
         }
     ])
 
-    .controller('pcHotelListController', ['$scope', '$filter', '$state', '$http', '$stateParams', 'util',
-        function ($scope, $filter, $state, $http, $stateParams, util) {
+    .controller('pcHotelListController', ['$scope', '$filter', '$state', '$http', '$stateParams', 'util', '$q',
+        function ($scope, $filter, $state, $http, $stateParams, util, $q) {
             var self = this;
             
             self.init = function() {
@@ -42,6 +42,7 @@
                     var data = response.data;
                     if (data.rescode == '200') {
                         self.list = data.data;
+                        self.showSections(self.list[0].ID);
                     } else {
                         alert('读取信息失败' + data.errInfo);
                     }
@@ -90,11 +91,54 @@
                 $scope.app.showHideMask(true,'pages/projectConfig/hotelAdd.html');
             }
 
+            //获取大分区信息
             self.showSections = function (id) {
+                //$state.go('app.projectConfig.hotelList.sections',{id:id});
+                var deferred = $q.defer();
+                self.loading = true;
+                var data = JSON.stringify({
+                    action: "getSectionList",
+                    token: util.getParams('token'),
+                    lang: util.langStyle(),
+                    hotelID: id
+                })
+                $http({
+                    method: 'POST',
+                    url: util.getApiUrl('section', '', 'server'),
+                    data: data
+                }).then(function successCallback(response) {
+                    var data = response.data;
+                    if (data.rescode == '200') {
+                        self.section = {};
+                        if(data.sectionList){
+                            self.section = data.sectionList;
+                        }
+
+                        deferred.resolve();
+                    } else if (data.rescode == '401') {
+                        alert('访问超时，请重新登录');
+                        $location.path("pages/login.html");
+                    } else {
+                        alert('读取信息失败，' + data.errInfo);
+                        deferred.reject();
+                    }
+                }, function errorCallback(response) {
+                    alert(response.status + ' 服务器出错');
+                    deferred.reject();
+                }).finally(function (e) {
+                    self.loading = false;
+                });
+                return deferred.promise;
+
+            }
+
+            //获取子科室信息
+            self.showSmallSections = function (name, id) {
+                util.setParams('secName', name);
                 $state.go('app.projectConfig.hotelList.sections',{id:id});
 
             }
-            
+
         }
     ])
 
@@ -103,59 +147,24 @@
                 var self = this;
 
                 self.init = function () {
-                    self.hotelId = $stateParams.id;
+                    self.id = $stateParams.id;
                     self.defaultLangCode = util.getDefaultLangCode();
-                    self.getHotelInfo();
+                    self.secName = util.getParams('secName');
                     self.loadSection();
-                }
-
-                self.getHotelInfo = function () {
-                    var deferred = $q.defer();
-                    self.loading = true;
-                    var data = JSON.stringify({
-                        action: "getHotel",
-                        token: util.getParams('token'),
-                        lang: util.langStyle(),
-                        HotelID: Number(self.hotelId)
-                    })
-                    $http({
-                        method: 'POST',
-                        url: util.getApiUrl('hotelroom', '', 'server'),
-                        data: data
-                    }).then(function successCallback(response) {
-                        var data = response.data;
-                        if (data.rescode == '200') {
-                            self.hotel = {};
-                            self.hotel.Name = data.data.Name;
-                            deferred.resolve();
-                        } else if (data.rescode == '401') {
-                            alert('访问超时，请重新登录');
-                            $location.path("pages/login.html");
-                        } else {
-                            alert('读取信息失败，' + data.errInfo);
-                            deferred.reject();
-                        }
-                    }, function errorCallback(response) {
-                        alert(response.status + ' 服务器出错');
-                        deferred.reject();
-                    }).finally(function (e) {
-                        self.loading = false;
-                    });
-                    return deferred.promise;
                 };
 
-                self.add = function () {
+              /*  self.add = function () {
                     $scope.app.showHideMask(true,'pages/projectConfig/sectionAdd.html');
-                };
+                };*/
 
-                self.edit = function (id,index) {
+               /* self.edit = function (id,index) {
                     console.log(id);
                     $scope.app.maskParams.sectionId = id;
                     $scope.app.maskParams.secInfo = self.list[index];
                     $scope.app.showHideMask(true,'pages/projectConfig/sectionEdit.html');
-                };
+                };*/
 
-                self.del = function (id) {
+               /* self.del = function (id) {
                     if(!confirm('确认删除？')) {
                         return;
                     }
@@ -185,16 +194,18 @@
                     }, function errorCallback(response) {
                         alert('服务器出错');
                     });
-                }
+                }*/
 
                 self.loadSection = function () {
                     var deferred = $q.defer();
                     self.loading = true;
                     var data = JSON.stringify({
-                        action: "getSectionList",
+                        action: "getLittleSectionByID",
                         token: util.getParams('token'),
                         lang: util.langStyle(),
-                        hotelID: Number(self.hotelId)
+                        data:{
+                            ID: self.id
+                        }
                     })
                     $http({
                         method: 'POST',
@@ -204,8 +215,8 @@
                         var data = response.data;
                         if (data.rescode == '200') {
                             self.section = {};
-                            if(data.sectionList){
-                                self.list = data.sectionList;
+                            if(data.data){
+                                self.list = data.data;
                             }
 
                             deferred.resolve();

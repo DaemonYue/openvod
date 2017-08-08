@@ -16,7 +16,7 @@
             function ($scope, $http, $filter, $state, md5, util) {
                 var self = this;
                 self.init = function () {
-                }
+                };
 
                 self.login = function () {
                     self.loading = true;
@@ -475,9 +475,7 @@
                     }).finally(function (value) {
                         self.loading = false;
                     })
-
-
-                }
+                };
 
 
                 self.delTerm = function (id) {
@@ -510,7 +508,7 @@
                     }, function errorCallback(data, status, headers, config) {
                         alert('连接服务器出错');
                     })
-                }
+                };
 
                 // 授权操作
                 // todo 未做批量操作
