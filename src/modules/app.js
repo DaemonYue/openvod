@@ -949,6 +949,28 @@
                     }
                 })
 
+                // 本地电影
+                .state('app.tvAdmin.LocalMovieCommon', {
+                    url: '/LocalMovieCommon?moduleId&label',
+                    templateUrl: 'pages/tv/LocalMovieCommon.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
+                        }]
+                    }
+                })
+
+                // 本地视频
+                .state('app.tvAdmin.LocalVideoCommon', {
+                    url: '/LocalVideoCommon?moduleId&label',
+                    templateUrl: 'pages/tv/LocalVideoCommon.html',
+                    resolve: {
+                        resB: ['resA', 'resWelcome', function (resA, resWelcome) {
+
+                        }]
+                    }
+                })
+
 
                 .state('app.tvAdmin.blank', {
                     url: '/blank?label',

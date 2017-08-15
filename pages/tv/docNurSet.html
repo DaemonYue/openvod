@@ -1,18 +1,18 @@
 <div ng-controller="DocNurSetController as cnset" ng-init="cnset.init()" class="row">
     <div class="col-xs-6">
         <!-- 读取中 -->
-        <div ng-show="cnset.loading">loading...</div>
+        <!--<div ng-show="cnset.loading">loading...</div>-->
         <!-- 读取中 -->
-        <form class="form" name="cnsetForm" ng-submit="cnsetForm.$valid && cnset.save()">
+       <!-- <form class="form" name="cnsetForm" ng-submit="cnsetForm.$valid && cnset.save()">
 
-            <!--ApkStartParam-->
+            &lt;!&ndash;ApkStartParam&ndash;&gt;
             <div class="form-group">
                 <label>展示方式</label>
                 <select class="form-control" ng-model="cnset.setOption" ng-options="x for x in cnset.selectOptions"></select>
             </div>
-            <!--ApkStartParam-->
+            &lt;!&ndash;ApkStartParam&ndash;&gt;
 
-            <!-- 保存 -->
+            &lt;!&ndash; 保存 &ndash;&gt;
             <div class="form-group">
                 <label> </label>
                 <button type="submit" class="button button-small button-block theme-button-outline">
@@ -20,7 +20,7 @@
                 </button>
             </div>
         </form>
-        <!-- 保存中 -->
-        <div ng-show="cnset.saving">saving...</div>
+        &lt;!&ndash; 保存中 &ndash;&gt;
+        <div ng-show="cnset.saving">saving...</div>-->
     </div>
 </div>

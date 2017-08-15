@@ -622,6 +622,22 @@
                         self.changeMenuInfo();
                     }
 
+                    //LocalMovieCommon
+                    if (branch.data.type == 'LocalMovieCommon') {
+
+                        $state.go('app.tvAdmin.LocalMovieCommon', {moduleId: branch.data.moduleId, label: branch.label});
+                        self.changeMenuInfo();
+                    }
+
+                    //LocalVideoCommon
+                    if (branch.data.type == 'LocalVideoCommon') {
+
+                        $state.go('app.tvAdmin.LocalVideoCommon', {moduleId: branch.data.moduleId, label: branch.label});
+                        self.changeMenuInfo();
+                    }
+
+
+
 
                     // MainMenu_THJ_SecondMenu
                     if (branch.data.type == 'MainMenu_THJ_SecondMenu'
@@ -842,6 +858,7 @@
                 self.init = function () {
                     self.editLangs = util.getParams('editLangs');
                     self.getWelInfo();
+                    self.selectOptions = ["仅显示相应分区信息", "显示所有分区信息"]
                 }
 
                 self.getWelInfo = function () {
@@ -907,6 +924,14 @@
                                 self.imgs3 = new Imgs([], true);
                             }
 
+                            //显示设置
+                            if (data.data.HospitalTermFlag == 0) {
+                                self.setOption = '仅显示相应分区信息'
+                            } else {
+                                self.setOption = '显示所有分区信息'
+                            }
+
+
 
                         } else if (data.rescode == '401') {
                             alert('访问超时，请重新登录');
@@ -922,6 +947,11 @@
                 }
 
                 self.save = function () {
+                    if (self.setOption == '仅显示相应分区信息') {
+                        self.showall = 0;
+                    } else {
+                        self.showall = 1;
+                    }
 
                     // 酒店logo图
                     if (self.imgs1.data.length == 0) {
@@ -970,7 +1000,8 @@
                             "HotelManageSignSize": 0,
                             "BackgroundVideoURL": self.imgs3.data[0].src,
                             "BackgroundVideoSize": self.imgs3.data[0].fileSize,
-                            "Announcement": self.Announcement
+                            "Announcement": self.Announcement,
+                            "HospitalTermFlag": self.showall
                         },
                         "lang": util.langStyle()
                     })
