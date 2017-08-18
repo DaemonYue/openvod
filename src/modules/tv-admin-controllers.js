@@ -19405,15 +19405,14 @@
 
 
                 self.submit = function () {
-                    if (self.preData.length != 7) {
-                        var s = confirm("菜单数为7个时，终端的显示效果最佳，您要继续提交吗？")
+                  /*  if (self.preData.length != 7) {
+                        //var s = confirm("菜单数为7个时，终端的显示效果最佳，您要继续提交吗？")
                         if (s) {
                             self.submitVision();
                         }
                     } else {
-                        self.submitVision();
-                    }
-
+                    }*/
+                    self.submitVision();
                 }
 
                 self.submitVision = function () {
