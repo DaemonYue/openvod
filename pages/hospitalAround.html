@@ -42,8 +42,8 @@
         <tbody>
         <tr ng-repeat="pic in around.info[around.cateIndex].sub track by $index">
             <td>{{pic.Seq}}</td>
-            <td>{{pic.Title[around.defaultLangCode]}}</td>
-            <td>{{pic.Text[around.defaultLangCode]}}</td>
+            <td style="max-width: 200px">{{pic.Title[around.defaultLangCode]}}</td>
+            <td style="max-width: 491px">{{pic.Text[around.defaultLangCode]}}</td>
             <td>
                 <!--编辑按钮-->
                 <a class="" ng-click="around.editPic($index)">编辑</a>

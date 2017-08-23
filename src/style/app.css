@@ -1215,3 +1215,7 @@ label + hr{
         filter: blur(12px)
     }
 }
+
+ table td{
+     overflow-wrap: break-word;
+ }

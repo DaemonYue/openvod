@@ -19401,7 +19401,7 @@
                     }).finally(function (value) {
 
                     });
-                }
+                };
 
 
                 self.submit = function () {
