@@ -999,7 +999,7 @@
             // serverUrl: 'http://192.168.17.132/backend_mgt/v1/',
 
             // serverUrl: 'http://openvod.cleartv.cn/backend_mgt/v1/',
-            uploadUrl: 'http://mres.cleartv.cn/upload',
+            uploadUrl: 'http://192.168.17.73/upload',
             testUrl: 'test/',
             test: false,
             hospitalTagNow: -1

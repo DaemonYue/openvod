@@ -3,7 +3,7 @@
 (function () {
     var app = angular.module('app.services', [])
 
-        .factory('util', ['$cookies', '$translate', 'CONFIG', function ($cookies, $translate, CONFIG) {
+        .factory('util', ['$cookies', '$translate', '$window', 'CONFIG', function ($cookies, $translate, $window, CONFIG) {
 
 
 
@@ -77,6 +77,22 @@
                         return false;
                     }
                 },
+
+                //存储对象，以JSON格式存储
+                'setObject': function(key,value){
+                    $window.localStorage[key]=JSON.stringify(value);
+                },
+
+                //读取对象
+                'getObject' : function (key) {
+                    return JSON.parse($window.localStorage[key] || '{}');
+                },
+
+                //清空localStorage
+                'clearStorage': function () {
+                    $window.localStorage.clear();
+                },
+
 
                 /**
                  * 当前系统 使用 的 语言

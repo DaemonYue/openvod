@@ -646,7 +646,8 @@
                         || branch.data.type == 'MainMenu_Yeste_SecondMenu'
                         || branch.data.type == 'MainMenu_SiMaTai_SecondMenu'
                         || branch.data.type == 'MainMenu_Samsung_SecondMenu'
-                        || branch.data.type == 'MainMenu_Hospital_SecondMenu') {
+                        || branch.data.type == 'MainMenu_Hospital_SecondMenu'
+                        || branch.data.type == 'Hospital_MainMenuB') {
                         $state.go('app.tvAdmin.blank', {label: branch.label});
                         self.changeMenuInfo();
                     }

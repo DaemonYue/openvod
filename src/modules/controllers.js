@@ -16,15 +16,31 @@
             function ($scope, $http, $filter, $state, md5, util) {
                 var self = this;
                 self.init = function () {
+                    var href = window.location.href;
+                    var a = href.indexOf('=');
+                    if(a != -1){
+                        var paramS = href.substring(a+1);
+                        var params = decodeURI(paramS);  //获取转义的参数
+                        self.projectName = 'default';
+                        var param = JSON.parse(params);
+                        self.userName = param.username;
+                        self.pwd = param.password;
+                        self.login(2);
+                    }
                 };
 
-                self.login = function () {
+                self.login = function (item) {
+                    if(item == 2){
+                        self.PWD = self.pwd;
+                    }else {
+                        self.PWD = md5.createHash(self.password)
+                    }
                     self.loading = true;
                     var data = JSON.stringify({
                         action: "GetToken",
                         projectName: self.projectName,
                         username: self.userName,
-                        password: md5.createHash(self.password)
+                        password: self.PWD
                     })
                     $http({
                         method: 'POST',
